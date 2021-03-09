@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Rooms</title>
+</head>
+<body>
+
+    <h1>Lista de salas</h1>
+
+    <list>
+        <tr th:each="room: ${rooms}">
+            <ul><td th:text="${room}">Onions</td></ul>
+        </tr>        
+    </list>
+
+</body>
+</html>
