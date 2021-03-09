@@ -8,7 +8,7 @@
 		<version>2.4.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.iw</groupId>
+	<groupId>es.ucm.fdi</groupId>
 	<artifactId>stonks</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>stonks</name>

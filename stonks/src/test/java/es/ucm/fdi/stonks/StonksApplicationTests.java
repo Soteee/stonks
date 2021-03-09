@@ -1,4 +1,4 @@
-package com.iw.stonks;
+package es.ucm.fdi.stonks;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
