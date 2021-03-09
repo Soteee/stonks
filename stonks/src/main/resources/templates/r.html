@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <!-- Mira el RootController, has puesto /r/idsala en lugar de /room/idsala -->
+</head>
+
+<body style="background-color: rgb(36, 83, 212);">
+
+    <div class="main_top_navbar" id=top_navbar style="position: fixed; top: 0px;width:100%">
+        <ul style="display:inline;align-items:center; "th:each="menu_item: ${menu_content}">
+            <button th:text="${menu_item}">X</button>
+
+        </ul>
+    </div>
+    <div class="left_navbar" id=left_navbar>
+        <ul style="display:block">
+            hola 
+            hola 
+            hola 
+            hola 
+        </ul>
+    </div>
+</body>
+
+</html>

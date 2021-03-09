@@ -3,13 +3,21 @@ package es.ucm.fdi.stonks.control;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class RootController {
 
     public static final String ROOMS = "rooms";
     public static final String USERS = "users";
+    public static final String _MENU = "_menu";
+    String [] _menu = {
+        "Ayuda",
+        "Salas",
+        "Perfil",
+        "Ayuda",
+        "Contacto"
+
+    };
     String[] users = {
         "John Doe", 
         "Jane Doe",
@@ -49,8 +57,9 @@ public class RootController {
 
     }
 
-    @GetMapping("/r/") // /s/idsala sala por dentro.
+    @GetMapping("/r") // /s/idsala sala por dentro.
     public String room(Model model) {
+        model.addAttribute("menu_content",_menu);
         return "r";
     }
     
