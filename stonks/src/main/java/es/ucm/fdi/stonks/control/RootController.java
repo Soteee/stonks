@@ -35,6 +35,8 @@ public class RootController {
     
     @GetMapping("/admin")   // admin panel
     public String admin(Model model) {
+        model.addAttribute(USERS, users);
+        model.addAttribute(ROOMS, rooms);
         return "admin";
     }
 

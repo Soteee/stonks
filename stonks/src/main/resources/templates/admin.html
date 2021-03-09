@@ -8,49 +8,41 @@
     <p>Hola admin :)</p>
     <div id="stats">
         <h2>Estadísticas</h2>
-        <list>
-            <ul>Puntos estables: 78%</ul>
-            <ul>Usuarios invitados: 34%</ul>
-            <ul>Usuarios VIP: 15%</ul>
-            <ul>Salas de pago: 12%</ul>
-        </list>
+        <ul>
+            <li>Puntos estables: 78%</li>
+            <li>Usuarios invitados: 34%</li>
+            <li>Usuarios VIP: 15%</li>
+            <li>Salas de pago: 12%</li>
+        </ul>
     </div>
     <div id="users">
         <h2>Usuarios activos</h2>
         <form>
-            <input type="text" name="buscarUser"><input type="submit" value="Buscar"><br>
+            <input type="text" name="userSearch"><input type="submit" value="Buscar"><br>
             <select name="filtro">
                 <option id="1">VIPs</option>
                 <option id="2">Invitados</option>
                 <option id="3">Nuevos</option>
-                <option id="4">Antiguos</option>
+                <option id="4">Top</option>
             </select>
         </form>
-        <ul>
-            <li>Ronaldinho</li>
-            <li>Roberto Carlos</li>
-            <li>Wall Street Wolverine</li>
-            <li>Alexelcapo</li>
-            <li>...</li>
+        <ul th:each="user: ${users}">
+            <li th:text="${user}">Alexelcapo</li>
         </ul>
     </div>
-    <div id="salas">
+    <div id="rooms">
         <h2>Salas activas</h2>
         <form>
-            <input type="text" name="buscarSala"><input type="submit" value="Buscar"><br>
+            <input type="text" name="roomSearch"><input type="submit" value="Buscar"><br>
             <select name="filtro">
                 <option id="1">Gratis</option>
                 <option id="2">De pago</option>
                 <option id="3">Nuevas</option>
-                <option id="4">Antiguas</option>
+                <option id="4">Top</option>
             </select>
         </form>
-        <ul>
-            <li>Viva Hacienda :D</li>
-            <li>Me gusta pagar impuestos</li>
-            <li>Lorem impsum</li>
-            <li>Las carreteras de Alexelcapo</li>
-            <li>...</li>
+        <ul th:each="room: ${rooms}">
+            <li th:text="${room}">Andorra</li>
         </ul>
     </div>
 </body>
