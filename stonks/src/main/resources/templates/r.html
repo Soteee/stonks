@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="/static/styles/css/stylesheet_r.css"/>
     <title></title>
     <meta name="description" content="">
     <!-- Mira el RootController, has puesto /r/idsala en lugar de /room/idsala -->
@@ -11,18 +12,21 @@
 
 <body style="background-color: rgb(36, 83, 212);">
 
-    <div class="main_top_navbar" id=top_navbar style="position: fixed; top: 0px;width:100%">
-        <ul style="display:inline;align-items:center; "th:each="menu_item: ${menu_content}">
-            <button th:text="${menu_item}">X</button>
+    <div class="topnavbar" id=top_navbar >
+        <ul style="display:inline-flex" th:each="menu_item: ${menu_content}">
+            <button class="btnMenu" th:text="${menu_item}">X</button>
 
         </ul>
     </div>
-    <div class="left_navbar" id=left_navbar>
+    <div class="left_navbar" id=left_navbar style="display:grid">
         <ul style="display:block">
-            hola 
-            hola 
-            hola 
-            hola 
+            <li>hola</li>
+            <li>hola</li>
+            <li>hola</li>
+            <li>hola</li>
+            <li>hola</li>
+            <li>hola</li>
+
         </ul>
     </div>
 </body>
