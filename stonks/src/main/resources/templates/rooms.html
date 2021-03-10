@@ -5,14 +5,20 @@
     <title>Rooms</title>
 </head>
 <body>
-
+   
     <h1>Lista de salas</h1>
-
-    <list>
-        <tr th:each="room: ${rooms}">
-            <ul><td th:text="${room}">Onions</td></ul>
-        </tr>        
-    </list>
-
+    <div class="topnavbar">
+        <ul style="display:inline-flex" th:each="menu_item: ${menu_content}">
+            <button class="btnMenu" th:text="${menu_item}">X</button>
+        </ul>
+    </div>
+    <div>
+        <list>
+            <tr th:each="room: ${rooms}">
+                <ul><td th:text="${room}"></td></ul>
+            </tr>        
+        </list>
+    </div>
+    
 </body>
 </html>

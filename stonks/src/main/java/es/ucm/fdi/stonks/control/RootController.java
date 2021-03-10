@@ -52,6 +52,7 @@ public class RootController {
     public String rooms(Model model) {
 
         model.addAttribute(ROOMS, rooms);
+        model.addAttribute("menu_content",_menu);
 
         return "rooms";
 
