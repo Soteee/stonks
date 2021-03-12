@@ -31,9 +31,15 @@ public class RootController {
         "A Andorra hemos de ir"
     };
 
-    @GetMapping("/")                        // peticion a `/`
+    @GetMapping("/")
     public String index(Model model) {
-        return "index";                      // vista resultante
+        String[] topUsers = {users[0], users[1]};
+        String[] topRooms = {rooms[0], rooms[1]};
+
+        model.addAttribute("topUsers", topUsers);
+        model.addAttribute("topRooms", topRooms);
+
+        return "index";
     }
 
     @GetMapping("/menu")
