@@ -67,6 +67,8 @@ public class RootController {
     @GetMapping("/r") // /s/idsala sala por dentro.
     public String room(Model model) {
         model.addAttribute("menu_content",_menu);
+        model.addAttribute("room_content",rooms);
+        model.addAttribute("users", users);
         return "r";
     }
     
