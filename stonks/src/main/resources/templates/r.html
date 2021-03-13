@@ -1,34 +1,66 @@
 <!DOCTYPE html>
 <html>
-
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" type="text/css" href="/static/styles/css/stylesheet_r.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}"/>
     <title></title>
     <meta name="description" content="">
     <!-- Mira el RootController, has puesto /r/idsala en lugar de /room/idsala -->
 </head>
 
-<body style="background-color: rgb(36, 83, 212);">
+<body >
 
     <div class="topnavbar" id=top_navbar >
-        <ul style="display:inline-flex" th:each="menu_item: ${menu_content}">
+        <span><img th:src="@{/images/logo200x200.png}"/></span>
+        <ul th:each="menu_item: ${menu_content}">
             <button class="btnMenu" th:text="${menu_item}">X</button>
 
         </ul>
     </div>
-    <div class="left_navbar" id=left_navbar style="display:grid">
-        <ul style="display:block">
-            <li>hola</li>
-            <li>hola</li>
-            <li>hola</li>
-            <li>hola</li>
-            <li>hola</li>
-            <li>hola</li>
-
+    <div class="leftnavbar" id=left_navbar>
+        <p>Mis salas</p>
+        <ul>
+            
+            <li th:each="room_item: ${room_content}">
+                <button class="btnR" th:text="${room_item}">X</button>
+            </li>
         </ul>
     </div>
+    <div class="rightnavbar" id=right_navbar>
+        <p>Usuarios en la sala</p>
+        <ul>
+    
+            <li th:each="user_inroom: ${users}">
+                <p  th:text="${user_inroom}">X</p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="visualizer">
+        
+        <p>Market Name</p>
+        <span><img th:src="@{/images/stockexample.png}" /></span>
+        <ul>
+            <li>
+                <button>Buy</button>
+                <button>Sell</button>
+                <BUTTON>Sell all positions</BUTTON>
+            </li>
+        </ul>
+        <div class="player_info">
+            <p>
+                Player info:
+                <li>
+                    <p>AMC- 20</p>
+                    <p>BTC- 50</p>
+                </li>
+            </p>
+        </div>
+        
+    </div>
+
 </body>
 
 </html>
