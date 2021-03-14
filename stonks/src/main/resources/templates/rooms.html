@@ -1,23 +1,60 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}"/>
     <title>Rooms</title>
 </head>
 <body>
-   
-    <h1>Lista de salas</h1>
-    <div class="topnavbar">
-        <ul style="display:inline-flex" th:each="menu_item: ${menu_content}">
+
+    <div class="topnavbar" id=top_navbar >
+        <span><img th:src="@{/images/logo200x200.png}"/></span>
+        <ul th:each="menu_item: ${menu_content}">
             <button class="btnMenu" th:text="${menu_item}">X</button>
         </ul>
     </div>
-    <div>
+    <div class="leftnavbar" id=left_navbar>
+        <p>Mis salas</p>
+        <ul>
+            <li th:each="room_item: ${room_content}">
+                <button class="btnR" th:text="${room_item}">X</button>
+            </li>
+        </ul>
+    </div>
+    <div class="rightnavbar" id=right_navbar>
+        <p>Usuarios en la sala</p>
+        <ul>
+            <li th:each="user_inroom: ${users}">
+                <p  th:text="${user_inroom}">X</p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="visualizer">
+
+        <h1>Salas</h1>
+
+        <h2>Buscador de salas</h2>
+
+        <form>
+            <input type="text" name="roomSearch"><input type="submit" value="Buscar">
+            <select name="roomType">
+                <option id="1">Públicas</option>
+                <option id="2">Privadas</option>
+                <option id="3">Todas</option>
+            </select>
+        </form>
+
+        <h2>Salas destacadas</h2>
+
         <list>
-            <tr th:each="room: ${rooms}">
-                <ul><td th:text="${room}"></td></ul>
-            </tr>        
+            <li th:each="room: ${featured_rooms}">
+                <p th:text="${room}"></p>
+            </li>
         </list>
+
+        <button>Crear sala</button>
+
     </div>
     
 </body>
