@@ -10,6 +10,9 @@ public class RootController {
     public static final String ROOMS = "rooms";
     public static final String USERS = "users";
     public static final String _MENU = "_menu";
+    public static final String MENU_CONTENT = "menu_content";
+    public static final String ROOM_CONTENT = "room_content";
+    public static final String FEATURED_ROOMS = "featured_rooms";
     String [] _menu = {
         "Ayuda",
         "Salas",
@@ -29,6 +32,11 @@ public class RootController {
         "Me gusta pagar impuestos",
         "Las carreteras de Alexelcapo",
         "A Andorra hemos de ir"
+    };
+    String[] featuredRooms = {
+        "Cryptoroom",
+        "GameStop strikes back",
+        "Mercadeo y lo que surja"
     };
 
     @GetMapping("/")
@@ -57,8 +65,10 @@ public class RootController {
     @GetMapping("/rooms")   // lista de salas
     public String rooms(Model model) {
 
-        model.addAttribute(ROOMS, rooms);
-        model.addAttribute("menu_content",_menu);
+        model.addAttribute(MENU_CONTENT, _menu);
+        model.addAttribute(ROOM_CONTENT, rooms);
+        model.addAttribute(USERS, users);
+        model.addAttribute(FEATURED_ROOMS, featuredRooms);
 
         return "rooms";
 
@@ -66,9 +76,9 @@ public class RootController {
 
     @GetMapping("/r") // /s/idsala sala por dentro.
     public String room(Model model) {
-        model.addAttribute("menu_content",_menu);
-        model.addAttribute("room_content",rooms);
-        model.addAttribute("users", users);
+        model.addAttribute(MENU_CONTENT,_menu);
+        model.addAttribute(ROOM_CONTENT,rooms);
+        model.addAttribute(USERS, users);
         return "r";
     }
     
