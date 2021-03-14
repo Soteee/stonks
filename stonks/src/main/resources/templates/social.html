@@ -5,6 +5,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Social</title>
+        <style>
+            #playerFound {
+              width: 50%;
+              padding: 15px 0;
+              text-align: center;
+              background-color: lightblue;
+              margin-top: 20px;
+            }
+        </style>
     </head>
     <body>
         <!-- LISTA PRINCIPAL -->
@@ -51,14 +60,30 @@
         <h2> BUSCAR UN JUGADOR </h2>
         <h3>
             <form>
-                <input type="text" name="roomSearch" value="Nombre de usuario o #12465" size="30px">
-                <input type="submit" value="Buscar">
+                <input type="text" name="roomSearch" onfocus="this.value=''" value="Nombre de usuario o #12465" size="30px">
+
+                <button onclick="buscarJugador()">Buscar</button>
+
             </form>
             <br>
-            Jugador encontrado
-            <button type="button">Ver perfil</button>
-            <button type="button">Invitar a una sala</button>
-            <button type="button">Mandar solicitud de amistad</button>
+            <div id="playerFound" >
+                Nombre del jugador #12465 
+                <button type="button">Ver perfil</button>
+                <button type="button">Invitar a una sala</button>
+                <button type="button">Mandar solicitud de amistad</button>
+            </div>
         </h3>
+
+        <script>
+            function buscarJugador() {
+                var x = document.getElementById("playerFound");
+    
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+        </script>
     </body>
 </html>
