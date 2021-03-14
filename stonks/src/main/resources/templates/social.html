@@ -1,12 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Social</title>
+    </head>
+    <body>
+        <!-- LISTA PRINCIPAL -->
+        <h1>
+            <div id="botones">
+                <button type="button">Mis amigos</button>
+                <button type="button">Solicitudes de amistad</button>
+                <button type="button">Buscar jugadores</button>
+            </div>
+        </h1>
+
+        <h2> LISTA DE AMIGOS </h2>
+        <h3>
+            <div id="amigos">
+                <ol>
+                    <li>
+                        Amigo 1
+                        <button type="button">Ver perfil</button>
+                        <button type="button">Invitar a una sala</button>
+                        <button type="button">Mensajes</button>
+                        <button type="button">Eliminar amigo</button>
+                    </li>
+                    <li>Amigo 2</li>
+                    <li>Amigo N</li>
+                </ol>
+            </div>
+        </h3>
+
+        <h2> SOLICITUDES DE AMISTAD </h2>
+        <h3>
+            <div id="solicitudes">
+                <ol>
+                    <li>
+                        Solicitud 1
+                        <button type="button">Aceptar</button>
+                        <button type="button">Rechazar</button>
+                    </li>
+                    <li>Solicitud 2</li>
+                    <li>Solicitud N</li>
+                </ol>
+            </div>
+        </h3>
+
+        <h2> BUSCAR UN JUGADOR </h2>
+        <h3>
+            <form>
+                <input type="text" name="roomSearch"><input type="submit" value="Buscar">
+            </form>
+            <br>
+            Jugador encontrado
+            <button type="button">Ver perfil</button>
+            <button type="button">Invitar a una sala</button>
+            <button type="button">Mandar solicitud de amistad</button>
+        </h3>
+    </body>
 </html>
