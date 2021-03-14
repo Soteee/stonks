@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin panel</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}"/>
+    <title>Panel de administrador</title>
 </head>
 <body>
-    <p>Hola admin :)</p>
+    <nav class="topnavbar" th:replace="fragments/menu.html :: topbar">X</nav>
     <div id="stats">
         <h2>Estadísticas</h2>
         <ul>

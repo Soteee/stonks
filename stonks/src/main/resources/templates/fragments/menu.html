@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}"/>
+</head>
+<body>
+    <nav class="topnavbar" th:fragment="topbar">
+        <span><img th:src="@{/images/logo200x200.png}"/></span>
+        <ul>
+            <button class="btnMenu">Salas</button>
+            <button class="btnMenu">Perfil</button>
+            <button class="btnMenu">Amigos</button>
+            <button class="btnMenu">Contacto</button>
+        </ul>
+    </nav>
+</body>
+</html>

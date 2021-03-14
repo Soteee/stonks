@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}"/>
-    <title>Rooms</title>
+    <title>Salas</title>
 </head>
 <body>
 
@@ -18,14 +18,6 @@
         <ul>
             <li th:each="room_item: ${room_content}">
                 <button class="btnR" th:text="${room_item}">X</button>
-            </li>
-        </ul>
-    </div>
-    <div class="rightnavbar" id=right_navbar>
-        <p>Usuarios en la sala</p>
-        <ul>
-            <li th:each="user_inroom: ${users}">
-                <p  th:text="${user_inroom}">X</p>
             </li>
         </ul>
     </div>

@@ -17,7 +17,7 @@ public class RootController {
         "Ayuda",
         "Salas",
         "Perfil",
-        "Ayuda",
+        "Amigos",
         "Contacto"
 
     };
@@ -84,7 +84,7 @@ public class RootController {
     
     @GetMapping("/social")
     public String social(Model model) {
-        return "admin";
+        return "social";
     }
     /*
     @GetMapping("/u/{id}") // /user/uid

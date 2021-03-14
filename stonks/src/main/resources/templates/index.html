@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}"/>
+    <title>Stonks</title>
 </head>
 <body>
-    <h2>Top Jugadores</h2>
-    <ul th:each="user: ${topUsers}">
-        <li th:text="${user}">Alexelcapo</li>
-    </ul>
-    <h2>Top Salas</h2>
-    <ul th:each="room: ${topRooms}">
-        <li th:text="${room}">Andorra</li>
-        <img width=300px th:attr="src=@{/img/room.png}">
-    </ul>
-    <button onclick="window.location.href='/r'">Crear sala</button>
-    <button onclick="window.location.href='/rooms'">Buscar sala</button>
+    <nav class="topnavbar" th:replace="fragments/menu.html :: topbar">X</nav>
+    <div class="visualizer">
+        <h2>Top Jugadores</h2>
+        <ul th:each="user: ${topUsers}">
+            <li th:text="${user}">Alexelcapo</li>
+        </ul>
+        <h2>Top Salas</h2>
+        <ul th:each="room: ${topRooms}">
+            <li th:text="${room}">Andorra</li>
+            <img width=300px th:attr="src=@{/images/stockexample.jpg}">
+        </ul>
+        <button onclick="window.location.href='/r'">Crear sala</button>
+        <button onclick="window.location.href='/rooms'">Buscar sala</button>
+    </div>
 </body>
 </html>

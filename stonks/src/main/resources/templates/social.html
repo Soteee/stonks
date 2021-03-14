@@ -1,32 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Social</title>
-        <style>
-            #playerFound {
-              width: 50%;
-              padding: 15px 0;
-              text-align: center;
-              background-color: lightblue;
-              margin-top: 20px;
-            }
-        </style>
-    </head>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}"/>
+    <title>Salas</title>
+</head>
     <body>
+    <nav class="topnavbar" th:replace="fragments/menu.html :: topbar">X</nav>
+    <div class="visualizer">
         <!-- LISTA PRINCIPAL -->
-        <h1>
             <div id="botones">
                 <button type="button">Mis amigos</button>
                 <button type="button">Solicitudes de amistad</button>
                 <button type="button">Buscar jugadores</button>
             </div>
-        </h1>
-
+    </div>
         <h2> LISTA DE AMIGOS </h2>
-        <h3>
             <div id="amigos">
                 <ol>
                     <li>
@@ -40,10 +29,8 @@
                     <li>Amigo N</li>
                 </ol>
             </div>
-        </h3>
 
         <h2> SOLICITUDES DE AMISTAD </h2>
-        <h3>
             <div id="solicitudes">
                 <ol>
                     <li>
@@ -55,10 +42,9 @@
                     <li>Solicitud N</li>
                 </ol>
             </div>
-        </h3>
 
         <h2> BUSCAR UN JUGADOR </h2>
-        <h3>
+
             <form>
                 <input type="text" name="roomSearch" onfocus="this.value=''" value="Nombre de usuario o #12465" size="30px">
 
@@ -72,7 +58,7 @@
                 <button type="button">Invitar a una sala</button>
                 <button type="button">Mandar solicitud de amistad</button>
             </div>
-        </h3>
+
 
         <script>
             function buscarJugador() {
