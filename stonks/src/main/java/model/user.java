@@ -22,6 +22,6 @@ public class user {
 
     @ManyToMany
     //salas de las que soy socio
-    private List<socios> salas;
+    private List<socio> salas;
 
 }

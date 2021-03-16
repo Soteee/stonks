@@ -1,15 +1,10 @@
 package model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+
 import lombok.Data;
 
 @Entity
@@ -17,11 +12,10 @@ import lombok.Data;
 public class positions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @OneToOne(mappedBy = "owner_id")
     private long id;
 
     @ManyToOne
-    private long idsocio;
+    private socio idsocio;
     
     
     private LocalDateTime fechacompra;
