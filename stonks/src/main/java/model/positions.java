@@ -14,14 +14,22 @@ import lombok.Data;
 
 @Entity
 @Data
-public class user {
+public class positions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @OneToOne(mappedBy = "owner_id")
     private long id;
 
-    @ManyToMany
-    //salas de las que soy socio
-    private List<socios> salas;
+    @ManyToOne
+    private long idsocio;
+    
+    
+    private LocalDateTime fechacompra;
+    private boolean active;
+    private int cantidadAcciones;
+    private String nombre_indice;
+    private double precio;
+
+
 
 }

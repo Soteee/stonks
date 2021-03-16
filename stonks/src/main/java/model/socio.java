@@ -14,14 +14,24 @@ import lombok.Data;
 
 @Entity
 @Data
-public class user {
+public class socio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @OneToOne(mappedBy = "owner_id")
-    private long id;
+    private long idsocio;
 
-    @ManyToMany
-    //salas de las que soy socio
-    private List<socios> salas;
+    @ManyToOne
+    private long iduser;
 
+    @ManyToOne
+    private long idsala;
+
+    private LocalDateTime joindate;
+    private double balance;
+
+    @OneToMany
+    List<positions> plist = new ArrayList();
+
+
+
+    
 }
