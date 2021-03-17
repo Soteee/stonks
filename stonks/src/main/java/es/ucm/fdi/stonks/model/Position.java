@@ -1,4 +1,4 @@
-package model;
+package es.ucm.fdi.stonks.model;
 
 import java.time.LocalDateTime;
 

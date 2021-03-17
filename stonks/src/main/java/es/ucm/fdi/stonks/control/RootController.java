@@ -1,11 +1,16 @@
 package es.ucm.fdi.stonks.control;
 
+import es.ucm.fdi.stonks.model.Member;
+import es.ucm.fdi.stonks.model.Room;
+import es.ucm.fdi.stonks.model.Test;
+import es.ucm.fdi.stonks.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 
 @Controller
@@ -46,13 +51,29 @@ public class RootController {
         "Mercadeo y lo que surja"
     };
 
+    @Transactional
     @GetMapping("/")
     public String index(Model model) {
         String[] topUsers = {users[0], users[1]};
         String[] topRooms = {rooms[0], rooms[1]};
+        Test test = new Test();
+        User user = new User();
+        Room room = new Room();
+        Member member = new Member();
 
         model.addAttribute("topUsers", topUsers);
         model.addAttribute("topRooms", topRooms);
+
+        room.setName("Salita");
+        member.setRoom(room);
+        member.setUser(user);
+
+        entityManager.persist(test);
+        entityManager.persist(user);
+        entityManager.persist(room);
+        entityManager.persist(member);
+
+        entityManager.flush();
 
         return "index";
     }

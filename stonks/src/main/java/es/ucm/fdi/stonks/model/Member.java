@@ -1,4 +1,4 @@
-package model;
+package es.ucm.fdi.stonks.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,16 +16,16 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = User.class)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Room.class)
     private Room room;
 
-    private LocalDateTime joinDate;
-    private double balance;
+//    private LocalDateTime joinDate;
+//    private double balance;
 
     @OneToMany
-    List<Position> positionList = new ArrayList();
+    private List<Position> positionList = new ArrayList<>();
     
 }

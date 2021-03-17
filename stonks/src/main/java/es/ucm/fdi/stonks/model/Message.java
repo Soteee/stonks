@@ -1,11 +1,10 @@
-package model;
+package es.ucm.fdi.stonks.model;
 
 import lombok.Data;
 
 import javax.persistence.Entity;
 
-@Entity
-@Data
+
 public class Message {
 
     
