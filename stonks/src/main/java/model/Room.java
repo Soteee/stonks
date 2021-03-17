@@ -11,13 +11,14 @@ import lombok.Data;
 
 @Entity
 @Data
-public class room {
+public class Room {
+
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private long id;
-   private String title;
-   
+   private String name;
 
    @ManyToMany
-   List<user> participants;
+   List<User> userList;
+
 }

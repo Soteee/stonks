@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import lombok.Data;
 
 @Entity
 @Data
-public class user {
+public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @OneToOne(mappedBy = "owner_id")
@@ -22,6 +21,6 @@ public class user {
 
     @ManyToMany
     //salas de las que soy socio
-    private List<socio> salas;
+    private List<Member> memberList;
 
 }

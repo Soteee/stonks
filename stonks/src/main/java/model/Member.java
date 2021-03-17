@@ -10,24 +10,22 @@ import lombok.Data;
 
 @Entity
 @Data
-public class socio {
+public class Member {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idsocio;
+    private long id;
 
     @ManyToOne
-    private user iduser;
+    private User user;
 
     @ManyToOne
-    private room idsala;
+    private Room room;
 
-    private LocalDateTime joindate;
+    private LocalDateTime joinDate;
     private double balance;
 
     @OneToMany
-    List<positions> plist = new ArrayList();
-
-
-
+    List<Position> positionList = new ArrayList();
     
 }

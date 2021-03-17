@@ -1,7 +1,6 @@
 package model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -9,20 +8,20 @@ import lombok.Data;
 
 @Entity
 @Data
-public class positions {
+public class Position {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
-    private socio idsocio;
+    private Member member;
     
-    
-    private LocalDateTime fechacompra;
-    private boolean active;
-    private int cantidadAcciones;
-    private String nombre_indice;
-    private double precio;
+    private LocalDateTime purchaseDate;
+    private boolean isActive;
+    private int quantity;
+    private String indexName;
+    private double price;
 
 
 
