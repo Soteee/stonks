@@ -30,29 +30,68 @@
     <p>Todas las entidades estan etiquetadas con @Entity y sus ids son únicas generadas secuencialmente</p>
     <br>
     <h2>User</h2>
-    <p>User tiene como atributo el nombre de usuario que no puede ser nulo, y el nombreReal puede ser nulo o repetido</p>
+    <p>Representa un usuario.</p>
+        <ul>
+            <li>ID</li>
+            <li>userName: Nombre de usuario (no puede ser nulo).</li>
+            <li>realName: Nombre real del usuario.</li>
+            <li>memberList: Indica las salas en las que el usuario participa. Es una lista de relaciones usuario-sala (clase Member).</li>
+        </ul>
     <h2>Rooms</h2>
-    
+    <p>Representa una sala en la que los usuarios pueden jugar una partida.</p>
     <ul>
         <li>ID</li>
-        <li>name, que no puede ser nulo</li>
-        <li>isPublic, indica si la sala es pública</li>
-        <li>weeklyCash, indica la cantidad de dinero que se añade a los usuarios al final de la semana por si se han quedado a 0 para que sigan jugando, si no se quiere se pone a 0</name>
-        <li>maxUsers, máximo de participantes en la sala</li>
-        <li>startBalance</li>
-        <li>cash2win, balance ncesario por un usuario para ganar en la sala</li>
-        <li>createDate</li>
-        <li>expirationDate, fecha de expiracion de la sala, el que más balance tenga cuando sea esa fecha gana, o el que llege primero al balance cash2win, lo que pase antes</li>
+        <li>name: Nombre de la sala (no puede ser nulo).</li>
+        <li>isPublic: Indica si la sala es pública o no.</li>
+        <li>weeklyCash: Indica la cantidad de dinero que se entrega a los usuarios de la sala al final de la semana. Esto les permite seguir jugando aunque pierdan todo su dinero. Puede ser 0.</name>
+        <li>maxUsers: Máximo número de participantes en la sala.</li>
+        <li>startBalance: Cantidad inicial de dinero en la sala.</li>
+        <li>cash2win: Cantidad de dinero necesaria para que un usuario gane la partida de la sala.</li>
+        <li>createDate: Fecha de creación de la sala.</li>
+        <li>expirationDate: Fecha de expiracion de la sala. Cuando llega esa fecha, el usuario con más dinero gana la partida (si nadie ha alcanzado ya la canitdad cash2win).</li>
+        <li>admin: Usuario con el rol de administrador en la sala (clase User).</li>
+        <li>memberList: Indica los usuarios que están en la sala. Es una lisa de relaciones usuario-sala (clase Member).</li>
     </ul>
 
     <h2>Member</h2>
+    <p>Representa la relación entre un usuario y una sala.</p>
+        <ul>
+            <li>ID</li>
+            <li>user: Usuario que participa en la relación (clase User).</li>s
+            <li>room: Sala en la que el usuario se encuentra (clase Room).</li>
+            <li>joinData: Fecha de entrada en la sala.</li>
+            <li>balance: Cantidad de dinero que el usuario acumula en esa sala.</li>
+            <li>positionList: Lista de transacciones que el usuario ha hecho en esa sala (clase Position).</li>
+        </ul>
+
+    <h2>Position</h2>
+    <p>Representa cada transacción que hace un usuario en una sala.</p>
+    <ul>
         <li>ID</li>
+        <li>member: Indica qué usuario dentro de qué sala ha realizado la transacción (clase Member).</li>
+        <li>purchaseDate: Indica la fecha en la que se realizó la transacción.</li>
+        <li>isActive: Indica si la transacción se encuentra en un estado activo o no.</li>
+        <li>quantity: Indica el número de acciones que se han adquirido.</li>
+        <li>indexName: Nombre de la empresa a la que pertenecen las acciones.</li>
+        <li>price: Precio medio de la transacción en función de lo que ha valido y lo que vale ahora. El precio real se calcula en base al precio de las acciones en el momento (usando la API).</li>
+    </ul>
 
-    <h2>Positions</h2>
+    <h2>Conversation</h2>
+    <p>Representa una conversación entre dos usuarios.</p>
+    <ul>
+        <li>ID</li>
+        <li>user1 y user2: Usuarios dentro de la conversación (clase User).</li>
+        <li>messageList: Lista de mensajes dentro de la conversación (clase Message).</li>
+    </ul>
 
-    <h2>Messages</h2>
-
-
-
+    <h2>Message</h2>
+    <p>Representa un mensaje enviado desde un usuario a otro dentro de una conversación.</p>
+    <ul>
+        <li>ID</li>
+        <li>conver: Conversación a la que pertenece el mensaje (clase Conversation).</li>
+        <li>sender: Usuario que envía el mensaje (sólo puede ser conversation.user1 o conversation.user2)(clase User).</li>
+        <li>text: Texto enviado.</li>
+        <li>date: Fecha en la que el mensaje ha sido enviado.</li>
+    </ul>
 </body>
 </html>
