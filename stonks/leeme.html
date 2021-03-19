@@ -1,12 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Léeme</title>
 </head>
 <body>
-    <h1>Entrega vistas</h1>
-    <h2>Vistas</h2>
+
+    <h1>stonks</h1>
+
+    <p><i>A trading community experience</i></p>
+
+    <p>Proyecto para la asignatura de Ingeniería Web (optativa general para distintos grados de la
+        <a href="https://informatica.ucm.es/">Facultad de Informática de la UCM</a>).</p>
+
+    <h2>Autores</h2>
+
+    <p>Óscar Fernández Romano, Víctor Fresco Perales, Alberto Redondo Gil, Javier Ignacio Sotelino Barriga, Juan
+        Tecedor Roa</p>
+
+    <h2>Introducción</h2>
+
+    <p>
+        ¿Te gustaría invertir en bolsa pero no tienes ni para un tercio? ¿Quieres demostrarle
+        a tus amigos quién es el verdadero Lobo de Wall Street? En Stonks te ofrecemos una
+        oportunidad de simular la verdadera experiencia Wall Street con tus amigos a través
+        de un divertido juego social.
+    </p>
+
+    <p><i>Buy, sell and have fun with your friends to get STONKS!</i></p>
+
+    <h2>Repositorio en GitHub</h2>
+
+    <a href="https://github.com/Soteee/stonks">Soteee/stonks</a>
+
+    <h2>Entrega vistas</h2>
+
+    <h3>Vistas</h3>
 
     <ul>
         <li><a href="localhost:8080">index.html</a></li>
@@ -16,82 +45,103 @@
         <li><a href="localhost:8080/social">social.html</a></li>
     </ul>
 
-    <h2>Licencias</h2>
+    <h3>Licencias</h3>
 
     <ul>
-        <li>Logo: <a href="https://www.freelogodesign.org/preview?lang=es&name=Stonks%20EST%202012&logo=e6fe77e5-b974-4cd8-87eb-8983d0e6de16">https://www.freelogodesign.org/preview?lang=es&name=Stonks%20EST%202012&logo=e6fe77e5-b974-4cd8-87eb-8983d0e6de16</a>
-        <br>Licencia descrita aquí: <a href="https://es.freelogodesign.org/terms-of-use">https://es.freelogodesign.org/terms-of-use</a></li>
+        <li>Logo: <a href="https://www.freelogodesign.org/preview?lang=es&name=Stonks%20EST%202012&logo=e6fe77e5-b974-4cd8-87eb-8983d0e6de16">
+            https://www.freelogodesign.org/preview?lang=es&name=Stonks%20EST%202012&logo=e6fe77e5-b974-4cd8-87eb-8983d0e6de16</a>
+        <br>Licencia descrita aquí: <a href="https://es.freelogodesign.org/terms-of-use">
+                https://es.freelogodesign.org/terms-of-use</a></li>
         <br>
-        <li>Imagen de muestra de bolsa: <a href="https://media.warriortrading.com/2019/08/shutterstock_775889491.jpg">https://media.warriortrading.com/2019/08/shutterstock_775889491.jpg</a>
+        <li>Imagen de muestra de bolsa: <a href="https://media.warriortrading.com/2019/08/shutterstock_775889491.jpg">
+            https://media.warriortrading.com/2019/08/shutterstock_775889491.jpg</a>
         <br>Licencia Creative Commons</li>
     </ul>
 
-    <h1>Entrega modelado</h1>
+    <h2>Entrega modelado</h2>
+
     <p>Todas las entidades estan etiquetadas con @Entity y sus ids son únicas generadas secuencialmente</p>
-    <br>
-    <h2>User</h2>
+
+    <h3>User</h3>
+
     <p>Representa un usuario.</p>
         <ul>
-            <li>ID</li>
-            <li>userName: Nombre de usuario (no puede ser nulo).</li>
-            <li>realName: Nombre real del usuario.</li>
-            <li>memberList: Indica las salas en las que el usuario participa. Es una lista de relaciones usuario-sala (clase Member).</li>
+            <li><b>ID</b></li>
+            <li><b>userName:</b> Nombre de usuario (no puede ser nulo).</li>
+            <li><b>realName:</b> Nombre real del usuario.</li>
+            <li><b>memberList:</b> Indica las salas en las que el usuario participa. Es una lista de relaciones
+                usuario-sala (clase Member).</li>
         </ul>
-    <h2>Rooms</h2>
+
+    <h3>Rooms</h3>
+
     <p>Representa una sala en la que los usuarios pueden jugar una partida.</p>
     <ul>
-        <li>ID</li>
-        <li>name: Nombre de la sala (no puede ser nulo).</li>
-        <li>isPublic: Indica si la sala es pública o no.</li>
-        <li>weeklyCash: Indica la cantidad de dinero que se entrega a los usuarios de la sala al final de la semana. Esto les permite seguir jugando aunque pierdan todo su dinero. Puede ser 0.</name>
-        <li>maxUsers: Máximo número de participantes en la sala.</li>
-        <li>startBalance: Cantidad inicial de dinero en la sala.</li>
-        <li>cash2win: Cantidad de dinero necesaria para que un usuario gane la partida de la sala.</li>
-        <li>createDate: Fecha de creación de la sala.</li>
-        <li>expirationDate: Fecha de expiracion de la sala. Cuando llega esa fecha, el usuario con más dinero gana la partida (si nadie ha alcanzado ya la canitdad cash2win).</li>
-        <li>admin: Usuario con el rol de administrador en la sala (clase User).</li>
-        <li>memberList: Indica los usuarios que están en la sala. Es una lisa de relaciones usuario-sala (clase Member).</li>
+        <li><b>ID</b></li>
+        <li><b>name:</b> Nombre de la sala (no puede ser nulo).</li>
+        <li><b>isPublic:</b> Indica si la sala es pública o no.</li>
+        <li><b>weeklyCash:</b> Indica la cantidad de dinero que se entrega a los usuarios de la sala al final de la
+            semana. Esto les permite seguir jugando aunque pierdan todo su dinero. Puede ser 0.
+        <li><b>maxUsers:</b> Máximo número de participantes en la sala.</li>
+        <li><b>startBalance:</b> Cantidad inicial de dinero en la sala.</li>
+        <li><b>cash3win:</b> Cantidad de dinero necesaria para que un usuario gane la partida de la sala. Puede ser 0,
+            lo que indicaría que la partida se terminará cuando expire (en ese caso, expirationDate no podría ser NULL)
+        </li>
+        <li><b>createDate:</b> Fecha de creación de la sala.</li>
+        <li><b>expirationDate:</b> Fecha de expiracion de la sala. Cuando llega esa fecha, el usuario con más dinero
+            gana la partida (si nadie ha alcanzado ya la canitdad cash3win). Puede ser NULL, lo que indicaría que la
+            partida terminará cuando alguien alcance la cantidad cash3win (en ese caso, cash3win no puede ser 0).</li>
+        <li><b>admin:</b> Usuario con el rol de administrador en la sala (clase User).</li>
+        <li><b>memberList:</b> Indica los usuarios que están en la sala. Es una lista de relaciones usuario-sala (clase
+            Member).</li>
     </ul>
 
-    <h2>Member</h2>
+    <h3>Member</h3>
+
     <p>Representa la relación entre un usuario y una sala.</p>
         <ul>
-            <li>ID</li>
-            <li>user: Usuario que participa en la relación (clase User).</li>s
-            <li>room: Sala en la que el usuario se encuentra (clase Room).</li>
-            <li>joinData: Fecha de entrada en la sala.</li>
-            <li>balance: Cantidad de dinero que el usuario acumula en esa sala.</li>
-            <li>positionList: Lista de transacciones que el usuario ha hecho en esa sala (clase Position).</li>
+            <li><b>ID</b></li>
+            <li><b>user:</b> Usuario que participa en la relación (clase User).</li>
+            <li><b>room:</b> Sala en la que el usuario se encuentra (clase Room).</li>
+            <li><b>joinData:</b> Fecha de entrada en la sala.</li>
+            <li><b>balance:</b> Cantidad de dinero que el usuario acumula en esa sala.</li>
+            <li><b>positionList:</b> Lista de transacciones que el usuario ha hecho en esa sala (clase Position).</li>
         </ul>
 
-    <h2>Position</h2>
+    <h3>Position</h3>
+
     <p>Representa cada transacción que hace un usuario en una sala.</p>
     <ul>
-        <li>ID</li>
-        <li>member: Indica qué usuario dentro de qué sala ha realizado la transacción (clase Member).</li>
-        <li>purchaseDate: Indica la fecha en la que se realizó la transacción.</li>
-        <li>isActive: Indica si la transacción se encuentra en un estado activo o no.</li>
-        <li>quantity: Indica el número de acciones que se han adquirido.</li>
-        <li>indexName: Nombre de la empresa a la que pertenecen las acciones.</li>
-        <li>price: Precio medio de la transacción en función de lo que ha valido y lo que vale ahora. El precio real se calcula en base al precio de las acciones en el momento (usando la API).</li>
+        <li><b>ID</b></li>
+        <li><b>member:</b> Indica qué usuario dentro de qué sala ha realizado la transacción (clase Member).</li>
+        <li><b>purchaseDate:</b> Indica la fecha en la que se realizó la transacción.</li>
+        <li><b>isActive:</b> Indica si la transacción se encuentra en un estado activo o no.</li>
+        <li><b>quantity:</b> Indica el número de acciones que se han adquirido.</li>
+        <li><b>indexName:</b> Nombre de la empresa a la que pertenecen las acciones.</li>
+        <li><b>price:</b> Precio medio de la transacción en función de lo que ha valido y lo que vale ahora. El precio
+            real se calcula en base al precio de las acciones en el momento (usando la API).</li>
     </ul>
 
-    <h2>Conversation</h2>
+    <h3>Conversation</h3>
+
     <p>Representa una conversación entre dos usuarios.</p>
     <ul>
-        <li>ID</li>
-        <li>user1 y user2: Usuarios dentro de la conversación (clase User).</li>
-        <li>messageList: Lista de mensajes dentro de la conversación (clase Message).</li>
+        <li><b>ID</b></li>
+        <li><b>user1 y user2:</b> Usuarios dentro de la conversación (clase User).</li>
+        <li><b>messageList:</b> Lista de mensajes dentro de la conversación (clase Message).</li>
     </ul>
 
-    <h2>Message</h2>
+    <h3>Message</h3>
+
     <p>Representa un mensaje enviado desde un usuario a otro dentro de una conversación.</p>
     <ul>
-        <li>ID</li>
-        <li>conver: Conversación a la que pertenece el mensaje (clase Conversation).</li>
-        <li>sender: Usuario que envía el mensaje (sólo puede ser conversation.user1 o conversation.user2)(clase User).</li>
-        <li>text: Texto enviado.</li>
-        <li>date: Fecha en la que el mensaje ha sido enviado.</li>
+        <li><b>ID</b></li>
+        <li><b>conver:</b> Conversación a la que pertenece el mensaje (clase Conversation).</li>
+        <li><b>sender:</b> Usuario que envía el mensaje (sólo puede ser conversation.user1 o conversation.user2; clase
+            User).</li>
+        <li><b>text:</b> Texto enviado.</li>
+        <li><b>date:</b> Fecha en la que el mensaje ha sido enviado.</li>
     </ul>
+
 </body>
 </html>
