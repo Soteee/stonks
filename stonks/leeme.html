@@ -5,8 +5,8 @@
     <title>Léeme</title>
 </head>
 <body>
-
-    <h1>Vistas</h1>
+    <h1>Entrega vistas</h1>
+    <h2>Vistas</h2>
 
     <ul>
         <li><a href="localhost:8080">index.html</a></li>
@@ -16,7 +16,7 @@
         <li><a href="localhost:8080/social">social.html</a></li>
     </ul>
 
-    <h1>Licencias</h1>
+    <h2>Licencias</h2>
 
     <ul>
         <li>Logo: <a href="https://www.freelogodesign.org/preview?lang=es&name=Stonks%20EST%202012&logo=e6fe77e5-b974-4cd8-87eb-8983d0e6de16">https://www.freelogodesign.org/preview?lang=es&name=Stonks%20EST%202012&logo=e6fe77e5-b974-4cd8-87eb-8983d0e6de16</a>
@@ -25,6 +25,34 @@
         <li>Imagen de muestra de bolsa: <a href="https://media.warriortrading.com/2019/08/shutterstock_775889491.jpg">https://media.warriortrading.com/2019/08/shutterstock_775889491.jpg</a>
         <br>Licencia Creative Commons</li>
     </ul>
+
+    <h1>Entrega modelado</h1>
+    <p>Todas las entidades estan etiquetadas con @Entity y sus ids son únicas generadas secuencialmente</p>
+    <br>
+    <h2>User</h2>
+    <p>User tiene como atributo el nombre de usuario que no puede ser nulo, y el nombreReal puede ser nulo o repetido</p>
+    <h2>Rooms</h2>
+    
+    <ul>
+        <li>ID</li>
+        <li>name, que no puede ser nulo</li>
+        <li>isPublic, indica si la sala es pública</li>
+        <li>weeklyCash, indica la cantidad de dinero que se añade a los usuarios al final de la semana por si se han quedado a 0 para que sigan jugando, si no se quiere se pone a 0</name>
+        <li>maxUsers, máximo de participantes en la sala</li>
+        <li>startBalance</li>
+        <li>cash2win, balance ncesario por un usuario para ganar en la sala</li>
+        <li>createDate</li>
+        <li>expirationDate, fecha de expiracion de la sala, el que más balance tenga cuando sea esa fecha gana, o el que llege primero al balance cash2win, lo que pase antes</li>
+    </ul>
+
+    <h2>Member</h2>
+        <li>ID</li>
+
+    <h2>Positions</h2>
+
+    <h2>Messages</h2>
+
+
 
 </body>
 </html>

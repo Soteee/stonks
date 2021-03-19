@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -16,16 +17,19 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne
     private User user;
 
-    @ManyToOne(targetEntity = Room.class)
+    @ManyToOne
     private Room room;
 
-//    private LocalDateTime joinDate;
-//    private double balance;
+    @NotNull
+    private LocalDateTime joinDate; // fecha en la que el usuario se unió a la sala
+
+    private double balance; // dinero que tiene el usuario en la sala
 
     @OneToMany
-    private List<Position> positionList = new ArrayList<>();
+    @JoinColumn (name = "position_id")
+    private List<Position> positionList = new ArrayList<>(); // lista de posiciones
     
 }
