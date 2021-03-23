@@ -36,7 +36,7 @@ _Buy, sell and have fun with your friends to get STONKS!_
 
 ### Esquema entidad/relación de la BD
 
-![Esquema entidad/relación de la BD](/stonks/img/esquema_bd.png)
+![Esquema entidad/relación de la BD](/img/esquema_bd.png)
 
 Todas las entidades estan etiquetadas con @Entity y sus ids son únicas generadas secuencialmente
 
