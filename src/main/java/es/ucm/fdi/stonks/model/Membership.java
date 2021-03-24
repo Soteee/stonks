@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Member {
+public class Membership {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +23,15 @@ public class Member {
     @ManyToOne
     private Room room;
 
+    /** fecha en la que el usuario se unió a la sala */
     @NotNull
-    private LocalDateTime joinDate; // fecha en la que el usuario se unió a la sala
+    private LocalDateTime joinDate; 
 
-    private double balance; // dinero que tiene el usuario en la sala
+    /** dinero que tiene el usuario en la sala */
+    private double balance;
 
     @OneToMany
     @JoinColumn (name = "position_id")
-    private List<Position> positionList = new ArrayList<>(); // lista de posiciones
-    
+    private List<Position> positionList = new ArrayList<>(); // lista de posiciones   
 }
+

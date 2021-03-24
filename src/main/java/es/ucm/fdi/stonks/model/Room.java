@@ -9,6 +9,11 @@ import javax.validation.constraints.Size;
 
 import lombok.Data;
 
+/**
+ * Una sala, en la cual un grupo de usuarios apuesta a la bolsa. 
+ * Cada sala está restringida a sus usuarios y a un mercado concreto.
+ */
+
 @Entity
 @Data
 public class Room {
@@ -38,6 +43,6 @@ public class Room {
 
    @OneToMany
    @JoinColumn(name = "room_id")
-   private List<Member> memberList; // lista de relaciones usuario-sala
+   private List<Membership> memberList; // lista de relaciones usuario-sala
 
 }
