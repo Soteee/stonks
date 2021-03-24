@@ -8,6 +8,9 @@ import javax.validation.constraints.Size;
 
 import lombok.Data;
 
+/**
+ * Una apuesta de N acciones - hecha por un usuario de una sala concreta
+ */
 @Entity
 @Data
 public class Position {
@@ -17,7 +20,7 @@ public class Position {
     private long id;
 
     @ManyToOne
-    private Member member;
+    private Membership member;
 
     @NotNull
     private LocalDateTime purchaseDate; // fecha de compra
