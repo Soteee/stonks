@@ -3,22 +3,6 @@
 -- 		application-default ó application-externaldb en modo 'create'
 --
 
--- Usuario de ejemplo con username = b y contraseña = aa  
-INSERT INTO user(id,enabled,username,password,roles,first_name,last_name) VALUES (
-	1, 1, 'a', 
-	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
-	'USER,ADMIN',
-	'Abundio', 'Ejémplez'
-);
-
--- Otro usuario de ejemplo con username = b y contraseña = aa  
-INSERT INTO user(id,enabled,username,password,roles,first_name,last_name) VALUES (
-	2, 1, 'b', 
-	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
-	'USER',
-	'Berta', 'Muéstrez'
-);
-
 -- Unos pocos auto-mensajes de prueba
 INSERT INTO MESSAGE VALUES(1,NULL,'2020-03-23 10:48:11.074000','probando 1',1,1);
 INSERT INTO MESSAGE VALUES(2,NULL,'2020-03-23 10:48:15.149000','probando 2',1,1);
@@ -27,3 +11,47 @@ INSERT INTO MESSAGE VALUES(4,NULL,'2020-03-23 10:48:20.971000','probando 4',1,1)
 INSERT INTO MESSAGE VALUES(5,NULL,'2020-03-23 10:48:22.926000','probando 5',1,1);
 
 
+-- Usuarios de prueba (todas las contraseñas son "aa")
+INSERT INTO user(id,enabled,username,password,roles,first_name,last_name) VALUES (
+	1, 1, 'admin', 
+	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
+	'USER,ADMIN',
+	'Admi', 'Nistrador'
+);
+INSERT INTO user(id,enabled,username,password,roles,first_name,last_name) VALUES (
+	2, 1, 'juan', 
+	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
+	'USER',
+	'Juan', 'Pérez'
+);
+INSERT INTO user(id,enabled,username,password,roles,first_name,last_name) VALUES (
+	3, 1, 'bob', 
+	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
+	'USER',
+	'Bob', 'Smith'
+);
+INSERT INTO user(id,enabled,username,password,roles,first_name,last_name) VALUES (
+	4, 1, 'alice', 
+	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
+	'USER',
+	'Alice', 'Peralta'
+);
+INSERT INTO user(id,enabled,username,password,roles,first_name,last_name) VALUES (
+	5, 1, 'jhon', 
+	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
+	'USER',
+	'Jhon', 'Doe'
+);
+
+
+-- Salas de prueba
+INSERT INTO room(id, name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (1, 'Andorra', TRUE, 1000, 10, 3000, 100000, 2);
+INSERT INTO room(id, name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (2, 'Me encanta pagar impuestos', TRUE, 1000, 10, 3000, 100000, 4);
+
+-- Memberships de prueba
+INSERT INTO membership VALUES (1, 10000, NULL, 1, 1);
+INSERT INTO membership VALUES (2, 20000, NULL, 1, 2);
+INSERT INTO membership VALUES (3, 5000, NULL, 1, 3);
+INSERT INTO membership VALUES (4, 10000, NULL, 2, 4);
+INSERT INTO membership VALUES (5, 40000, NULL, 2, 5);
+INSERT INTO membership VALUES (6, 8000, NULL, 2, 1);

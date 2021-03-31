@@ -28,8 +28,7 @@ import lombok.AllArgsConstructor;
  * Users can log in and send each other messages.
  *
  * @author mfreire
- */
-/**
+ * 
  * An authorized user of the system.
  */
 @Entity
@@ -42,7 +41,7 @@ import lombok.AllArgsConstructor;
         @NamedQuery(name="User.hasUsername",
                 query="SELECT COUNT(u) "
                         + "FROM User u "
-                        + "WHERE u.username = :username")
+                        + "WHERE u.username = :username")	
 })
 public class User implements Transferable<User.Transfer> {
 
@@ -52,8 +51,7 @@ public class User implements Transferable<User.Transfer> {
 	public enum Role {
 		USER,			// used for logged-in, non-priviledged users
 		ADMIN,			// used for maximum priviledged users
-		
-		MODERATOR,		// remove or add roles as needed
+		MODERATOR		// remove or add roles as needed
 	}
 	
 	// do not change these fields

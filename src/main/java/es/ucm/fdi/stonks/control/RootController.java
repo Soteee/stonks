@@ -14,6 +14,8 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
 @Controller
 public class RootController {
 
@@ -22,8 +24,6 @@ public class RootController {
     @Autowired
     private EntityManager entityManager;
 
-    public static final String ROOMS = "rooms";
-    public static final String USERS = "users";
     public static final String _MENU = "_menu";
     public static final String MENU_CONTENT = "menu_content";
     public static final String ROOM_CONTENT = "room_content";
@@ -38,18 +38,7 @@ public class RootController {
         "Contacto"
 
     };
-    String[] users = {
-        "John Doe", 
-        "Jane Doe",
-        "Alice",
-        "Bob"
-    };
-    String[] rooms = {
-        "Viva Hacienda :D",
-        "Me gusta pagar impuestos",
-        "Las carreteras de Alexelcapo",
-        "A Andorra hemos de ir"
-    };
+
     String[] featuredRooms = {
         "Cryptoroom",
         "GameStop strikes back",
@@ -59,28 +48,31 @@ public class RootController {
     @Transactional
     @GetMapping("/")
     public String index(Model model) {
-        String[] topUsers = {users[0], users[1]};
-        String[] topRooms = {rooms[0], rooms[1]};
-        User user = entityManager.find(User.class, 1L);
+        /*
 
-        log.info("El primer usuario es {}", user);
+        Estas queries no funcionan por jpa pero sí directamente en la aplicación web de h2.
+        Las dejo aquí por si alguien se atreve.
+        Son para sacar los usuarios y salas con más dinero.
 
-        Room room = new Room();
-        Membership member = new Membership();
+        List<String> topUsers = entityManager.
+            createQuery("SELECT User.username FROM Membership "
+                        + "INNER JOIN User ON Membership.user_id = User.id "
+                        + "GROUP BY user_id "
+                        + "ORDER BY sum(balance) DESC")
+                            .getResultList();
+        List<String> topRooms = entityManager.
+            createQuery("SELECT Room.name  FROM Membership "
+                        + "INNER JOIN Room ON Membership.room_id = Room.id "
+                        + "GROUP BY room_id "
+                        + "ORDER BY sum(balance) DESC")
+                            .getResultList();
+        */
+        List<String> topUsers = entityManager.createQuery("SELECT username FROM User").getResultList();
+        List<String> topRooms = entityManager.createQuery("SELECT name FROM Room").getResultList();
+
 
         model.addAttribute("topUsers", topUsers);
         model.addAttribute("topRooms", topRooms);
-
-        room.setName("Salita");
-        member.setRoom(room);
-        member.setUser(user);
-
-      
-        entityManager.persist(user);
-        entityManager.persist(room);
-        entityManager.persist(member);
-
-        entityManager.flush();
 
         return "index";
     }
@@ -92,17 +84,22 @@ public class RootController {
     
     @GetMapping("/admin")   // admin panel
     public String admin(Model model) {
-        model.addAttribute(USERS, users);
-        model.addAttribute(ROOMS, rooms);
+        List<String> users = entityManager.createQuery("SELECT username FROM User").getResultList();
+        List<String> rooms = entityManager.createQuery("SELECT name FROM Room").getResultList();
+
+        model.addAttribute("users", users);
+        model.addAttribute("rooms", rooms);
         return "admin";
     }
 
     @GetMapping("/rooms")   // lista de salas
     public String rooms(Model model) {
+        List<String> users = entityManager.createQuery("select username from User").getResultList();
+        List<String> rooms = entityManager.createQuery("SELECT name FROM Room").getResultList();
 
         model.addAttribute(MENU_CONTENT, _menu);
-        model.addAttribute(ROOM_CONTENT, rooms);
-        model.addAttribute(USERS, users);
+        model.addAttribute("rooms", rooms);
+        model.addAttribute("users", users);
         model.addAttribute(FEATURED_ROOMS, featuredRooms);
 
         return "rooms";
@@ -111,9 +108,13 @@ public class RootController {
 
     @GetMapping("/r") // /s/idsala sala por dentro.
     public String room(Model model) {
+        List<String> users = entityManager.createQuery("select username from User").getResultList();
+        List<String> rooms = entityManager.createQuery("SELECT name FROM Room").getResultList();
+
         model.addAttribute(MENU_CONTENT,_menu);
-        model.addAttribute(ROOM_CONTENT,rooms);
-        model.addAttribute(USERS, users);
+        model.addAttribute("rooms",rooms);
+        model.addAttribute("users", users);
+
         return "r";
     }
     

@@ -5,5 +5,5 @@ package es.ucm.fdi.stonks.model;
  */
 public class Valor {
    private Simbolo simbolo;
-   private LocalDate fecha; 
+   //private LocalDate fecha; 
 }
