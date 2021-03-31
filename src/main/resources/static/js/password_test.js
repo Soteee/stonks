@@ -63,7 +63,18 @@ function seguridad_clave(clave) {
     return seguridad
 }
 
+function modificar(seguridad) {
+    document.getElementById("porcentajeBarra").style.width = seguridad + "%";
+    // Rojo
+    if (seguridad <= 30) document.getElementById("porcentajeBarra").style.backgroundColor = "#ff0000";
+    // Amarillo
+    else if (seguridad <= 60) document.getElementById("porcentajeBarra").style.backgroundColor = "#ffff00";
+    // Verde
+    else document.getElementById("porcentajeBarra").style.backgroundColor = "#00ff00";
+}
+
 function muestra_seguridad_clave(clave, formulario) {
     seguridad = seguridad_clave(clave);
     formulario.seguridad.value = seguridad + "%";
+    modificar(seguridad);
 }
