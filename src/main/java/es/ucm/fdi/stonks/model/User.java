@@ -72,6 +72,7 @@ public class User implements Transferable<User.Transfer> {
 	private byte enabled;
 
 	// application-specific fields
+	private String name;
 	private String firstName;
 	private String lastName;
 

@@ -28,6 +28,8 @@ public class RootController {
     public static final String MENU_CONTENT = "menu_content";
     public static final String ROOM_CONTENT = "room_content";
     public static final String FEATURED_ROOMS = "featured_rooms";
+    public static final String LOG_IN = "logIn";
+
     String [] _menu = {
         "Ayuda",
         "Salas",
@@ -118,6 +120,16 @@ public class RootController {
     @GetMapping("/social")
     public String social(Model model) {
         return "social";
+    }
+
+    @GetMapping("/logIn")
+    public String logIn(Model model) {
+        return "logIn";
+    }
+
+    @GetMapping("/register")
+    public String register(Model model) {
+        return "register";
     }
     /*
     @GetMapping("/u/{id}") // /user/uid

@@ -1,0 +1,90 @@
+/* body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: #343434;
+} */
+
+.LogInBox {
+    width: 300px;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    text-align: center;
+    border-radius: 24px;
+}
+
+.LogInBox h1 {
+    color: black;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.LogInBox input[type="text"],
+.LogInBox input[type="password"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #0081AF;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    color: black;
+    border-radius: 24px;
+    transition: 0.25s;
+}
+
+.LogInBox input[type="text"]:focus,
+.LogInBox input[type="password"]:focus {
+    width: 280px;
+    border-color: blueviolet;
+}
+
+.LogInBox input[type="submit"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid blueviolet;
+    padding: 14px 10px;
+    outline: none;
+    color: black;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+.LogInBox input[type="submit"]:hover {
+    background: blueviolet;
+}
+
+.LogInBox #CrearCuenta {
+    color: black;
+}
+
+.barra {
+    height: 6px;
+    position: relative;
+    background: white;
+    border-color: black;
+    border-width: 1px;
+    padding: 8px;
+}
+
+.barra>span {
+    display: block;
+    height: 100%;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background-color: #22AA11;
+    position: relative;
+    overflow: hidden;
+}

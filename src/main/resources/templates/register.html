@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/logIn.css}" />
+    <!-- ERROR 404 NO ENCUENTRA EL .JS, DE MOMENTO DEJO EL SCRIPT AQUI QUE YA ESTOY CANSADO DE PROBAR COSAS-->
+    <!--<script type="text/javascript" src="../static/js/password_test.js"></script>-->
+    <script>
+        var numeros = "0123456789";
+        var letras = "abcdefghyjklmnñopqrstuvwxyz";
+        var letras_mayusculas = "ABCDEFGHYJKLMNÑOPQRSTUVWXYZ";
+
+        function tiene_numeros(texto) {
+            for (i = 0; i < texto.length; i++) {
+                if (numeros.indexOf(texto.charAt(i), 0) != -1) {
+                    return 1;
+                }
+            }
+            return 0;
+        }
+
+        function tiene_letras(texto) {
+            texto = texto.toLowerCase();
+            for (i = 0; i < texto.length; i++) {
+                if (letras.indexOf(texto.charAt(i), 0) != -1) {
+                    return 1;
+                }
+            }
+            return 0;
+        }
+
+        function tiene_minusculas(texto) {
+            for (i = 0; i < texto.length; i++) {
+                if (letras.indexOf(texto.charAt(i), 0) != -1) {
+                    return 1;
+                }
+            }
+            return 0;
+        }
+
+        function tiene_mayusculas(texto) {
+            for (i = 0; i < texto.length; i++) {
+                if (letras_mayusculas.indexOf(texto.charAt(i), 0) != -1) {
+                    return 1;
+                }
+            }
+            return 0;
+        }
+
+        function seguridad_clave(clave) {
+            var seguridad = 0;
+            if (clave.length != 0) {
+                if (tiene_numeros(clave) && tiene_letras(clave)) {
+                    seguridad += 30;
+                }
+                if (tiene_minusculas(clave) && tiene_mayusculas(clave)) {
+                    seguridad += 30;
+                }
+                if (clave.length >= 4 && clave.length <= 5) {
+                    seguridad += 10;
+                } else {
+                    if (clave.length >= 6 && clave.length <= 8) {
+                        seguridad += 30;
+                    } else {
+                        if (clave.length > 8) {
+                            seguridad += 40;
+                        }
+                    }
+                }
+            }
+            return seguridad
+        }
+
+        function modificar(seguridad) {
+            document.getElementById("porcentajeBarra").style.width = seguridad + "%";
+            // Rojo
+            if (seguridad <= 30) document.getElementById("porcentajeBarra").style.backgroundColor = "#ff0000";
+            // Amarillo
+            else if (seguridad <= 60) document.getElementById("porcentajeBarra").style.backgroundColor = "#ffff00";
+            // Verde
+            else document.getElementById("porcentajeBarra").style.backgroundColor = "#00ff00";
+        }
+
+        function muestra_seguridad_clave(clave, formulario) {
+            seguridad = seguridad_clave(clave);
+            formulario.seguridad.value = seguridad + "%";
+            modificar(seguridad);
+        }
+    </script>
+    <title>Registrarse</title>
+</head>
+
+<body>
+    <!-- BARRA SUPERIOR -->
+    <nav class="topnavbar" th:replace="fragments/menu.html :: topbar">X</nav>
+
+    <!-- CAJA DE REGISTRARSE -->
+    <form class="LogInBox">
+        <h1>CREAR UNA CUENTA</h1>
+        <input type="text" name="" placeholder="UserName">
+        <input type="text" name="" placeholder="Correo electrónico">
+        <input type="text" name="" placeholder="Nombre">
+        <input type="text" name="" placeholder="Primer apellido">
+        <input type="text" name="" placeholder="Segundo apellido">
+
+        <!-- Se comprueba el nivel de seguridad de la primera, y la segunda tiene que ser igual -->
+        <input type="password" name="clave1" maxlength="15" placeholder="Password" onkeyup="muestra_seguridad_clave(this.value, this.form)">
+        <input type="password" name="clave2" maxlength="15" placeholder="Repit password">
+        <div class="barra">
+            <span id="porcentajeBarra" style="width: 0%"></span>
+        </div>
+
+        <!-- El numero habrá que quitarlo pero de momento lo dejo ahí para debug -->
+        <input name="seguridad" type="text" onfocus="blur() ">
+
+        <input type="submit" placeholder="Check" value="Crear cuenta">
+    </form>
+</body>
+
+</html>

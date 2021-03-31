@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/logIn.css}" />
     <title>Stonks</title>
 </head>
+
 <body>
     <nav class="topnavbar" th:replace="fragments/menu.html :: topbar">X</nav>
     <div class="visualizer">
+
+        <a href="logIn">INICIAR SESION</a>
+
         <h2>Top Jugadores</h2>
         <ul th:each="user: ${topUsers}">
             <li th:text="${user}">Alexelcapo</li>
@@ -21,4 +27,5 @@
         <button onclick="window.location.href='/rooms'">Buscar sala</button>
     </div>
 </body>
+
 </html>
