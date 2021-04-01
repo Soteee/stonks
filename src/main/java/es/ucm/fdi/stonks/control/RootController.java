@@ -69,11 +69,6 @@ public class RootController {
         return "index";
     }
 
-    @GetMapping("/menu")
-    public String menu(Model model) {
-        return "menu";
-    }
-    
     @GetMapping("/admin")   // admin panel
     public String admin(Model model) {
         List<?> users = entityManager.createQuery("SELECT username FROM User").getResultList();
@@ -123,6 +118,28 @@ public class RootController {
     @GetMapping("/register")
     public String getRegister(Model model) {
         return "register";
+    }
+
+    @PostMapping("/register")
+    @Transactional
+    public String postRegister(
+                        @RequestParam String username, 
+                        @RequestParam String mail,
+                        @RequestParam String name,
+                        @RequestParam String firstName,
+                        @RequestParam String lastName,
+                        @RequestParam String password,
+                        Model model){
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setMail(mail);
+        newUser.setName(name);
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        newUser.setPassword(password);
+        entityManager.persist(newUser);
+
+        return "logIn";
     }
 
     /*
