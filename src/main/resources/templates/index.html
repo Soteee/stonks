@@ -15,14 +15,13 @@
         <a href="logIn">INICIAR SESION</a>
 
         <h2>Top Jugadores</h2>
-        <ul th:each="user: ${topUsers}">
+        <ol th:each="user: ${topUsers}">
             <li th:text="${user}">No se han encontrado usuarios</li>
-        </ul>
+        </ol>
         <h2>Top Salas</h2>
-        <ul th:each="room: ${topRooms}">
+        <ol th:each="room: ${topRooms}">
             <li th:text="${room}">No se han encontrado salas</li>
-            <img width=300px th:attr="src=@{/images/stockexample.jpg}">
-        </ul>
+        </ol>
         <button onclick="window.location.href='/r'">Crear sala</button>
         <button onclick="window.location.href='/rooms'">Buscar sala</button>
     </div>

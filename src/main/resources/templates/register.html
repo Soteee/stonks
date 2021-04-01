@@ -97,17 +97,17 @@
     <nav class="topnavbar" th:replace="fragments/menu.html :: topbar">X</nav>
 
     <!-- CAJA DE REGISTRARSE -->
-    <form class="LogInBox">
+    <form class="LogInBox" method="POST">
         <h1>CREAR UNA CUENTA</h1>
-        <input type="text" name="" placeholder="UserName">
-        <input type="text" name="" placeholder="Correo electrónico">
-        <input type="text" name="" placeholder="Nombre">
-        <input type="text" name="" placeholder="Primer apellido">
-        <input type="text" name="" placeholder="Segundo apellido">
+        <input type="text" name="username" placeholder="Nombre de usuario">
+        <input type="mail" name="mail" placeholder="Correo electrónico">
+        <input type="text" name="name" placeholder="Nombre">
+        <input type="text" name="firstName" placeholder="Primer apellido">
+        <input type="text" name="lastName" placeholder="Segundo apellido">
 
         <!-- Se comprueba el nivel de seguridad de la primera, y la segunda tiene que ser igual -->
-        <input type="password" name="clave1" maxlength="15" placeholder="Password" onkeyup="muestra_seguridad_clave(this.value, this.form)">
-        <input type="password" name="clave2" maxlength="15" placeholder="Repit password">
+        <input type="password" name="password" maxlength="15" placeholder="Contraseña" onkeyup="muestra_seguridad_clave(this.value, this.form)">
+        <input type="password" name="repitedPassword" maxlength="15" placeholder="Repite la contraseña">
         <div class="barra">
             <span id="porcentajeBarra" style="width: 0%"></span>
         </div>

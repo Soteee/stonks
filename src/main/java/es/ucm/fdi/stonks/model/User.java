@@ -73,6 +73,7 @@ public class User implements Transferable<User.Transfer> {
 	private String name;
 	private String firstName;
 	private String lastName;
+	private String mail;
 
 	@OneToMany
 	@JoinColumn(name = "sender_id")
@@ -117,4 +118,6 @@ public class User implements Transferable<User.Transfer> {
 	public String toString() {
 		return toTransfer().toString();
 	}
+
+	
 }

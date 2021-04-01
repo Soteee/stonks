@@ -24,6 +24,7 @@
 }
 
 .LogInBox input[type="text"],
+.LogInBox input[type="mail"],
 .LogInBox input[type="password"] {
     border: 0;
     background: none;
@@ -40,6 +41,7 @@
 }
 
 .LogInBox input[type="text"]:focus,
+.LogInBox input[type="mail"]:focus,
 .LogInBox input[type="password"]:focus {
     width: 280px;
     border-color: blueviolet;
