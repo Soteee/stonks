@@ -53,13 +53,13 @@ public class RootController {
     public String index(Model model) {
         // Top 5 users y top 3 salas
         List<?> topUsers = entityManager.
-            createQuery("SELECT u.username FROM Membership m "
+            createQuery("SELECT u FROM Membership m "
                         + "INNER JOIN User u ON m.user = u.id "
                         + "GROUP BY m.user "
                         + "ORDER BY sum(m.balance) DESC")
                         .setMaxResults(5).getResultList();
         List<?> topRooms = entityManager.
-            createQuery("SELECT r.name  FROM Membership m "
+            createQuery("SELECT r  FROM Membership m "
                         + "INNER JOIN Room r ON m.room = r.id "
                         + "GROUP BY m.room "
                         + "ORDER BY sum(m.balance) DESC")
@@ -73,8 +73,8 @@ public class RootController {
 
     @GetMapping("/admin")   // admin panel
     public String admin(Model model) {
-        List<?> users = entityManager.createQuery("SELECT username FROM User").getResultList();
-        List<?> rooms = entityManager.createQuery("SELECT name FROM Room").getResultList();
+        List<?> users = entityManager.createQuery("SELECT u FROM User u").getResultList();
+        List<?> rooms = entityManager.createQuery("SELECT r FROM Room r").getResultList();
 
         model.addAttribute("users", users);
         model.addAttribute("rooms", rooms);
@@ -83,13 +83,19 @@ public class RootController {
 
     @GetMapping("/rooms")   // lista de salas
     public String rooms(Model model) {
-        List<?> users = entityManager.createQuery("select username from User").getResultList();
-        List<?> rooms = entityManager.createQuery("SELECT name FROM Room").getResultList();
+        List<?> users = entityManager.createQuery("select u from User u").getResultList();
+        List<?> rooms = entityManager.createQuery("SELECT r FROM Room r").getResultList();
+        List<?> topRooms = entityManager.
+            createQuery("SELECT r  FROM Membership m "
+                        + "INNER JOIN Room r ON m.room = r.id "
+                        + "GROUP BY m.room "
+                        + "ORDER BY sum(m.balance) DESC")
+                        .setMaxResults(3).getResultList();
 
         model.addAttribute(MENU_CONTENT, _menu);
         model.addAttribute("rooms", rooms);
         model.addAttribute("users", users);
-        model.addAttribute(FEATURED_ROOMS, featuredRooms);
+        model.addAttribute("topRooms", topRooms);
 
         return "rooms";
 
@@ -99,7 +105,7 @@ public class RootController {
     public String room(@PathVariable long id, Model model) {
         model.addAttribute(MENU_CONTENT,_menu);
 
-        List<?> rooms = entityManager.createQuery("SELECT name FROM Room").getResultList();
+        List<?> rooms = entityManager.createQuery("SELECT r FROM Room r").getResultList();
         model.addAttribute("rooms",rooms);
 
         Room room = entityManager.find(Room.class, id);

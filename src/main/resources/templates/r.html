@@ -12,15 +12,15 @@
 
     <div class="leftnavbar" id=left_navbar>
         <p>Mis salas</p>
-        <ul th:each="room: ${rooms}">
-            <li><button class="btnR" th:text="${room}">X</button></li>
+        <ul>
+            <li th:each="room: ${rooms}"><a th:text="${room.name}"></a></li>
         </ul>
     </div>
 
     <div class="rightnavbar" id=right_navbar>
         <p>Usuarios en la sala</p>
-        <ul th:each="user_inroom: ${users_inroom}">
-            <li th:text="${user_inroom}">No se han encontrado usuarios en esta sala</li>
+        <ul>
+            <li th:each="user: ${users_inroom}" th:text="${user.username}">No se han encontrado usuarios en esta sala</li>
         </ul>
     </div>
 

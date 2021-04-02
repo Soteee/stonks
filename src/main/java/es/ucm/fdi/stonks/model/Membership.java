@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 @NamedQueries({
     @NamedQuery(name="userInRoom",
-            query="SELECT u.username FROM Membership m "
+            query="SELECT u FROM Membership m "
                     + "INNER JOIN User u ON m.user = u.id "
                     + "WHERE m.room = :room_id")
 })
