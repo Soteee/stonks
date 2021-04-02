@@ -9,15 +9,15 @@
 
     <div class="topnavbar" id=top_navbar >
         <span><img th:src="@{/images/logo200x200.png}"/></span>
-        <ul th:each="menu_item: ${menu_content}">
-            <button class="btnMenu" th:text="${menu_item}">X</button>
+        <ul>
+            <button class="btnMenu" th:each="menu_item: ${menu_content}" th:text="${menu_item}">X</button>
         </ul>
     </div>
     <div class="leftnavbar" id=left_navbar>
         <p>Mis salas</p>
         <ul>
-            <li th:each="room_item: ${room_content}">
-                <button class="btnR" th:text="${room_item}">X</button>
+            <li>
+                <button class="btnR" th:each="room: ${rooms}" th:text="${room}">X</button>
             </li>
         </ul>
     </div>

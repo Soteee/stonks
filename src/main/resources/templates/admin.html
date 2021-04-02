@@ -27,8 +27,8 @@
                 <option id="4">Top</option>
             </select>
         </form>
-        <ul th:each="user: ${users}">
-            <li th:text="${user}">No se han encontrado usuarios</li>
+        <ul>
+            <li th:each="user: ${users}" th:text="${user}">No se han encontrado usuarios</li>
         </ul>
     </div>
     <div id="rooms">
@@ -42,8 +42,8 @@
                 <option id="4">Top</option>
             </select>
         </form>
-        <ul th:each="room: ${rooms}">
-            <li th:text="${room}">No se han encontrado salas</li>
+        <ul>
+            <li th:each="room: ${rooms}" th:text="${room}">No se han encontrado salas</li>
         </ul>
     </div>
 </body>

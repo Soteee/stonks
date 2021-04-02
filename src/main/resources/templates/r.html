@@ -9,22 +9,18 @@
 <body>
 
     <nav class="topnavbar" th:replace="fragments/menu.html :: topbar">X</nav>
+
     <div class="leftnavbar" id=left_navbar>
         <p>Mis salas</p>
-        <ul>
-
-            <li th:each="room_item: ${room_content}">
-                <button class="btnR" th:text="${room_item}">X</button>
-            </li>
+        <ul th:each="room: ${rooms}">
+            <li><button class="btnR" th:text="${room}">X</button></li>
         </ul>
     </div>
+
     <div class="rightnavbar" id=right_navbar>
         <p>Usuarios en la sala</p>
-        <ul>
-    
-            <li th:each="user_inroom: ${users}">
-                <p  th:text="${user_inroom}">X</p>
-            </li>
+        <ul th:each="user_inroom: ${users_inroom}">
+            <li th:text="${user_inroom}">No se han encontrado usuarios en esta sala</li>
         </ul>
     </div>
 

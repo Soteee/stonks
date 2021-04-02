@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -50,6 +51,7 @@ public class RootController {
     @Transactional
     @GetMapping("/")
     public String index(Model model) {
+        // Top 5 users y top 3 salas
         List<?> topUsers = entityManager.
             createQuery("SELECT u.username FROM Membership m "
                         + "INNER JOIN User u ON m.user = u.id "
@@ -93,14 +95,16 @@ public class RootController {
 
     }
 
-    @GetMapping("/r") // /s/idsala sala por dentro.
-    public String room(Model model) {
-        List<?> users = entityManager.createQuery("select username from User").getResultList();
-        List<?> rooms = entityManager.createQuery("SELECT name FROM Room").getResultList();
-
+    @GetMapping("/r/{id}") // /s/idsala sala por dentro.
+    public String room(@PathVariable long id, Model model) {
         model.addAttribute(MENU_CONTENT,_menu);
+
+        List<?> rooms = entityManager.createQuery("SELECT name FROM Room").getResultList();
         model.addAttribute("rooms",rooms);
-        model.addAttribute("users", users);
+
+        Room room = entityManager.find(Room.class, id);
+        List<?> users_inroom = entityManager.createNamedQuery("userInRoom").setParameter("room_id", room).getResultList();
+        model.addAttribute("users_inroom", users_inroom);
 
         return "r";
     }

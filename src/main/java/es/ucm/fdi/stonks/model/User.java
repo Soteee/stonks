@@ -41,7 +41,7 @@ import lombok.AllArgsConstructor;
         @NamedQuery(name="User.hasUsername",
                 query="SELECT COUNT(u) "
                         + "FROM User u "
-                        + "WHERE u.username = :username")	
+                        + "WHERE u.username = :username")
 })
 public class User implements Transferable<User.Transfer> {
 
