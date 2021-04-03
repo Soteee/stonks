@@ -3,9 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/logIn.css}" />
-    <!-- ERROR 404 NO ENCUENTRA EL .JS, DE MOMENTO DEJO EL SCRIPT AQUI QUE YA ESTOY CANSADO DE PROBAR COSAS-->
-    <!--<script type="text/javascript" src="../static/js/password_test.js"></script>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/createRoom.css}" />
     <script>
         var numeros = "0123456789";
         var letras = "abcdefghyjklmnñopqrstuvwxyz";
@@ -84,35 +83,66 @@
 
         function muestra_seguridad_clave(clave, formulario) {
             seguridad = seguridad_clave(clave);
-            formulario.seguridad.value = seguridad + "%";
+            //formulario.seguridad.value = seguridad + "%";
             modificar(seguridad);
         }
     </script>
-    <title>Registrarse</title>
+    <title>Crear Sala</title>
 </head>
 
 <body>
-    <!-- CAJA DE REGISTRARSE -->
-    <form class="LogInBox" method="POST">
-        <h1>CREAR UNA CUENTA</h1>
-        <input type="text" name="username" placeholder="Nombre de usuario">
-        <input type="mail" name="mail" placeholder="Correo electrónico">
-        <input type="text" name="name" placeholder="Nombre">
-        <input type="text" name="firstName" placeholder="Primer apellido">
-        <input type="text" name="lastName" placeholder="Segundo apellido">
+    <nav class="topnavbar" th:replace="fragments/menu.html :: topbar">X</nav>
+    <div class="visualizer">
 
-        <!-- Se comprueba el nivel de seguridad de la primera, y la segunda tiene que ser igual -->
-        <input type="password" name="password" maxlength="15" placeholder="Contraseña" onkeyup="muestra_seguridad_clave(this.value, this.form)">
-        <input type="password" name="repitedPassword" maxlength="15" placeholder="Repite la contraseña">
-        <div class="barra">
-            <span id="porcentajeBarra" style="width: 0%"></span>
-        </div>
+        <!-- CREAR UNA SALA -->
+        <form class="Formulario" method="POST">
+            <h1 class="form-text">CREAR UNA SALA</h1>
+            <!-- NOMBRE DE LA SALA -->
+            <p class="form-text">Nombre de la sala</p>
+            <input type="text" name="roomName" placeholder="Nombre de la Sala">
 
-        <!-- El numero habrá que quitarlo pero de momento lo dejo ahí para debug -->
-        <input name="seguridad" type="text" onfocus="blur() ">
+            <!-- Privacidad y contraseña -->
+            <p class="form-text">Privacidad</p>
+            <select class="likeInput">
+                <option id="1">Privada (contraseña)</option>
+                <option id="2">Pública</option>
+            </select>
+            <!-- Se comprueba el nivel de seguridad de la primera, y la segunda tiene que ser igual -->
+            <input type="password" name="password" maxlength="15" placeholder="Contraseña" onkeyup="muestra_seguridad_clave(this.value, this.form)">
+            <input type="password" name="repitedPassword" maxlength="15" placeholder="Repite la contraseña">
+            <span id="porcentajeBarra" style="width: 50%"></span>
 
-        <input type="submit" placeholder="Check" value="Crear cuenta">
-    </form>
+            <!-- Privacidad y contraseña -->
+            <p class="form-text">Número de jugadores</p>
+            <input type="number" maxlength="3" max="10" name="numPlayers" placeholder="Número de jugadores">
+
+            <!-- Dinero inicial -->
+            <p class="form-text">Cantidad de dinero inicial</p>
+            <input type="number" maxlength="7" name="startMoney" placeholder="Dinero inicial">
+
+            <!-- Dinero extra -->
+            <p class="form-text">Cantidad de dinero extra</p>
+            <select class="likeInput">
+                <option id="1">Diariamente</option>
+                <option id="2">Semanalmente</option>
+                <option id="3">Mensualmente</option>
+                <option id="4">Nunca</option>
+
+            </select>
+            <input type="number" maxlength="7" name="extraMoney" placeholder="Dinero extra">
+
+            <!-- Fecha límite -->
+            <p class="form-text">Fecha límite</p>
+            <input type="date" id="finih" name="finish" value="2021-07-22" min="2021-04-06" max="2022-04-06">
+
+            <!-- Dinero para ganar -->
+            <p class="form-text">Dinero para ganar</p>
+            <input type="checkbox">
+            <input type="number" maxlength="8" name="winMoney" placeholder="Dinero para ganar">
+            <br>
+            <input type="submit" placeholder="Check" value="Crear sala">
+        </form>
+    </div>
 </body>
 
 </html>
