@@ -33,6 +33,7 @@ public class RootController {
     public static final String FEATURED_ROOMS = "featured_rooms";
     public static final String LOG_IN = "logIn";
     public static final String CREATE_ROOM = "createRoom";
+    public static final String USER = "user";
 
     String [] _menu = {
         "Ayuda",
@@ -134,6 +135,11 @@ public class RootController {
     @GetMapping("/createRoom")
     public String createRoom(Model model) {
         return "createRoom";
+    }
+
+    @GetMapping("/user")
+    public String user(Model model) {
+        return "user";
     }
 
     @PostMapping("/register")
