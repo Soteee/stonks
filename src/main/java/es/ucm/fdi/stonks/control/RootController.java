@@ -17,6 +17,9 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -150,8 +153,7 @@ public class RootController {
                         @RequestParam String name,
                         @RequestParam String firstName,
                         @RequestParam String lastName,
-                        @RequestParam String password,
-                        Model model){
+                        @RequestParam String password) {
         User newUser = new User();
         newUser.setUsername(username);
         newUser.setMail(mail);
@@ -162,6 +164,46 @@ public class RootController {
         entityManager.persist(newUser);
 
         return "logIn";
+    }
+
+    @PostMapping("/createRoom")
+    @Transactional
+    public String postCreateRoom(
+            @RequestParam String name,
+            @RequestParam boolean isPublic,
+            @RequestParam int weeklyCash,
+            @RequestParam int maxUsers,
+            @RequestParam int startBalance,
+            @RequestParam int cash2Win,
+            @RequestParam long adminID,
+            @RequestParam LocalDate expirationDate) {
+
+        Room newRoom = new Room();
+        User admin = entityManager.find(User.class, adminID);
+        Membership adminMember = new Membership();
+        ArrayList<Membership> memberList = new ArrayList<>();
+        LocalDateTime currentDate = LocalDateTime.now();
+
+        adminMember.setUser(admin);
+        adminMember.setRoom(newRoom);
+        adminMember.setBalance(startBalance);
+        adminMember.setJoinDate(currentDate);
+
+        memberList.add(adminMember);
+
+        newRoom.setName(name);
+        newRoom.setPublic(isPublic);
+        newRoom.setWeeklyCash(weeklyCash);
+        newRoom.setMaxUsers(maxUsers);
+        newRoom.setStartBalance(startBalance);
+        newRoom.setCash2Win(cash2Win);
+        newRoom.setAdmin(admin);
+        newRoom.setCreationDate(currentDate);
+        newRoom.setExpirationDate(expirationDate);
+        newRoom.setMemberList(memberList);
+
+        return "rooms";
+
     }
 
     /*

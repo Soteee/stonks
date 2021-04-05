@@ -1,5 +1,6 @@
 package es.ucm.fdi.stonks.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class Room {
    @NotNull
    private LocalDateTime creationDate; // fecha de creación
 
-   private LocalDateTime expirationDate; // fecha de caducidad; si es NULL no tiene esta función
+   private LocalDate expirationDate; // fecha de caducidad; si es NULL no tiene esta función
 
    @ManyToOne
    private User admin; // administrador de la sala
