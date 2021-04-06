@@ -21,9 +21,7 @@
     </div>
 
     <div class="visualizer">
-
         <h1>Salas</h1>
-
         <h2>Buscador de salas</h2>
         <form>
             <input type="text" name="roomSearch"><input type="submit" value="Buscar">
@@ -35,13 +33,11 @@
         </form>
 
         <h2>Top salas</h2>
-
         <ol>
             <li th:each="room: ${topRooms}" th:text="${room.name}"></li>
         </ol>
 
         <button>Crear sala</button>
-
     </div>
     
 </body>
