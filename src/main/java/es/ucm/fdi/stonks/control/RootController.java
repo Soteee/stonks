@@ -114,6 +114,8 @@ public class RootController {
         model.addAttribute("rooms",rooms);
 
         Room room = entityManager.find(Room.class, id);
+        model.addAttribute("room", room);
+
         List<?> users_inroom = entityManager.createNamedQuery("userInRoom").setParameter("room_id", room).getResultList();
         model.addAttribute("users_inroom", users_inroom);
 
@@ -206,11 +208,14 @@ public class RootController {
 
     }
 
-    /*
     @GetMapping("/u/{id}") // /user/uid
-    public String user(@PathVariable int id, Model model) { // comentar esto <-
-        
-        return "admin";
+    public String user(@PathVariable long id, Model model) {
+        model.addAttribute(MENU_CONTENT,_menu);
+
+        User user = entityManager.find(User.class, id);
+
+        model.addAttribute("user", user);
+
+        return "u";
     }
-    */
 }

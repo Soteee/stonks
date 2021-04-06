@@ -11,7 +11,7 @@
     <nav class="topnavbar" th:replace="fragments/menu.html :: topbar">X</nav>
 
     <div class="leftnavbar" id=left_navbar>
-        <p>Mis salas</p>
+        <p>Otras salas</p>
         <ul>
             <li th:each="room: ${rooms}"><a th:text="${room.name}"></a></li>
         </ul>
@@ -26,7 +26,7 @@
 
     <div class="visualizer">
         
-        <p>Market Name</p>
+        <h1 th:text="${room.name}">No market found</h1>
         <span><img th:src="@{/images/stockexample.jpg}" /></span>
         <ul>
             <li>
