@@ -163,6 +163,7 @@ public class RootController {
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
         newUser.setPassword(password);
+        newUser.setRoles("USER");
         entityManager.persist(newUser);
 
         return "logIn";

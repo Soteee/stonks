@@ -93,7 +93,7 @@
 
 <body>
     <!-- CAJA DE REGISTRARSE -->
-    <form class="LogInBox" method="POST">
+    <form class="LogInBox" method="POST" th:action="@{/register}">
         <h1>CREAR UNA CUENTA</h1>
         <input type="text" name="username" placeholder="Nombre de usuario">
         <input type="mail" name="mail" placeholder="Correo electrónico">
