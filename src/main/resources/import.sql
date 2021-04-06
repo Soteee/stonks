@@ -12,31 +12,31 @@ INSERT INTO MESSAGE VALUES(5,NULL,'2020-03-23 10:48:22.926000','probando 5',1,1)
 
 
 -- Usuarios de prueba (todas las contraseñas son "aa")
-INSERT INTO user(id,enabled,username,password,roles,first_name,last_name) VALUES (
+INSERT INTO user(id,enabled,username,password,roles,name,first_name) VALUES (
 	1, 1, 'admin', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
 	'USER,ADMIN',
 	'Admi', 'Nistrador'
 );
-INSERT INTO user(id,enabled,username,password,roles,first_name,last_name) VALUES (
+INSERT INTO user(id,enabled,username,password,roles,name,first_name) VALUES (
 	2, 1, 'juan', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
 	'USER',
 	'Juan', 'Pérez'
 );
-INSERT INTO user(id,enabled,username,password,roles,first_name,last_name) VALUES (
+INSERT INTO user(id,enabled,username,password,roles,name,first_name) VALUES (
 	3, 1, 'bob', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
 	'USER',
 	'Bob', 'Smith'
 );
-INSERT INTO user(id,enabled,username,password,roles,first_name,last_name) VALUES (
+INSERT INTO user(id,enabled,username,password,roles,name,first_name) VALUES (
 	4, 1, 'alice', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
 	'USER',
 	'Alice', 'Peralta'
 );
-INSERT INTO user(id,enabled,username,password,roles,first_name,last_name) VALUES (
+INSERT INTO user(id,enabled,username,password,roles,name,first_name) VALUES (
 	5, 1, 'jhon', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
 	'USER',
