@@ -99,7 +99,7 @@
             <h1 class="form-text">CREAR UNA SALA</h1>
             <!-- NOMBRE DE LA SALA -->
             <p class="form-text">Nombre de la sala</p>
-            <input type="text" name="roomName" placeholder="Nombre de la Sala">
+            <input type="text" name="name" placeholder="Nombre de la Sala">
 
             <!-- Privacidad y contraseña -->
             <p class="form-text">Privacidad</p>
@@ -114,11 +114,11 @@
 
             <!-- Privacidad y contraseña -->
             <p class="form-text">Número de jugadores</p>
-            <input type="number" maxlength="3" max="10" name="numPlayers" placeholder="Número de jugadores">
+            <input type="number" maxlength="3" max="10" name="maxUsers" placeholder="Número de jugadores">
 
             <!-- Dinero inicial -->
             <p class="form-text">Cantidad de dinero inicial</p>
-            <input type="number" maxlength="7" name="startMoney" placeholder="Dinero inicial">
+            <input type="number" maxlength="7" name="startBalance" placeholder="Dinero inicial">
 
             <!-- Dinero extra -->
             <p class="form-text">Cantidad de dinero extra</p>
@@ -129,16 +129,16 @@
                 <option id="4">Nunca</option>
 
             </select>
-            <input type="number" maxlength="7" name="extraMoney" placeholder="Dinero extra">
+            <input type="number" maxlength="7" name="weeklyCash" placeholder="Dinero extra">
 
             <!-- Fecha límite -->
             <p class="form-text">Fecha límite</p>
-            <input type="date" id="finih" name="finish" value="2021-07-22" min="2021-04-06" max="2022-04-06">
+            <input type="date" id="finish" name="expirationDate" value="2021-07-22" min="2021-04-06" max="2022-04-06">
 
             <!-- Dinero para ganar -->
             <p class="form-text">Dinero para ganar</p>
             <input type="checkbox">
-            <input type="number" maxlength="8" name="winMoney" placeholder="Dinero para ganar">
+            <input type="number" maxlength="8" name="cash2Win" placeholder="Dinero para ganar">
             <br>
             <input type="submit" placeholder="Check" value="Crear sala">
         </form>
