@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}"/>
+    <title>Usuarios</title>
+</head>
+<body>
+    <nav class="topnavbar" th:replace="fragments/menu.html :: topbar">X</nav>
+    <div class="visualizer">
+        <h1>Usuarios</h1>
+        <h2>Buscador de usuarios</h2>
+        <form>
+            <input type="text" name="roomSearch"><input type="submit" value="Buscar">
+        </form>
+
+        <h2>Top usuarios</h2>
+        <ol>
+            <li th:each="user: ${topUsers}" th:text="${user.name}"></li>
+        </ol>
+    </div>
+    
+</body>
+</html>

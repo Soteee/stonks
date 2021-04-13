@@ -142,9 +142,18 @@ public class RootController {
         return "createRoom";
     }
 
-    @GetMapping("/user")
+    @GetMapping("/users")
     public String user(Model model) {
-        return "user";
+        List<?> topUsers = entityManager.
+            createQuery("SELECT u FROM Membership m "
+                        + "INNER JOIN User u ON m.user = u.id "
+                        + "GROUP BY m.user "
+                        + "ORDER BY sum(m.balance) DESC")
+                        .setMaxResults(5).getResultList();
+
+        model.addAttribute("topUsers", topUsers);
+
+        return "users";
     }
 
     @PostMapping("/register")
