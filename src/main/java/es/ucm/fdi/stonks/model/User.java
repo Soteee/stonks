@@ -35,13 +35,20 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @NamedQueries({
+		@NamedQuery(name="User.all",
+				query = "SELECT u FROM User u"),
         @NamedQuery(name="User.byUsername",
                 query="SELECT u FROM User u "
                         + "WHERE u.username = :username AND u.enabled = 1"),
         @NamedQuery(name="User.hasUsername",
                 query="SELECT COUNT(u) "
                         + "FROM User u "
-                        + "WHERE u.username = :username")
+                        + "WHERE u.username = :username"),
+		@NamedQuery(name="User.top",
+				query="SELECT u FROM Membership m "
+				+ "INNER JOIN User u ON m.user = u.id "
+				+ "GROUP BY m.user "
+				+ "ORDER BY sum(m.balance) DESC")
 })
 public class User implements Transferable<User.Transfer> {
 

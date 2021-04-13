@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -38,15 +39,6 @@ public class RootController {
     public static final String CREATE_ROOM = "createRoom";
     public static final String USER = "user";
 
-    String [] _menu = {
-        "Ayuda",
-        "Salas",
-        "Perfil",
-        "Amigos",
-        "Contacto"
-
-    };
-
     String[] featuredRooms = {
         "Cryptoroom",
         "GameStop strikes back",
@@ -58,17 +50,13 @@ public class RootController {
     public String index(Model model) {
         // Top 5 users y top 3 salas
         List<?> topUsers = entityManager.
-            createQuery("SELECT u FROM Membership m "
-                        + "INNER JOIN User u ON m.user = u.id "
-                        + "GROUP BY m.user "
-                        + "ORDER BY sum(m.balance) DESC")
-                        .setMaxResults(5).getResultList();
+            createNamedQuery("User.top").
+            setMaxResults(5).
+            getResultList();
         List<?> topRooms = entityManager.
-            createQuery("SELECT r  FROM Membership m "
-                        + "INNER JOIN Room r ON m.room = r.id "
-                        + "GROUP BY m.room "
-                        + "ORDER BY sum(m.balance) DESC")
-                        .setMaxResults(3).getResultList();
+            createNamedQuery("Room.top").
+            setMaxResults(3).
+            getResultList();
 
         model.addAttribute("topUsers", topUsers);
         model.addAttribute("topRooms", topRooms);
@@ -78,8 +66,8 @@ public class RootController {
 
     @GetMapping("/admin")   // admin panel
     public String admin(Model model) {
-        List<?> users = entityManager.createQuery("SELECT u FROM User u").getResultList();
-        List<?> rooms = entityManager.createQuery("SELECT r FROM Room r").getResultList();
+        List<?> users = entityManager.createNamedQuery("User.all").getResultList();
+        List<?> rooms = entityManager.createNamedQuery("Room.all").getResultList();
 
         model.addAttribute("users", users);
         model.addAttribute("rooms", rooms);
@@ -88,16 +76,13 @@ public class RootController {
 
     @GetMapping("/rooms")   // lista de salas
     public String rooms(Model model) {
-        List<?> users = entityManager.createQuery("select u from User u").getResultList();
-        List<?> rooms = entityManager.createQuery("SELECT r FROM Room r").getResultList();
+        List<?> users = entityManager.createNamedQuery("User.all").getResultList();
+        List<?> rooms = entityManager.createNamedQuery("Room.all").getResultList();
         List<?> topRooms = entityManager.
-            createQuery("SELECT r  FROM Membership m "
-                        + "INNER JOIN Room r ON m.room = r.id "
-                        + "GROUP BY m.room "
-                        + "ORDER BY sum(m.balance) DESC")
-                        .setMaxResults(3).getResultList();
+                createNamedQuery("Room.top").
+                setMaxResults(3).
+                getResultList();
 
-        model.addAttribute(MENU_CONTENT, _menu);
         model.addAttribute("rooms", rooms);
         model.addAttribute("users", users);
         model.addAttribute("topRooms", topRooms);
@@ -108,15 +93,17 @@ public class RootController {
 
     @GetMapping("/r/{id}") // /s/idsala sala por dentro.
     public String room(@PathVariable long id, Model model) {
-        model.addAttribute(MENU_CONTENT,_menu);
-
-        List<?> rooms = entityManager.createQuery("SELECT r FROM Room r").getResultList();
+        List<?> rooms = entityManager.createNamedQuery("Room.all").getResultList();
         model.addAttribute("rooms",rooms);
 
         Room room = entityManager.find(Room.class, id);
         model.addAttribute("room", room);
 
-        List<?> users_inroom = entityManager.createNamedQuery("userInRoom").setParameter("room_id", room).getResultList();
+        List<?> users_inroom = entityManager.
+                    createNamedQuery("Membership.userInRoom").
+                    setParameter("room_id", room).
+                    getResultList();
+
         model.addAttribute("users_inroom", users_inroom);
 
         return "r";
@@ -128,32 +115,24 @@ public class RootController {
     }
 
     @GetMapping("/logIn")
-    public String logIn(Model model) {
+    public String getLogin(Model model) {
         return "logIn";
     }
+
+    @PostMapping("/logIn")
+    public String postLogin(HttpSession session,
+                            @RequestParam String username,
+                            @RequestParam String password){
+
+        // implementar el login
+
+        return "index";
+    }
+
 
     @GetMapping("/register")
     public String getRegister(Model model) {
         return "register";
-    }
-
-    @GetMapping("/createRoom")
-    public String createRoom(Model model) {
-        return "createRoom";
-    }
-
-    @GetMapping("/users")
-    public String user(Model model) {
-        List<?> topUsers = entityManager.
-            createQuery("SELECT u FROM Membership m "
-                        + "INNER JOIN User u ON m.user = u.id "
-                        + "GROUP BY m.user "
-                        + "ORDER BY sum(m.balance) DESC")
-                        .setMaxResults(5).getResultList();
-
-        model.addAttribute("topUsers", topUsers);
-
-        return "users";
     }
 
     @PostMapping("/register")
@@ -177,6 +156,11 @@ public class RootController {
         entityManager.persist(newUser);
 
         return "logIn";
+    }
+
+    @GetMapping("/createRoom")
+    public String createRoom(Model model) {
+        return "createRoom";
     }
 
     @PostMapping("/createRoom")
@@ -216,13 +200,22 @@ public class RootController {
         newRoom.setMemberList(memberList);
 
         return "rooms";
+    }
 
+    @GetMapping("/users")
+    public String user(Model model) {
+        List<?> topUsers = entityManager.
+            createNamedQuery("User.top").
+            setMaxResults(5).
+            getResultList();
+
+        model.addAttribute("topUsers", topUsers);
+
+        return "users";
     }
 
     @GetMapping("/u/{id}") // /user/uid
     public String user(@PathVariable long id, Model model) {
-        model.addAttribute(MENU_CONTENT,_menu);
-
         User user = entityManager.find(User.class, id);
 
         model.addAttribute("user", user);
