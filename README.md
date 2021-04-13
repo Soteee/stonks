@@ -105,3 +105,12 @@ Representa un mensaje enviado desde un usuario a otro dentro de una conversació
 *   **sender:** Usuario que envía el mensaje (sólo puede ser conversation.user1 o conversation.user2; clase User).
 *   **text:** Texto enviado.
 *   **date:** Fecha en la que el mensaje ha sido enviado.
+
+
+
+## TODO
+
+- Login (trabajar sesiones de usuarios)
+- /users para poder buscar usuarios, ver el top, etc.
+- /u/{id} para ver info de un usuario en concreto
+- Entrega para el lunes

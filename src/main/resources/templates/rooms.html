@@ -7,12 +7,7 @@
 </head>
 <body>
 
-    <div class="topnavbar" id=top_navbar >
-        <span><img th:src="@{/images/logo200x200.png}"/></span>
-        <ul>
-            <button class="btnMenu" th:each="menu_item: ${menu_content}" th:text="${menu_item}">X</button>
-        </ul>
-    </div>
+    <nav class="topnavbar" th:replace="fragments/menu.html :: topbar">X</nav>
     <div class="leftnavbar" id=left_navbar>
         <p>Mis salas</p>
         <ul>
@@ -37,7 +32,7 @@
             <li th:each="room: ${topRooms}" th:text="${room.name}"></li>
         </ol>
 
-        <button>Crear sala</button>
+        <button onclick="window.location = 'createRoom'">Crear sala</button>
     </div>
     
 </body>

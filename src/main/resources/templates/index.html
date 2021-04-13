@@ -12,10 +12,6 @@
     <nav class="topnavbar" th:replace="fragments/menu.html :: topbar">X</nav>
     <div class="visualizer">
 
-        <a href="logIn">INICIAR SESION</a>
-        <a href="createRoom">CREAR SALA</a>
-        <a href="user">USUARIOS</a>
-
         <h2>Top Jugadores</h2>
         <ol>
             <li th:each="user: ${topUsers}" th:text="${user.username}">No se han encontrado usuarios</li>
@@ -25,9 +21,6 @@
         <ol>
             <li th:each="room: ${topRooms}" th:text="${room.name}">No se han encontrado salas</li>
         </ol>
-
-        <button onclick="window.location.href='/createRoom'">Crear sala</button>
-        <button onclick="window.location.href='/rooms'">Buscar sala</button>
     </div>
 </body>
 

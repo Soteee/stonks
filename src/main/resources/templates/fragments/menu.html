@@ -10,11 +10,15 @@
     <nav class="topnavbar" th:fragment="topbar">
         <span><img th:src="@{/images/logo200x200.png}"/></span>
         <ul>
-            <button class="btnMenu">Salas</button>
+            <!-- Si no está loggeado -->
+            <button onclick="window.location='/rooms'" class="btnMenu">Salas</button>
+            <button onclick="window.location='/users'" class="btnMenu">Usuarios</button>
+            <button onclick="window.location='/social'" class="btnMenu">Amigos</button>
             <button class="btnMenu">Perfil</button>
-            <button class="btnMenu">Amigos</button>
-            <button class="btnMenu">Contacto</button>
-            <button class="btnMenu"><a href="../logIn">INICIAR SESION</a></button>
+            <button class="btnMenu">Cerrar sesión</button>
+            <!-- Si está loggeado -->
+            <button onclick="window.location='/logIn'" class="btnMenu">Iniciar Sesión</button>
+            <button onclick="window.location='/register'" class="btnMenu">Registrarse</button>
         </ul>
     </nav>
 </body>
