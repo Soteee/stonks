@@ -119,17 +119,6 @@ public class RootController {
         return "logIn";
     }
 
-    @PostMapping("/logIn")
-    public String postLogin(HttpSession session,
-                            @RequestParam String username,
-                            @RequestParam String password){
-
-        // implementar el login
-
-        return "index";
-    }
-
-
     @GetMapping("/register")
     public String getRegister(Model model) {
         return "register";
