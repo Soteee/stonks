@@ -17,6 +17,15 @@ import lombok.Data;
 
 @Entity
 @Data
+@NamedQueries({
+   @NamedQuery(name="Room.all",
+				query = "SELECT r FROM Room r"),
+   @NamedQuery(name="Room.top",
+           query="SELECT r  FROM Membership m "
+           + "INNER JOIN Room r ON m.room = r.id "
+           + "GROUP BY m.room "
+           + "ORDER BY sum(m.balance) DESC")
+})
 public class Room {
 
    @Id
