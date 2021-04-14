@@ -9,10 +9,10 @@
 
 <body>
     <!-- CAJA DE INICIAR SESION -->
-    <form class="LogInBox">
+    <form th:action="@{/login}" method="post" class="LogInBox">
         <h1>LOGIN</h1>
-        <input type="text" name="" placeholder="UserName">
-        <input type="password" name="" placeholder="Password">
+        <input type="text" name="username" placeholder="UserName">
+        <input type="password" name="password" placeholder="Password">
         <input type="submit" name="" placeholder="Login" value="Iniciar sesión">
         <p id="CrearCuenta">¿No tienes una cuenta? <a href="register">Registrate</a></p>
         <p id="CrearCuenta">¿Has perdido la contraseña? De momento te jodes :)</p>
