@@ -2,6 +2,7 @@ package es.ucm.fdi.stonks.control;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import es.ucm.fdi.stonks.model.Membership;
 import es.ucm.fdi.stonks.model.Position;
@@ -43,7 +44,7 @@ public class ApiController {
     @PostMapping("/action_buy")
     @Transactional
     public String actionBuy(@RequestParam long id, @RequestParam String stockName,
-            @RequestParam String amount) {
+            @RequestParam String amount, Model model) {
 
         Membership member =   entityManager.find(Membership.class, id);     
         Position testPosition = new Position();
@@ -59,13 +60,22 @@ public class ApiController {
             System.out.println("bro eres bobo o que");
         }
 
+        //que me vuelva a explicar esto tutorial
+        // Copia exacta del RootController GetMapping de r/id
+        List<?> rooms = entityManager.createNamedQuery("Room.all").getResultList();
+        model.addAttribute("rooms",rooms);
 
+        Room room = entityManager.find(Room.class, member.getRoom().getId());
+        model.addAttribute("room", room);
 
+        List<?> users_inroom = entityManager.
+                    createNamedQuery("Membership.userInRoom").
+                    setParameter("room_id", room).
+                    getResultList();
+
+        model.addAttribute("users_inroom", users_inroom);
         
-
-
-        // return r/{id} -> Sacarlo de Membership con una NamedQuery
-        return "room";
+        return "r";
     }
 
     public String getSymbol(String name){
