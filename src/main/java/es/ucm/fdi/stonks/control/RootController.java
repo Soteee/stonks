@@ -173,7 +173,7 @@ public class RootController {
             @RequestParam int startBalance,
             @RequestParam int cash2Win,
             @RequestParam long adminID,
-            @RequestParam LocalDate expirationDate) {
+            @RequestParam String expirationDate) {
 
         Room newRoom = new Room();
         User admin = entityManager.find(User.class, adminID);
@@ -185,6 +185,7 @@ public class RootController {
         adminMember.setRoom(newRoom);
         adminMember.setBalance(startBalance);
         adminMember.setJoinDate(currentDate);
+        entityManager.persist(adminMember);
 
         memberList.add(adminMember);
 
@@ -196,8 +197,9 @@ public class RootController {
         newRoom.setCash2Win(cash2Win);
         newRoom.setAdmin(admin);
         newRoom.setCreationDate(currentDate);
-        newRoom.setExpirationDate(expirationDate);
+        newRoom.setExpirationDate(LocalDate.parse(expirationDate));
         newRoom.setMemberList(memberList);
+        entityManager.persist(newRoom);
 
         return "rooms";
     }

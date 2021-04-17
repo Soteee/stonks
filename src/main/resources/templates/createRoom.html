@@ -97,15 +97,19 @@
         <!-- CREAR UNA SALA -->
         <form class="Formulario" method="POST" th:action="@{/createRoom}">
             <h1 class="form-text">CREAR UNA SALA</h1>
+
+            <p class="form-text">Id de usuario que crea la sala (estará en la sesión)</p>
+            <input type="text" name="adminID">
+
             <!-- NOMBRE DE LA SALA -->
             <p class="form-text">Nombre de la sala</p>
             <input type="text" name="name" placeholder="Nombre de la Sala">
 
             <!-- Privacidad y contraseña -->
             <p class="form-text">Privacidad</p>
-            <select class="likeInput">
-                <option id="1">Privada (contraseña)</option>
-                <option id="2">Pública</option>
+            <select class="likeInput" name="isPublic">
+                <option value="0">Privada (contraseña)</option>
+                <option value="1">Pública</option>
             </select>
             <!-- Se comprueba el nivel de seguridad de la primera, y la segunda tiene que ser igual -->
             <input type="password" name="password" maxlength="15" placeholder="Contraseña" onkeyup="muestra_seguridad_clave(this.value, this.form)">
