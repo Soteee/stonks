@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -29,7 +30,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 
 @Data
-@Controller("/room")
+@Controller("action_buy")
 public class ApiController {
     @Autowired
     private EntityManager entityManager;
@@ -38,23 +39,17 @@ public class ApiController {
     private String headerkeyp2 = "1a2c0118edmsh2fe8520e5114c90p147e61jsn9a2bc42af118";
     private String authname1 = "x-rapidapi-host";
     private String authname2 = "yahoo-finance15.p.rapidapi.com";
-
-    @GetMapping("/room")
-    public String roomMapper(){
-        
-        return "room";
-    }
     
-    @PostMapping("/room")
+    @PostMapping("/action_buy")
     @Transactional
-    public String actionBuy(@RequestParam String id, @RequestParam String mail, @RequestParam String actionName,
+    public String actionBuy(@RequestParam long id, @RequestParam String stockName,
             @RequestParam String amount) {
-    
+
         Membership member =   entityManager.find(Membership.class, id);     
         Position testPosition = new Position();
         testPosition.setMember(member);
-        testPosition.setPrice(Float.parseFloat(getSymbol(actionName)));
-        testPosition.setIndexName(actionName);
+        testPosition.setPrice(Float.parseFloat(getSymbol(stockName)));
+        testPosition.setIndexName(stockName);
         testPosition.setPurchaseDate(java.time.LocalDateTime.now());
         testPosition.setQuantity(Integer.parseInt(amount));
         testPosition.setActive(true);
@@ -63,6 +58,13 @@ public class ApiController {
         }catch(Exception e){
             System.out.println("bro eres bobo o que");
         }
+
+
+
+        
+
+
+        // return r/{id} -> Sacarlo de Membership con una NamedQuery
         return "room";
     }
 
@@ -73,15 +75,15 @@ public class ApiController {
             headers.put(authname1, authname2);
             headers.put("useQueryString", "true");
            
-
-            System.out.println(url + name + "/financial-data");
-            JSONObject json = Unirest.get(url + name + "financial-data").headers(headers).asJson().getBody()
+            System.out.println(name);
+            //System.out.println(url + name + "/financial-data");
+            JSONObject json = Unirest.get(url + name + "/financial-data").headers(headers).asJson().getBody()
                     .getObject();
-            System.out.println(json.toString());
+            //System.out.println(json.toString());
             if (json != null) {
-                String paraTH = (json.getJSONObject("financialData").getJSONObject("currentPrice").getString("fmt"));
+                String valor = (json.getJSONObject("financialData").getJSONObject("currentPrice").getString("fmt"));
                 
-                return paraTH;
+                return valor;
 
             } else System.out.println("es nulo manin");
                

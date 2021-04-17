@@ -28,13 +28,27 @@
         
         <h1 th:text="${room.name}">No market found</h1>
         <span><img th:src="@{/images/stockexample.jpg}" /></span>
-        <ul>
-            <li>
-                <button>Buy</button>
-                <button>Sell</button>
-                <BUTTON>Sell all positions</BUTTON>
-            </li>
-        </ul>
+
+        <!-- Buy stocks -->
+        <form class="action_buy" method="POST" th:action="@{/action_buy}">
+            <p>Id de miembro en una sala: <input type="text" name="id" size="20"></p>
+            <select name="stockName">
+            // TODO: parsear esto desde el TH, con el valor de la hora.
+                <option name="TSLA"> TSLA </option>
+                <option name="AAPL"> AAPL </option>
+                <option name="MSFT"> MSFT </option>
+                <option name="AMZN"> AMZN </option>
+                <option name="FB"> FB </option>
+            </select>
+            <p>Cuantas quieres bro <input type="text" name="amount" size="20"></p>
+            <p>
+                <input type="submit" value="Comprar">
+            </p>
+        </form>
+
+        <button>Vender</button>
+        <button>Vender todo</button>
+
         <div class="player_info">
             <p>
                 Player info:

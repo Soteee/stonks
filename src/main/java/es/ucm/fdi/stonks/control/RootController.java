@@ -1,6 +1,7 @@
 package es.ucm.fdi.stonks.control;
 
 import es.ucm.fdi.stonks.model.Membership;
+import es.ucm.fdi.stonks.model.Position;
 import es.ucm.fdi.stonks.model.Room;
 import es.ucm.fdi.stonks.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,19 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class RootController {
@@ -30,7 +37,11 @@ public class RootController {
 
     @Autowired
     private EntityManager entityManager;
-
+    private String url = "https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/";
+    private String headerkey = "x-rapidapi-key";
+    private String headerkeyp2 = "1a2c0118edmsh2fe8520e5114c90p147e61jsn9a2bc42af118";
+    private String authname1 = "x-rapidapi-host";
+    private String authname2 = "yahoo-finance15.p.rapidapi.com";
     public static final String _MENU = "_menu";
     public static final String MENU_CONTENT = "menu_content";
     public static final String ROOM_CONTENT = "room_content";

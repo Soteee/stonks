@@ -9,11 +9,11 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
-        <form class="action_buy" meth="post" th:action="@{/action_buy}">
+        <form class="action_buy" method="POST" th:action="@{/action_buy}">
             <p>Id de miembro en una sala: <input type="text" name="id" size="20"></p>
-            <select name="action">
+            <select name="stockName">
             // TODO: parsear esto desde el TH, con el valor de la hora.
-                <option value="TSLA"> TESLA </option>
+                <option value="TSLA" name="TSLA"> TESLA </option>
                 <option value="TSLA"> AAPL </option>
                 <option value="TSLA"> MSFT </option>
                 <option value="TSLA"> AMZN </option>
