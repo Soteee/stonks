@@ -9,16 +9,21 @@
 <body>
     <nav class="topnavbar" th:fragment="topbar">
         <span><img th:src="@{/images/logo200x200.png}"/></span>
+        <p th:text="${isLogged}">Lol no</p>
         <ul>
             <!-- Si no está loggeado -->
-            <button onclick="window.location='/rooms'" class="btnMenu">Salas</button>
-            <button onclick="window.location='/users'" class="btnMenu">Usuarios</button>
-            <button onclick="window.location='/social'" class="btnMenu">Amigos</button>
-            <button class="btnMenu">Perfil</button>
-            <button class="btnMenu">Cerrar sesión</button>
+            <div th:if="${session.u}">
+                <button onclick="window.location='/rooms'" class="btnMenu">Salas</button>
+                <button onclick="window.location='/users'" class="btnMenu">Usuarios</button>
+                <button onclick="window.location='/social'" class="btnMenu">Amigos</button>
+                <button class="btnMenu">Perfil</button>
+                <button class="btnMenu">Cerrar sesión</button>
+            </div>
             <!-- Si está loggeado -->
-            <button onclick="window.location='/logIn'" class="btnMenu">Iniciar Sesión</button>
-            <button onclick="window.location='/register'" class="btnMenu">Registrarse</button>
+            <div th:unless="${session.u}">
+                <button onclick="window.location='/logIn'" class="btnMenu">Iniciar Sesión</button>
+                <button onclick="window.location='/register'" class="btnMenu">Registrarse</button>
+            </div>
         </ul>
     </nav>
 </body>
