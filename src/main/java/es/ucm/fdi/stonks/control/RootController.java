@@ -35,7 +35,6 @@ public class RootController {
     @Transactional
     @GetMapping("/")
     public String index(Model model) {
-        // Top 5 users y top 3 salas
         List<?> topUsers = entityManager
             .createNamedQuery("User.top")
             .setMaxResults(5)
@@ -44,7 +43,7 @@ public class RootController {
 
         List<?> topRooms = entityManager
             .createNamedQuery("Room.top")
-            .setMaxResults(3)
+            .setMaxResults(5)
             .getResultList();
         model.addAttribute("topRooms", topRooms);
 
@@ -72,7 +71,7 @@ public class RootController {
 
         List<?> topRooms = entityManager
                 .createNamedQuery("Room.top")
-                .setMaxResults(3)
+                .setMaxResults(10)
                 .getResultList();
         model.addAttribute("topRooms", topRooms);
 
@@ -148,17 +147,17 @@ public class RootController {
             @RequestParam int maxUsers,
             @RequestParam int startBalance,
             @RequestParam int cash2Win,
-            @RequestParam long adminID,
             @RequestParam String expirationDate,
-            HttpServletResponse response) throws Exception{
+            HttpServletResponse response,
+            HttpSession session) throws Exception{
 
         Room newRoom = new Room();
-        User admin = entityManager.find(User.class, adminID);
+        User room_admin = (User) session.getAttribute("u");
         Membership adminMember = new Membership();
         ArrayList<Membership> memberList = new ArrayList<>();
         LocalDateTime currentDate = LocalDateTime.now();
 
-        adminMember.setUser(admin);
+        adminMember.setUser(room_admin);
         adminMember.setRoom(newRoom);
         adminMember.setBalance(startBalance);
         adminMember.setJoinDate(currentDate);
@@ -172,7 +171,7 @@ public class RootController {
         newRoom.setMaxUsers(maxUsers);
         newRoom.setStartBalance(startBalance);
         newRoom.setCash2Win(cash2Win);
-        newRoom.setAdmin(admin);
+        newRoom.setAdmin(room_admin);
         newRoom.setCreationDate(currentDate);
         newRoom.setExpirationDate(LocalDate.parse(expirationDate));
         newRoom.setMemberList(memberList);
@@ -185,7 +184,7 @@ public class RootController {
     public String user(Model model) {
         List<?> topUsers = entityManager
             .createNamedQuery("User.top")
-            .setMaxResults(5)
+            .setMaxResults(10)
             .getResultList();
         model.addAttribute("topUsers", topUsers);
 
