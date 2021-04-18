@@ -2,33 +2,25 @@ package es.ucm.fdi.stonks.control;
 
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import es.ucm.fdi.stonks.model.Membership;
 import es.ucm.fdi.stonks.model.Position;
-import es.ucm.fdi.stonks.model.Room;
-import es.ucm.fdi.stonks.model.User;
 import lombok.Data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
+
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import org.json.JSONObject;
-import org.springframework.stereotype.Controller;
 
 @Data
 @Controller("action_buy")
@@ -43,7 +35,7 @@ public class ApiController {
     
     @PostMapping("/action_buy")
     @Transactional
-    public String actionBuy(@RequestParam long id, @RequestParam String stockName,
+    public RedirectView actionBuy(@RequestParam long id, @RequestParam String stockName,
             @RequestParam String amount, Model model) {
 
         Membership member =   entityManager.find(Membership.class, id);     
@@ -60,22 +52,7 @@ public class ApiController {
             System.out.println("bro eres bobo o que");
         }
 
-        //que me vuelva a explicar esto tutorial
-        // Copia exacta del RootController GetMapping de r/id
-        List<?> rooms = entityManager.createNamedQuery("Room.all").getResultList();
-        model.addAttribute("rooms",rooms);
-
-        Room room = entityManager.find(Room.class, member.getRoom().getId());
-        model.addAttribute("room", room);
-
-        List<?> users_inroom = entityManager.
-                    createNamedQuery("Membership.userInRoom").
-                    setParameter("room_id", room).
-                    getResultList();
-
-        model.addAttribute("users_inroom", users_inroom);
-        
-        return "r";
+        return new RedirectView("/r/" + member.getRoom().getId());
     }
 
     public String getSymbol(String name){

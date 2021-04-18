@@ -1,7 +1,6 @@
 package es.ucm.fdi.stonks.control;
 
 import es.ucm.fdi.stonks.model.Membership;
-import es.ucm.fdi.stonks.model.Position;
 import es.ucm.fdi.stonks.model.Room;
 import es.ucm.fdi.stonks.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,24 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class RootController {
@@ -153,7 +147,7 @@ public class RootController {
 
     @PostMapping("/createRoom")
     @Transactional
-    public String postCreateRoom(
+    public RedirectView postCreateRoom(
             @RequestParam String name,
             @RequestParam boolean isPublic,
             @RequestParam int weeklyCash,
@@ -189,11 +183,7 @@ public class RootController {
         newRoom.setMemberList(memberList);
         entityManager.persist(newRoom);
 
-
-
-        
-
-        return "rooms";
+        return new RedirectView("/rooms");
     }
 
     @GetMapping("/users")
