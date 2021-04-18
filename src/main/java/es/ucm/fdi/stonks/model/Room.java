@@ -21,10 +21,14 @@ import lombok.Data;
    @NamedQuery(name="Room.all",
 				query = "SELECT r FROM Room r"),
    @NamedQuery(name="Room.top",
-           query="SELECT r  FROM Membership m "
-           + "INNER JOIN Room r ON m.room = r.id "
-           + "GROUP BY m.room "
-           + "ORDER BY sum(m.balance) DESC")
+            query="SELECT r  FROM Membership m "
+            + "INNER JOIN Room r ON m.room = r.id "
+            + "GROUP BY m.room "
+            + "ORDER BY sum(m.balance) DESC"),
+   @NamedQuery(name="Room.byUser",
+            query="SELECT r FROM Membership m "
+            + "JOIN Room r ON m.room = r.id "
+            + "WHERE m.user = :user")
 })
 public class Room {
 

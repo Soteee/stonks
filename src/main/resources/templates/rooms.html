@@ -11,7 +11,7 @@
     <div class="leftnavbar" id=left_navbar>
         <p>Mis salas</p>
         <ul>
-            <li th:each="room: ${rooms}"><a th:text="${room.name}"></a></li>
+            <li th:each="room: ${user_rooms}"><a th:text="${room.name}"></a></li>
         </ul>
     </div>
 

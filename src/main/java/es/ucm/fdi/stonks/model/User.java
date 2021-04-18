@@ -48,7 +48,11 @@ import lombok.AllArgsConstructor;
 				query="SELECT u FROM Membership m "
 				+ "INNER JOIN User u ON m.user = u.id "
 				+ "GROUP BY m.user "
-				+ "ORDER BY sum(m.balance) DESC")
+				+ "ORDER BY sum(m.balance) DESC"),
+		@NamedQuery(name="User.inRoom",
+				query="SELECT u FROM Membership m "
+						+ "INNER JOIN User u ON m.user = u.id "
+						+ "WHERE m.room = :room")
 })
 public class User implements Transferable<User.Transfer> {
 

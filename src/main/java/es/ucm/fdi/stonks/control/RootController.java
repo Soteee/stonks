@@ -32,26 +32,20 @@ public class RootController {
     @Autowired
     private EntityManager entityManager;
 
-    String[] featuredRooms = {
-        "Cryptoroom",
-        "GameStop strikes back",
-        "Mercadeo y lo que surja"
-    };
-
     @Transactional
     @GetMapping("/")
     public String index(Model model) {
         // Top 5 users y top 3 salas
-        List<?> topUsers = entityManager.
-            createNamedQuery("User.top").
-            setMaxResults(5).
-            getResultList();
-        List<?> topRooms = entityManager.
-            createNamedQuery("Room.top").
-            setMaxResults(3).
-            getResultList();
-
+        List<?> topUsers = entityManager
+            .createNamedQuery("User.top")
+            .setMaxResults(5)
+            .getResultList();
         model.addAttribute("topUsers", topUsers);
+
+        List<?> topRooms = entityManager
+            .createNamedQuery("Room.top")
+            .setMaxResults(3)
+            .getResultList();
         model.addAttribute("topRooms", topRooms);
 
         return "index";
@@ -60,28 +54,29 @@ public class RootController {
     @GetMapping("/admin")   // admin panel
     public String admin(Model model) {
         List<?> users = entityManager.createNamedQuery("User.all").getResultList();
-        List<?> rooms = entityManager.createNamedQuery("Room.all").getResultList();
-
         model.addAttribute("users", users);
+
+        List<?> rooms = entityManager.createNamedQuery("Room.all").getResultList();
         model.addAttribute("rooms", rooms);
+
         return "admin";
     }
 
     @GetMapping("/rooms")   // lista de salas
-    public String rooms(Model model) {
-        List<?> user_rooms = entityManager.
-                createNamedQuery("Room.all").   // Hay que cambiar esto por las salas del usuario en la sesión
-                getResultList();
-        List<?> topRooms = entityManager.
-                createNamedQuery("Room.top").
-                setMaxResults(3).
-                getResultList();
-
+    public String rooms(Model model, HttpSession session) {
+        List<?> user_rooms = entityManager
+                .createNamedQuery("Room.byUser")
+                .setParameter("user", session.getAttribute("u"))
+                .getResultList();
         model.addAttribute("user_rooms", user_rooms);
+
+        List<?> topRooms = entityManager
+                .createNamedQuery("Room.top")
+                .setMaxResults(3)
+                .getResultList();
         model.addAttribute("topRooms", topRooms);
 
         return "rooms";
-
     }
 
     @GetMapping("/r/{id}") // /s/idsala sala por dentro.
@@ -92,11 +87,10 @@ public class RootController {
         Room room = entityManager.find(Room.class, id);
         model.addAttribute("room", room);
 
-        List<?> users_inroom = entityManager.
-                    createNamedQuery("Membership.userInRoom").
-                    setParameter("room_id", room).
-                    getResultList();
-
+        List<?> users_inroom = entityManager
+                    .createNamedQuery("User.inRoom")
+                    .setParameter("room", room)
+                    .getResultList();
         model.addAttribute("users_inroom", users_inroom);
 
         return "r";
@@ -189,11 +183,10 @@ public class RootController {
 
     @GetMapping("/users")
     public String user(Model model) {
-        List<?> topUsers = entityManager.
-            createNamedQuery("User.top").
-            setMaxResults(5).
-            getResultList();
-
+        List<?> topUsers = entityManager
+            .createNamedQuery("User.top")
+            .setMaxResults(5)
+            .getResultList();
         model.addAttribute("topUsers", topUsers);
 
         return "users";
@@ -202,7 +195,6 @@ public class RootController {
     @GetMapping("/u/{id}") // /user/uid
     public String user(@PathVariable long id, Model model) {
         User user = entityManager.find(User.class, id);
-
         model.addAttribute("user", user);
 
         return "u";
