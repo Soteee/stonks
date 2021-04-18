@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
@@ -147,7 +148,7 @@ public class RootController {
 
     @PostMapping("/createRoom")
     @Transactional
-    public RedirectView postCreateRoom(
+    public void postCreateRoom(
             @RequestParam String name,
             @RequestParam boolean isPublic,
             @RequestParam int weeklyCash,
@@ -155,7 +156,8 @@ public class RootController {
             @RequestParam int startBalance,
             @RequestParam int cash2Win,
             @RequestParam long adminID,
-            @RequestParam String expirationDate) {
+            @RequestParam String expirationDate,
+            HttpServletResponse response) throws Exception{
 
         Room newRoom = new Room();
         User admin = entityManager.find(User.class, adminID);
@@ -183,7 +185,7 @@ public class RootController {
         newRoom.setMemberList(memberList);
         entityManager.persist(newRoom);
 
-        return new RedirectView("/rooms");
+        response.sendRedirect("/rooms");
     }
 
     @GetMapping("/users")

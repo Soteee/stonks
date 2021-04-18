@@ -12,12 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.json.JSONObject;
@@ -35,8 +35,11 @@ public class ApiController {
     
     @PostMapping("/action_buy")
     @Transactional
-    public RedirectView actionBuy(@RequestParam long id, @RequestParam String stockName,
-            @RequestParam String amount, Model model) {
+    public void actionBuy(@RequestParam long id, 
+                        @RequestParam String stockName,
+                        @RequestParam String amount,
+                        Model model,
+                        HttpServletResponse response) throws Exception{
 
         Membership member =   entityManager.find(Membership.class, id);     
         Position testPosition = new Position();
@@ -52,7 +55,7 @@ public class ApiController {
             System.out.println("bro eres bobo o que");
         }
 
-        return new RedirectView("/r/" + member.getRoom().getId());
+        response.sendRedirect("/r/" + member.getRoom().getId());
     }
 
     public String getSymbol(String name){
