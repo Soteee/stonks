@@ -8,14 +8,8 @@
 
 <body>
 
-    <nav class="topnavbar" th:replace="fragments/menu.html :: topbar">X</nav>
-
-    <div class="leftnavbar" id=left_navbar>
-        <p>Mis salas</p>
-        <ul>
-            <li th:each="room: ${user_rooms}"><a th:text="${room.name}"></a></li>
-        </ul>
-    </div>
+    <nav th:replace="fragments/menu.html :: topbar"></nav>
+    <nav th:replace="fragments/left_navbar :: my_rooms"></nav>
 
     <div class="rightnavbar" id=right_navbar>
         <p>Usuarios en la sala</p>

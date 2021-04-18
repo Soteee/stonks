@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}" />
+</head>
+
+<body>
+    <nav class="leftnavbar" th:fragment="my_rooms">
+        <p>Mis salas</p>
+        <ul>
+            <li th:each="room: ${user_rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}"></a></li>
+        </ul>
+    </nav>
+</body>
+
+</html>
