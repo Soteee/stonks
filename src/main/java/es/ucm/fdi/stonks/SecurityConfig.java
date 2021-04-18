@@ -54,16 +54,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 	    http
 	        .authorizeRequests()
-	            .antMatchers("/css/**", "/js/**", "/images/**", "/img/**", "/error", "/", "/register", 
-
-				"/**" // Borrar esto cuando arreglemos el login
-				
-				).permitAll() // <-- Accesible by non authenticated user
-	            .antMatchers("/admin/**", "/admin").hasRole("ADMIN")		  // <-- administration
+	            .antMatchers("/css/**", "/js/**", "/images/**", "/", "/error", "/register", "/**").permitAll() // Borra entrada /** cuando consigamos hacer funcionar el login
+	            .antMatchers("/admin/**").hasRole("ADMIN")		  // <-- administration
 	            .anyRequest().authenticated()
 	            .and()
-				.formLogin()
-				.loginPage("/logIn")
+			.formLogin()
+				.loginPage("/login")
 				.permitAll().successHandler(loginSuccessHandler); // <-- called when login Ok; can redirect
 	}
 	

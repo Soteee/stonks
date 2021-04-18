@@ -107,9 +107,9 @@ public class RootController {
         return "social";
     }
 
-    @GetMapping("/logIn")
+    @GetMapping("/login")
     public String getLogin(Model model) {
-        return "logIn";
+        return "login";
     }
 
     @GetMapping("/register")
