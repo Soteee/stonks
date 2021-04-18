@@ -37,18 +37,6 @@ public class RootController {
 
     @Autowired
     private EntityManager entityManager;
-    private String url = "https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/";
-    private String headerkey = "x-rapidapi-key";
-    private String headerkeyp2 = "1a2c0118edmsh2fe8520e5114c90p147e61jsn9a2bc42af118";
-    private String authname1 = "x-rapidapi-host";
-    private String authname2 = "yahoo-finance15.p.rapidapi.com";
-    public static final String _MENU = "_menu";
-    public static final String MENU_CONTENT = "menu_content";
-    public static final String ROOM_CONTENT = "room_content";
-    public static final String FEATURED_ROOMS = "featured_rooms";
-    public static final String LOG_IN = "logIn";
-    public static final String CREATE_ROOM = "createRoom";
-    public static final String USER = "user";
 
     String[] featuredRooms = {
         "Cryptoroom",
@@ -87,15 +75,15 @@ public class RootController {
 
     @GetMapping("/rooms")   // lista de salas
     public String rooms(Model model) {
-        List<?> users = entityManager.createNamedQuery("User.all").getResultList();
-        List<?> rooms = entityManager.createNamedQuery("Room.all").getResultList();
+        List<?> user_rooms = entityManager.
+                createNamedQuery("Room.all").   // Hay que cambiar esto por las salas del usuario en la sesión
+                getResultList();
         List<?> topRooms = entityManager.
                 createNamedQuery("Room.top").
                 setMaxResults(3).
                 getResultList();
 
-        model.addAttribute("rooms", rooms);
-        model.addAttribute("users", users);
+        model.addAttribute("user_rooms", user_rooms);
         model.addAttribute("topRooms", topRooms);
 
         return "rooms";
@@ -200,6 +188,10 @@ public class RootController {
         newRoom.setExpirationDate(LocalDate.parse(expirationDate));
         newRoom.setMemberList(memberList);
         entityManager.persist(newRoom);
+
+
+
+        
 
         return "rooms";
     }
