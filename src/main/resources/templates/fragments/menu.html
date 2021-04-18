@@ -21,7 +21,7 @@
             </div>
             <!-- Si está loggeado -->
             <div th:unless="${session.u}">
-                <button onclick="window.location='/logIn'" class="btnMenu">Iniciar Sesión</button>
+                <button onclick="window.location='/login'" class="btnMenu">Iniciar Sesión</button>
                 <button onclick="window.location='/register'" class="btnMenu">Registrarse</button>
             </div>
         </ul>
