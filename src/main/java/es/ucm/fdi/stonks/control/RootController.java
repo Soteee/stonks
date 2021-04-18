@@ -79,9 +79,12 @@ public class RootController {
     }
 
     @GetMapping("/r/{id}") // /s/idsala sala por dentro.
-    public String room(@PathVariable long id, Model model) {
-        List<?> rooms = entityManager.createNamedQuery("Room.all").getResultList();
-        model.addAttribute("rooms",rooms);
+    public String room(@PathVariable long id, Model model, HttpSession session) {
+        List<?> user_rooms = entityManager
+                .createNamedQuery("Room.byUser")
+                .setParameter("user", session.getAttribute("u"))
+                .getResultList();
+        model.addAttribute("user_rooms", user_rooms);
 
         Room room = entityManager.find(Room.class, id);
         model.addAttribute("room", room);

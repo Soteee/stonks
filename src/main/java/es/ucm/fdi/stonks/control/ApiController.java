@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import es.ucm.fdi.stonks.model.Membership;
 import es.ucm.fdi.stonks.model.Position;
+import es.ucm.fdi.stonks.model.Room;
 import lombok.Data;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.json.JSONObject;
@@ -35,13 +37,17 @@ public class ApiController {
     
     @PostMapping("/action_buy")
     @Transactional
-    public void actionBuy(@RequestParam long id, 
+    public void actionBuy(HttpSession session,
                         @RequestParam String stockName,
                         @RequestParam String amount,
+                        @RequestParam long room_id,
                         Model model,
                         HttpServletResponse response) throws Exception{
 
-        Membership member =   entityManager.find(Membership.class, id);     
+        Membership member = (Membership) entityManager.createNamedQuery("Membership.byUserAndRoom")
+                                        .setParameter("user", session.getAttribute("u"))
+                                        .setParameter("room", entityManager.find(Room.class, room_id))
+                                        .getSingleResult();
         Position testPosition = new Position();
         testPosition.setMember(member);
         testPosition.setPrice(Float.parseFloat(getSymbol(stockName)));

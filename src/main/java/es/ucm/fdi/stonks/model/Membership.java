@@ -11,6 +11,11 @@ import lombok.Data;
 
 @Entity
 @Data
+@NamedQueries({
+	@NamedQuery(name="Membership.byUserAndRoom",
+	        query="SELECT m FROM Membership m "
+                + "WHERE m.room = :room AND m.user = :user")
+})
 public class Membership {
 
     @Id
