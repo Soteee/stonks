@@ -126,10 +126,6 @@ public class RootController {
                         @RequestParam String firstName,
                         @RequestParam String lastName,
                         @RequestParam String password) {
-
-        if (!entityManager.createNamedQuery("User.hasUsername").getResultList().isEmpty()){
-            return "register"; // Añadir error
-        }
         
         User newUser = new User();
         newUser.setUsername(username);
