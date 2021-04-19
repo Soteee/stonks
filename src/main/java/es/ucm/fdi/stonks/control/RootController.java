@@ -4,6 +4,7 @@ import es.ucm.fdi.stonks.model.Membership;
 import es.ucm.fdi.stonks.model.Room;
 import es.ucm.fdi.stonks.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,9 @@ public class RootController {
 
     @Autowired
     private EntityManager entityManager;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Transactional
     @GetMapping("/")
@@ -128,7 +132,7 @@ public class RootController {
         newUser.setName(name);
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
-        newUser.setPassword(password);
+        newUser.setPassword(encoder.encode(password));
         newUser.setEnabled((byte) 1);
         newUser.setRoles("USER");
         entityManager.persist(newUser);
