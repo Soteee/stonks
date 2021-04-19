@@ -13,6 +13,11 @@ import lombok.Data;
  */
 @Entity
 @Data
+@NamedQueries({
+	@NamedQuery(name="Position.byMembership",
+	        query="SELECT p FROM Position p "
+                + "WHERE p.member = :membership")
+})
 public class Position {
 
     @Id

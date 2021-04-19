@@ -17,9 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import com.google.common.collect.Maps.EntryTransformer;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.lang.reflect.Member;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -84,9 +87,11 @@ public class RootController {
 
     @GetMapping("/r/{id}") // /s/idsala sala por dentro.
     public String room(@PathVariable long id, Model model, HttpSession session) {
+        User user = (User) session.getAttribute("u");
+
         List<?> user_rooms = entityManager
                 .createNamedQuery("Room.byUser")
-                .setParameter("user", session.getAttribute("u"))
+                .setParameter("user", user)
                 .getResultList();
         model.addAttribute("user_rooms", user_rooms);
 
@@ -98,6 +103,21 @@ public class RootController {
                     .setParameter("room", room)
                     .getResultList();
         model.addAttribute("users_inroom", users_inroom);
+
+        // Añade las acciones del usuario a model si éste pertenece a la sala
+        if (users_inroom.contains(user)){
+            Membership membership = (Membership) entityManager
+                        .createNamedQuery("Membership.byUserAndRoom")
+                        .setParameter("user", user)
+                        .setParameter("room", room)
+                        .getSingleResult();
+
+            List<?> positions = entityManager
+                        .createNamedQuery("Position.byMembership")
+                        .setParameter("membership", membership)
+                        .getResultList();
+            model.addAttribute("positions", positions);
+        }
 
         return "r";
     }

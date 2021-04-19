@@ -22,12 +22,7 @@
         
         <h1 th:text="${room.name}">No se encontró la sala</h1>
 
-        <!-- 
-            Si el usuario no pertenece a la sala, muestar el botón de unirse 
-            th:if="${users_inroom.?[#this.id == '${session.u.id}']}"
-            NO FUNCIONA
-        -->
-        <div >
+        <div th:if="${positions == null}">
             <form method="POST" th:action="@{/joinRoom}">
                 No perteneces a esta sala
                 <input type="hidden" name="room_id" th:value="${room.id}">
@@ -37,12 +32,7 @@
 
         <span><img th:src="@{/images/stockexample.jpg}" /></span>
 
-        <!-- 
-            If user belongs to this room, display the buttons 
-            th:unless="${users_inroom.?[#this.id == '${session.u.id}'].isEmpty()}"
-            NO FUNCIONA
-        -->
-        <div >
+        <div th:if="${positions != null}">
             <!-- Buy stocks -->
             <form class="action_buy" method="POST" th:action="@{/action_buy}">
                 <input type="hidden" name="room_id" th:value="${room.id}">
@@ -61,14 +51,14 @@
             <button>Vender</button>
             <button>Vender todo</button>
 
+            <!-- Información de las acciones del usuario -->
             <div class="player_info">
-                <p>
-                    Player info:
-                    <li>
-                        <p>AMC- 20</p>
-                        <p>BTC- 50</p>
-                    </li>
-                </p>
+                <table>
+                    <tr th:each="position: ${positions}">
+                        <td th:text="${position.indexName}">Todavía no se han comprado acciones</td>
+                        <td th:text="${position.quantity}"></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

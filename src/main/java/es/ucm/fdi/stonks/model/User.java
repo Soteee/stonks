@@ -130,5 +130,15 @@ public class User implements Transferable<User.Transfer> {
 		return toTransfer().toString();
 	}
 
-	
+	@Override
+    public boolean equals(Object object){
+		User u = (User) object;
+
+		if (u.getId() == this.id){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 }
