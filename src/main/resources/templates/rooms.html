@@ -21,10 +21,10 @@
                 <option id="3">Todas</option>
             </select>
         </form>
-
-        <h2>Top salas</h2>
-        <ol>
-            <li th:each="room: ${topRooms}" th:text="${room.name}"></li>
+        <ol id="results-rooms">
+           <li th:each="room: ${topRooms}">
+               <a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}"></a>
+            </li>
         </ol>
 
         <button onclick="window.location = 'createRoom'">Crear sala</button>

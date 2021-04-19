@@ -21,36 +21,56 @@
     <div class="visualizer">
         
         <h1 th:text="${room.name}">No se encontró la sala</h1>
+
+        <!-- 
+            Si el usuario no pertenece a la sala, muestar el botón de unirse 
+            th:if="${users_inroom.?[#this.id == '${session.u.id}']}"
+            NO FUNCIONA
+        -->
+        <div >
+            <form method="POST" th:action="@{/joinRoom}">
+                No perteneces a esta sala
+                <input type="hidden" name="room_id" th:value="${room.id}">
+                <input type="submit" value="Unirme">
+            </form>
+        </div>
+
         <span><img th:src="@{/images/stockexample.jpg}" /></span>
 
-        <!-- Buy stocks -->
-        <form class="action_buy" method="POST" th:action="@{/action_buy}">
-            <input type="hidden" name="room_id" th:value="${room.id}">
-            <select name="stockName">
-            // TODO: parsear esto desde el TH, con el valor de la hora.
-                <option name="TSLA"> TSLA </option>
-                <option name="AAPL"> AAPL </option>
-                <option name="MSFT"> MSFT </option>
-                <option name="AMZN"> AMZN </option>
-                <option name="FB"> FB </option>
-            </select>
-            <input type="number" placeholder="Cantidad" name="amount" size="20">
-            <input type="submit" value="Comprar">
-        </form>
+        <!-- 
+            If user belongs to this room, display the buttons 
+            th:unless="${users_inroom.?[#this.id == '${session.u.id}'].isEmpty()}"
+            NO FUNCIONA
+        -->
+        <div >
+            <!-- Buy stocks -->
+            <form class="action_buy" method="POST" th:action="@{/action_buy}">
+                <input type="hidden" name="room_id" th:value="${room.id}">
+                <select name="stockName">
+                <!-- TODO: parsear esto desde el TH, con el valor de la hora -->
+                    <option name="TSLA"> TSLA </option>
+                    <option name="AAPL"> AAPL </option>
+                    <option name="MSFT"> MSFT </option>
+                    <option name="AMZN"> AMZN </option>
+                    <option name="FB"> FB </option>
+                </select>
+                <input type="number" placeholder="Cantidad" name="amount" size="20">
+                <input type="submit" value="Comprar">
+            </form>
 
-        <button>Vender</button>
-        <button>Vender todo</button>
+            <button>Vender</button>
+            <button>Vender todo</button>
 
-        <div class="player_info">
-            <p>
-                Player info:
-                <li>
-                    <p>AMC- 20</p>
-                    <p>BTC- 50</p>
-                </li>
-            </p>
+            <div class="player_info">
+                <p>
+                    Player info:
+                    <li>
+                        <p>AMC- 20</p>
+                        <p>BTC- 50</p>
+                    </li>
+                </p>
+            </div>
         </div>
-        
     </div>
 
 </body>

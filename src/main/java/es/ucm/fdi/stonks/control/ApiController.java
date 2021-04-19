@@ -44,50 +44,48 @@ public class ApiController {
                         Model model,
                         HttpServletResponse response) throws Exception{
 
-        Membership member = (Membership) entityManager.createNamedQuery("Membership.byUserAndRoom")
-                                        .setParameter("user", session.getAttribute("u"))
-                                        .setParameter("room", entityManager.find(Room.class, room_id))
-                                        .getSingleResult();
-        Position testPosition = new Position();
-        testPosition.setMember(member);
-        testPosition.setPrice(Float.parseFloat(getSymbol(stockName)));
-        testPosition.setIndexName(stockName);
-        testPosition.setPurchaseDate(java.time.LocalDateTime.now());
-        testPosition.setQuantity(Integer.parseInt(amount));
-        testPosition.setActive(true);
-        try{
-            entityManager.persist(testPosition);
-        }catch(Exception e){
-            System.out.println("bro eres bobo o que");
-        }
+        String stockValue = getSymbol(stockName);
 
-        response.sendRedirect("/r/" + member.getRoom().getId());
+        if (stockValue.equals("error")){
+            response.sendError(400);
+        }
+        else{
+            Membership member = (Membership) entityManager.createNamedQuery("Membership.byUserAndRoom")
+                                            .setParameter("user", session.getAttribute("u"))
+                                            .setParameter("room", entityManager.find(Room.class, room_id))
+                                            .getSingleResult();
+            Position testPosition = new Position();
+            testPosition.setMember(member);
+            testPosition.setPrice(Float.parseFloat(stockValue));
+            testPosition.setIndexName(stockName);
+            testPosition.setPurchaseDate(java.time.LocalDateTime.now());
+            testPosition.setQuantity(Integer.parseInt(amount));
+            testPosition.setActive(true);
+            entityManager.persist(testPosition);
+
+            response.sendRedirect("/r/" + room_id);
+        }
     }
 
-    public String getSymbol(String name){
-        try {
-            Map<String, String> headers = new HashMap<>();
-            headers.put(headerkey, headerkeyp2);
-            headers.put(authname1, authname2);
-            headers.put("useQueryString", "true");
+    public String getSymbol(String name) throws Exception {
+        Map<String, String> headers = new HashMap<>();
+        headers.put(headerkey, headerkeyp2);
+        headers.put(authname1, authname2);
+        headers.put("useQueryString", "true");
            
-            System.out.println(name);
-            //System.out.println(url + name + "/financial-data");
-            JSONObject json = Unirest.get(url + name + "/financial-data").headers(headers).asJson().getBody()
-                    .getObject();
-            //System.out.println(json.toString());
-            if (json != null) {
-                String valor = (json.getJSONObject("financialData").getJSONObject("currentPrice").getString("fmt"));
-                
-                return valor;
+        JSONObject json = Unirest.get(url + name + "/financial-data")
+                                .headers(headers)
+                                .asJson()
+                                .getBody()
+                                .getObject();
 
-            } else System.out.println("es nulo manin");
-               
-
-        } catch (UnirestException exception) {
-            System.out.println("error bro");
+        if (json == null) {
+            return "error";
         }
-        return "1";
+
+        return json.getJSONObject("financialData")
+                    .getJSONObject("currentPrice")
+                    .getString("fmt");
     }
 
 

@@ -183,6 +183,40 @@ public class RootController {
         response.sendRedirect("/rooms");
     }
 
+    @PostMapping("/joinRoom")
+    @Transactional
+    public void joinRoom(@RequestParam long room_id,
+                        HttpServletResponse response,
+                        HttpSession session) throws Exception{
+
+        User user = (User) session.getAttribute("u");
+        Room room = entityManager.find(Room.class, room_id);
+
+        List<?> previousMembers = entityManager.createNamedQuery("Membership.byUserAndRoom")
+                            .setParameter("user", user)
+                            .setParameter("room", room).getResultList();
+
+        // Checks if user is already in the room and if room is full
+        if (previousMembers.size() == 0 &&
+            room.getMaxUsers() > room.getMemberList().size()){
+
+            Membership membership = new Membership();
+
+            membership.setUser(user);
+            membership.setRoom(room);
+            membership.setBalance(room.getStartBalance());
+            membership.setJoinDate(LocalDateTime.now());
+            entityManager.persist(membership);
+
+            room.getMemberList().add(membership);
+
+            response.sendRedirect("/r/" + room_id);
+        }
+        else{
+            response.sendError(400);
+        }
+    }
+
     @GetMapping("/users")
     public String user(Model model) {
         List<?> topUsers = entityManager

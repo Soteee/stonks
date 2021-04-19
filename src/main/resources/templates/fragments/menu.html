@@ -12,7 +12,7 @@
         <p th:text="${isLogged}">Lol no</p>
         <ul>
             <!-- Si no está loggeado -->
-            <div th:if="${session.u}">
+            <div th:unless="${session.isEmpty()}">
                 <button onclick="window.location='/rooms'" class="btnMenu">Salas</button>
                 <button onclick="window.location='/users'" class="btnMenu">Usuarios</button>
                 <button onclick="window.location='/social'" class="btnMenu">Amigos</button>
@@ -20,7 +20,7 @@
                 <button class="btnMenu">Cerrar sesión</button>
             </div>
             <!-- Si está loggeado -->
-            <div th:unless="${session.u}">
+            <div th:if="${session.isEmpty()}">
                 <button onclick="window.location='/login'" class="btnMenu">Iniciar Sesión</button>
                 <button onclick="window.location='/register'" class="btnMenu">Registrarse</button>
             </div>
