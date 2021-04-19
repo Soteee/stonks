@@ -10,7 +10,7 @@
     <nav class="leftnavbar" th:fragment="my_rooms">
         <p>Mis salas</p>
         <ul>
-            <li th:each="room: ${user_rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}"></a></li>
+            <li th:each="room: ${user_rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}"></a></li>
         </ul>
     </nav>
 </body>
