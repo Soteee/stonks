@@ -100,26 +100,26 @@
 
             <!-- NOMBRE DE LA SALA -->
             <p class="form-text">Nombre de la sala</p>
-            <input type="text" name="name" placeholder="Nombre de la Sala">
+            <input type="text" id="name" name="name" placeholder="Nombre de la Sala">
 
             <!-- Privacidad y contraseña -->
             <p class="form-text">Privacidad</p>
-            <select class="likeInput" name="isPublic">
+            <select id="isPublic" class="likeInput" name="isPublic">
                 <option value="0">Privada (contraseña)</option>
                 <option value="1">Pública</option>
             </select>
             <!-- Se comprueba el nivel de seguridad de la primera, y la segunda tiene que ser igual -->
-            <input type="password" name="password" maxlength="15" placeholder="Contraseña" onkeyup="muestra_seguridad_clave(this.value, this.form)">
-            <input type="password" name="repitedPassword" maxlength="15" placeholder="Repite la contraseña">
+            <input type="password" id="password" name="password" maxlength="15" placeholder="Contraseña" onkeyup="muestra_seguridad_clave(this.value, this.form)">
+            <input type="password" id="repitedPassword" name="repitedPassword" maxlength="15" placeholder="Repite la contraseña">
             <span id="porcentajeBarra" style="width: 50%"></span>
 
             <!-- Privacidad y contraseña -->
             <p class="form-text">Número de jugadores</p>
-            <input type="number" maxlength="3" max="10" name="maxUsers" placeholder="Número de jugadores">
+            <input type="number" id="maxUsers" maxlength="3" max="10" name="maxUsers" placeholder="Número de jugadores">
 
             <!-- Dinero inicial -->
             <p class="form-text">Cantidad de dinero inicial</p>
-            <input type="number" maxlength="7" name="startBalance" placeholder="Dinero inicial">
+            <input type="number" id="startBalance" maxlength="7" name="startBalance" placeholder="Dinero inicial">
 
             <!-- Dinero extra -->
             <p class="form-text">Cantidad de dinero extra</p>
@@ -130,16 +130,16 @@
                 <option id="4">Nunca</option>
 
             </select>
-            <input type="number" maxlength="7" name="weeklyCash" placeholder="Dinero extra">
+            <input type="number" id="weeklyCash" maxlength="7" name="weeklyCash" placeholder="Dinero extra">
 
             <!-- Fecha límite -->
             <p class="form-text">Fecha límite</p>
-            <input type="date" id="finish" name="expirationDate" value="2021-07-22" min="2021-04-06" max="2022-04-06">
+            <input type="date" id="expirationDate" name="expirationDate" value="2021-07-22" min="2021-04-06" max="2022-04-06">
 
             <!-- Dinero para ganar -->
             <p class="form-text">Dinero para ganar</p>
-            <input type="checkbox">
-            <input type="number" maxlength="8" name="cash2Win" placeholder="Dinero para ganar">
+            <input type="checkbox" id="cash2WinBool">
+            <input type="number" id="cash2Win" maxlength="8" name="cash2Win" placeholder="Dinero para ganar">
             <br>
             <input type="submit" placeholder="Check" value="Crear sala">
         </form>

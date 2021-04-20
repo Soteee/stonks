@@ -13,7 +13,7 @@
         <ul>
             <!-- Si no está loggeado -->
             <div th:unless="${session.isEmpty()}">
-                <button onclick="window.location='/rooms'" class="btnMenu">Salas</button>
+                <button id="rooms" onclick="window.location='/rooms'" class="btnMenu">Salas</button>
                 <button onclick="window.location='/users'" class="btnMenu">Usuarios</button>
                 <button onclick="window.location='/social'" class="btnMenu">Amigos</button>
                 <button class="btnMenu">Perfil</button>
