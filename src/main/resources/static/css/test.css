@@ -111,7 +111,9 @@ h2{
     color: #fff;
 }
 
-
+.menu_buttons{
+    display: inline;
+}
 
 .btnMenu{
      background-color: #20A7D7;
