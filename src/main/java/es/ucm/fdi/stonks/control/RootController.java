@@ -255,9 +255,17 @@ public class RootController {
 
     @GetMapping("/u/{id}") // /user/uid
     public String user(@PathVariable long id, Model model) {
+
         User user = entityManager.find(User.class, id);
         model.addAttribute("user", user);
 
+        List<?> user_rooms = entityManager
+                .createNamedQuery("Room.byUser")
+                .setParameter("user", user)
+                .getResultList();
+        model.addAttribute("user_rooms", user_rooms);
+
         return "u";
+
     }
 }
