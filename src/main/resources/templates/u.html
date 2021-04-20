@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}"/>
+    <title th:text="${user.username}">No se encontró el usuario</title>
+</head>
+
+<body>
+
+    <nav th:replace="fragments/menu.html :: topbar"></nav>
+    <nav th:replace="fragments/left_navbar :: my_rooms"></nav>
+
+    <div class="visualizer">
+
+        <h1>Datos de <span th:text="${user.username}"></span></h1>
+
+        <h2>ID</h2>
+        <div th:text="${user.id}"></div>
+
+        <h2>Nombre completo</h2>
+        <div><span th:text="${user.name}"></span> <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></div>
+
+        <h2>Roles</h2>
+        <div th:text="${user.roles}"></div>
+
+        <h1>Salas de <span th:text="${user.username}"></span></h1>
+
+        <ul>
+            <li th:each="room: ${user_rooms}">
+                <h2 th:text="${room.name}"></h2>
+            </li>
+        </ul>
+
+        <!-- TODO activo en salas..., Ganancias, etc -->
+
+    </div>
+
+</body>
+</html>
