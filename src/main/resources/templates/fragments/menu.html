@@ -8,21 +8,37 @@
 
 <body>
     <nav class="topnavbar" th:fragment="topbar">
-        <span><img th:src="@{/images/logo200x200.png}"/></span>
-        <p th:text="${isLogged}">Lol no</p>
-        <ul>
+        <a th:href="@{/}"><img th:src="@{/images/logo200x200.png}"/></a>
+        <ul class="menu_buttons">
             <!-- Si no está loggeado -->
             <div th:unless="${session.isEmpty()}">
-                <button id="rooms" onclick="window.location='/rooms'" class="btnMenu">Salas</button>
-                <button onclick="window.location='/users'" class="btnMenu">Usuarios</button>
-                <button onclick="window.location='/social'" class="btnMenu">Amigos</button>
-                <button class="btnMenu">Perfil</button>
-                <button class="btnMenu">Cerrar sesión</button>
+                <form method="GET" th:action="@{/admin}" th:if="${session.u.hasRole(1)}">
+                    <button class="btnMenu">Administrador</button>
+                </form>
+                <form method="GET" th:action="@{/rooms}">
+                    <button id="rooms" class="btnMenu">Salas</button>
+                </form>
+                <form method="GET" th:action="@{/users}">
+                    <button class="btnMenu">Usuarios</button>
+                </form>
+                <form method="GET" th:action="@{/social}">
+                    <button class="btnMenu">Amigos</button>
+                </form>
+                <form method="GET" th:action="@{/perfil}">
+                    <button class="btnMenu">Perfil</button>
+                </form>
+                <form method="POST" th:action="@{/logout}">
+                    <button class="btnMenu" type="submit">Cerrar sesión</button>
+                </form>
             </div>
             <!-- Si está loggeado -->
             <div th:if="${session.isEmpty()}">
-                <button onclick="window.location='/login'" class="btnMenu">Iniciar Sesión</button>
-                <button onclick="window.location='/register'" class="btnMenu">Registrarse</button>
+                <form method="GET" th:action="@{/login}">
+                    <button class="btnMenu">Iniciar Sesión</button>
+                </form>
+                <form method="GET" th:action="@{/register}">
+                    <button class="btnMenu">Registrarse</button>
+                </form>
             </div>
         </ul>
     </nav>

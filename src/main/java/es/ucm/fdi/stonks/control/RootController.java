@@ -57,17 +57,6 @@ public class RootController {
         return "index";
     }
 
-    @GetMapping("/admin")   // admin panel
-    public String admin(Model model) {
-        List<?> users = entityManager.createNamedQuery("User.all").getResultList();
-        model.addAttribute("users", users);
-
-        List<?> rooms = entityManager.createNamedQuery("Room.all").getResultList();
-        model.addAttribute("rooms", rooms);
-
-        return "admin";
-    }
-
     @GetMapping("/rooms")   // lista de salas
     public String rooms(Model model, HttpSession session) {
         List<?> user_rooms = entityManager
@@ -104,13 +93,13 @@ public class RootController {
                     .getResultList();
         model.addAttribute("users_inroom", users_inroom);
 
-        // Añade las acciones del usuario a model si éste pertenece a la sala
         if (users_inroom.contains(user)){
             Membership membership = (Membership) entityManager
                         .createNamedQuery("Membership.byUserAndRoom")
                         .setParameter("user", user)
                         .setParameter("room", room)
                         .getSingleResult();
+            model.addAttribute("membership", membership);
 
             List<?> positions = entityManager
                         .createNamedQuery("Position.byMembership")
