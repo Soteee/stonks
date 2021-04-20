@@ -17,7 +17,10 @@
                 <button onclick="window.location='/users'" class="btnMenu">Usuarios</button>
                 <button onclick="window.location='/social'" class="btnMenu">Amigos</button>
                 <button class="btnMenu">Perfil</button>
-                <button class="btnMenu">Cerrar sesión</button>
+
+                <form method="POST" th:action="@{/logout}">
+                    <button class="btnMenu" type="submit">Cerrar sesión</button>
+                </form>
             </div>
             <!-- Si está loggeado -->
             <div th:if="${session.isEmpty()}">
