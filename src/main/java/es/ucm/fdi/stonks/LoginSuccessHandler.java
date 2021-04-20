@@ -64,6 +64,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 				.replaceFirst("/[^/]*$", "/ws");	// .../foo		 => .../ws
 		session.setAttribute("ws", ws);
 		
+		// Intentar que si estabas accediendo a una página protegida, vuelvas a ella una vez te hayas loggeado
+
 		// redirects to 'admin' or 'user/{id}', depending on the user
 		String nextUrl = u.hasRole(User.Role.ADMIN) ? 
 			"admin/" :
