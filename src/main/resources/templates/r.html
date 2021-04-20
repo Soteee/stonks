@@ -22,7 +22,7 @@
         
         <h1 th:text="${room.name}">No se encontró la sala</h1>
 
-        <div th:if="${positions == null}">
+        <div th:if="${membership == null}">
             <form method="POST" th:action="@{/joinRoom}">
                 No perteneces a esta sala
                 <input type="hidden" name="room_id" th:value="${room.id}">
@@ -32,7 +32,7 @@
 
         <span><img th:src="@{/images/stockexample.jpg}" /></span>
 
-        <div th:if="${positions != null}">
+        <div th:if="${membership != null}">
             <!-- Buy stocks -->
             <form class="action_buy" method="POST" th:action="@{/action_buy}">
                 <input type="hidden" name="room_id" th:value="${room.id}">
@@ -53,9 +53,13 @@
 
             <!-- Información de las acciones del usuario -->
             <div class="player_info">
+                <p>Balance: <span th:text="${membership.balance}"></span></p>
+
+                <p>Posiciones</p>
+                <p th:if="${#lists.size(positions) == 0}">Todavía no tienes posiciones</p>
                 <table>
                     <tr th:each="position: ${positions}">
-                        <td th:text="${position.indexName}">Todavía no se han comprado acciones</td>
+                        <td th:text="${position.indexName}"></td>
                         <td th:text="${position.quantity}"></td>
                     </tr>
                 </table>

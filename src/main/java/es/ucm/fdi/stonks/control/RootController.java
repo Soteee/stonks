@@ -104,13 +104,13 @@ public class RootController {
                     .getResultList();
         model.addAttribute("users_inroom", users_inroom);
 
-        // Añade las acciones del usuario a model si éste pertenece a la sala
         if (users_inroom.contains(user)){
             Membership membership = (Membership) entityManager
                         .createNamedQuery("Membership.byUserAndRoom")
                         .setParameter("user", user)
                         .setParameter("room", room)
                         .getSingleResult();
+            model.addAttribute("membership", membership);
 
             List<?> positions = entityManager
                         .createNamedQuery("Position.byMembership")
