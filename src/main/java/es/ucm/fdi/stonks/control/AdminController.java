@@ -1,6 +1,7 @@
 package es.ucm.fdi.stonks.control;
 
 import java.io.File;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -44,8 +45,11 @@ public class AdminController {
 		model.addAttribute("basePath", env.getProperty("es.ucm.fdi.base-path"));
 		model.addAttribute("debug", env.getProperty("es.ucm.fdi.debug"));
 
-		model.addAttribute("users", entityManager.createQuery(
-				"SELECT u FROM User u").getResultList());
+		List<?> users = entityManager.createNamedQuery("User.all").getResultList();
+        model.addAttribute("users", users);
+
+        List<?> rooms = entityManager.createNamedQuery("Room.all").getResultList();
+        model.addAttribute("rooms", rooms);
 		
 		return "admin";
 	}

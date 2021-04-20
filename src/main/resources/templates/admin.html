@@ -19,13 +19,14 @@
     <div id="users">
         <h2>Usuarios activos</h2>
         <form>
-            <input type="text" name="userSearch"><input type="submit" value="Buscar"><br>
+            <input type="text" name="userSearch">
             <select name="filtro">
                 <option id="1">VIPs</option>
                 <option id="2">Invitados</option>
                 <option id="3">Nuevos</option>
                 <option id="4">Top</option>
             </select>
+            <input type="submit" value="Buscar">
         </form>
         <ul>
             <li th:each="user: ${users}" th:text="${user.username}">No se han encontrado usuarios</li>
@@ -34,13 +35,14 @@
     <div id="rooms">
         <h2>Salas activas</h2>
         <form>
-            <input type="text" name="roomSearch"><input type="submit" value="Buscar"><br>
+            <input type="text" name="roomSearch">
             <select name="filtro">
                 <option id="1">Gratis</option>
                 <option id="2">De pago</option>
                 <option id="3">Nuevas</option>
                 <option id="4">Top</option>
             </select>
+            <input type="submit" value="Buscar">
         </form>
         <ul>
             <li th:each="room: ${rooms}" th:text="${room.name}">No se han encontrado salas</li>

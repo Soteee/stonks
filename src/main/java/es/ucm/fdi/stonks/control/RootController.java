@@ -57,17 +57,6 @@ public class RootController {
         return "index";
     }
 
-    @GetMapping("/admin")   // admin panel
-    public String admin(Model model) {
-        List<?> users = entityManager.createNamedQuery("User.all").getResultList();
-        model.addAttribute("users", users);
-
-        List<?> rooms = entityManager.createNamedQuery("Room.all").getResultList();
-        model.addAttribute("rooms", rooms);
-
-        return "admin";
-    }
-
     @GetMapping("/rooms")   // lista de salas
     public String rooms(Model model, HttpSession session) {
         List<?> user_rooms = entityManager
