@@ -81,9 +81,10 @@ public class ApiController {
         if (json == null) {
             return "error";
         }
+        else{
 
-        return json.getJSONObject("financialData")
-                    .getJSONObject("currentPrice")
-                    .getString("fmt");
+            
+        }
+        return json.getJSONObject("financialData").getJSONObject("currentPrice").getString("fmt");
     }
 }

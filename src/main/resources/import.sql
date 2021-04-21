@@ -42,7 +42,9 @@ INSERT INTO user(id,enabled,username,password,roles,name,first_name) VALUES (
 	'USER',
 	'Jhon', 'Doe'
 );
-
+Insert into user(id,enabled,username,password,roles,name,first_name) VALUES (
+	6,1, 'javi', '{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u', 'USER', 'javi', 'javi'
+);
 
 -- Salas de prueba
 INSERT INTO room(id, name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (1, 'Andorra', TRUE, 1000, 10, 3000, 100000, 2);
@@ -55,3 +57,24 @@ INSERT INTO membership VALUES (3, 5000, NULL, 1, 3);
 INSERT INTO membership VALUES (4, 10000, NULL, 2, 4);
 INSERT INTO membership VALUES (5, 40000, NULL, 2, 5);
 INSERT INTO membership VALUES (6, 8000, NULL, 2, 1);
+
+
+-- Mercados
+
+insert into market values (1, 'NASDAQ');
+insert into market values (2, 'CRYTPO');
+
+--Stocks en mercados
+
+insert into market_stocks values (1, 'TSLA');
+insert into market_stocks values (1, 'AAPL');
+insert into market_stocks values (1, 'AMZN');
+insert into market_stocks values (1, 'MSFT');
+insert into market_stocks values (1, 'NIO');
+insert into market_stocks values (1, 'NVDIA');
+insert into market_stocks values (1, 'MRNA');
+insert into market_stocks values (1, 'NKLA');
+insert into market_stocks values (1, 'FB');
+insert into market_stocks values (1, 'AMD');
+
+

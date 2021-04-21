@@ -1,5 +1,6 @@
 package es.ucm.fdi.stonks.control;
 
+import es.ucm.fdi.stonks.model.Market;
 import es.ucm.fdi.stonks.model.Membership;
 import es.ucm.fdi.stonks.model.Room;
 import es.ucm.fdi.stonks.model.User;
@@ -165,14 +166,18 @@ public class RootController {
             @RequestParam int startBalance,
             @RequestParam int cash2Win,
             @RequestParam String expirationDate,
+            @RequestParam String marketName,
             HttpServletResponse response,
             HttpSession session) throws Exception{
 
         Room newRoom = new Room();
+        Market market= new Market();
         User room_admin = (User) session.getAttribute("u");
         Membership adminMember = new Membership();
         ArrayList<Membership> memberList = new ArrayList<>();
         LocalDateTime currentDate = LocalDateTime.now();
+
+
 
         adminMember.setUser(room_admin);
         adminMember.setRoom(newRoom);
@@ -181,7 +186,9 @@ public class RootController {
         entityManager.persist(adminMember);
 
         memberList.add(adminMember);
-
+           
+        market.setName(marketName);
+        newRoom.setMarket(market);
         newRoom.setName(name);
         newRoom.setPublic(isPublic);
         newRoom.setWeeklyCash(weeklyCash);

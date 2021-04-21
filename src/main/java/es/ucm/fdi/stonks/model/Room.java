@@ -36,6 +36,9 @@ public class Room {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private long id;
 
+   @ManyToOne
+   private Market market;
+
    @NotNull
    @Size(max=20)
    private String name; // nombre de la sala
