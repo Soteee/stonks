@@ -2,6 +2,8 @@ package es.ucm.fdi.stonks.model;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 import javax.persistence.Column;
@@ -13,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import lombok.Data;
 
@@ -32,6 +36,9 @@ import lombok.Data;
  */
 @Entity
 @Data
+@NamedQueries({
+    
+})
 public class Market {
 
     @Id
@@ -47,6 +54,17 @@ public class Market {
     @Column
     @ElementCollection(targetClass = String.class)
     private List<String> stocks; 
+    
+    public List<String> getStocks() {
+        return stocks;
+    }
 
+    public boolean getListElement(String name){
+        for(int i=0;i<stocks.size();i++){
+           if(name.equals(stocks.get(i)))
+            return true;
+        }
+        return false;
+    }
 
 }
