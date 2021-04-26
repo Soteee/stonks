@@ -29,7 +29,7 @@
             <input type="submit" value="Buscar">
         </form>
         <ul>
-            <li th:each="user: ${users}" th:text="${user.username}">No se han encontrado usuarios</li>
+            <li th:each="user: ${users}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios</a></li>
         </ul>
     </div>
     <div id="rooms">
@@ -45,7 +45,7 @@
             <input type="submit" value="Buscar">
         </form>
         <ul>
-            <li th:each="room: ${rooms}" th:text="${room.name}">No se han encontrado salas</li>
+            <li th:each="room: ${rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
         </ul>
     </div>
 </body>

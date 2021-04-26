@@ -14,7 +14,7 @@
     <div class="rightnavbar" id=right_navbar>
         <p>Usuarios en la sala</p>
         <ul>
-            <li th:each="user: ${users_inroom}" th:text="${user.username}">No se han encontrado usuarios en esta sala</li>
+            <li th:each="user: ${users_inroom}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios en esta sala</a></li>
         </ul>
     </div>
 

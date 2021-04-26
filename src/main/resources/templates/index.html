@@ -14,12 +14,12 @@
 
         <h2>Top Jugadores</h2>
         <ol>
-            <li th:each="user: ${topUsers}" th:text="${user.username}">No se han encontrado usuarios</li>
+            <li th:each="user: ${topUsers}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios</a></li>
         </ol>
 
         <h2>Top Salas</h2>
         <ol>
-            <li th:each="room: ${topRooms}" th:text="${room.name}">No se han encontrado salas</li>
+            <li th:each="room: ${topRooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
         </ol>
     </div>
 </body>
