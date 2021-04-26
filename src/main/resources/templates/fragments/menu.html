@@ -12,7 +12,7 @@
         <!-- Si no está loggeado -->
         <div th:unless="${session.isEmpty()}">
             <a th:if="${session.u.hasRole(1)}" th:href="@{/admin/}" class="btnMenu">Administrador</a>
-            <a th:href="@{/rooms}" class="btnMenu">Salas</a>
+            <a th:href="@{/r/}" class="btnMenu">Salas</a>
             <a th:href="@{/users}" class="btnMenu">Usuarios</a>
             <a th:href="@{/social}" class="btnMenu">Amigos</a>
             <a th:href="@{/u/{id}(id=${session.u.id})}" class="btnMenu">Perfil</a>

@@ -23,7 +23,7 @@
         <h1 th:text="${room.name}">No se encontró la sala</h1>
 
         <div th:if="${membership == null}">
-            <form method="POST" th:action="@{/joinRoom}">
+            <form method="POST" th:action="@{/r/joinRoom}">
                 No perteneces a esta sala
                 <input type="hidden" name="room_id" th:value="${room.id}">
                 <input type="submit" value="Unirme">

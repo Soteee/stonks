@@ -25,7 +25,7 @@
             <li th:each="room: ${topRooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
         </ol>
 
-        <a href='createRoom'>Crear sala</a>
+        <a th:href='@{/r/createRoom}'>Crear sala</a>
     </div>
     
 </body>
