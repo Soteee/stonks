@@ -32,30 +32,30 @@ h2{
     height: 110px;
    background-color:#0081AF;
 }
-.topnavbar span img{
+.topnavbar a img{
     margin-top:2%;
     margin-left: 5%;
     width: 100px;
     height: 100px;
    
 }
-
-.topnavbar ul{
+.topnavbar div{
     position: relative;
     left: 40%;
-    display:inline;
     bottom:60%;
-   
 }
 
-.topnavbar ul button{
+.topnavbar div *{
+    display: inline-block;
+}
+
+.topnavbar button{
     background-color: #4c74af; /* Green */
     border:black solid;
     color: white;
     padding: 7px 15px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
     font-size: 16px;
    
 }
@@ -111,13 +111,8 @@ h2{
     color: #fff;
 }
 
-.menu_buttons{
-    display: inline;
-}
 
-.btnMenu{
-     background-color: #20A7D7;
-}
+
 
 .visualizer{
     display:block;
