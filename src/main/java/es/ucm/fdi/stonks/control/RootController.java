@@ -1,6 +1,6 @@
 package es.ucm.fdi.stonks.control;
 
-import es.ucm.fdi.stonks.model.Market;
+
 import es.ucm.fdi.stonks.model.Membership;
 import es.ucm.fdi.stonks.model.Room;
 import es.ucm.fdi.stonks.model.User;

@@ -34,9 +34,7 @@ public class Position {
     private int quantity; // cantidad de acciones
 
     @NotNull
-    @Size(max=20)
-    private String indexName; // nombre del stock; no puede repetirse
-
-    private double price; // precio medio ponderado de la posición
+    @ManyToOne
+    private Symbol symbol;
 
 }

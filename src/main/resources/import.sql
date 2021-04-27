@@ -47,28 +47,24 @@ Insert into user(id,enabled,username,password,roles,name,first_name) VALUES (
 );
 
 
--- Mercados
-
-insert into market values (1, 'NASDAQ');
-insert into market values (2, 'CRYTPO');
 
 --Stocks en mercados
 
-insert into market_stocks values (1, 'TSLA');
-insert into market_stocks values (1, 'AAPL');
-insert into market_stocks values (1, 'AMZN');
-insert into market_stocks values (1, 'MSFT');
-insert into market_stocks values (1, 'NIO');
-insert into market_stocks values (1, 'NVDIA');
-insert into market_stocks values (1, 'MRNA');
-insert into market_stocks values (1, 'NKLA');
-insert into market_stocks values (1, 'FB');
-insert into market_stocks values (1, 'AMD');
+insert into symbol(name, updated_on, value) values ('TSLA',NULL,0.0);
+insert into symbol(name, updated_on, value) values ('AAPL',NULL,0.0);
+insert into symbol(name, updated_on, value) values ('AMZN',NULL,0.0);
+insert into symbol(name, updated_on, value) values ('MSFT',NULL,0.0);
+insert into symbol(name, updated_on, value) values ('NIO',NULL,0.0);
+insert into symbol(name, updated_on, value) values ('NVDIA',NULL,0.0);
+insert into symbol(name, updated_on, value) values ('MRNA',NULL,0.0);
+insert into symbol(name, updated_on, value) values ('NKLA',NULL,0.0);
+insert into symbol(name, updated_on, value) values ('FB',NULL,0.0);
+insert into symbol(name, updated_on, value) values ('AMD',NULL,0.0);
 
 
 -- Salas de prueba
-INSERT INTO room(id,market,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (1, 1,'Andorra', TRUE, 1000, 10, 3000, 100000, 2);
-INSERT INTO room(id,market ,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (2,1,'Me encanta pagar impuestos', TRUE, 1000, 10, 3000, 100000, 4);
+INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (1,'Andorra', TRUE, 1000, 10, 3000, 100000, 2);
+INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (2,'Me encanta pagar impuestos', TRUE, 1000, 10, 3000, 100000, 4);
 
 -- Memberships de prueba
 INSERT INTO membership VALUES (1, 10000, NULL, 1, 1);
