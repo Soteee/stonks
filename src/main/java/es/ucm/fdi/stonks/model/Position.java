@@ -35,7 +35,7 @@ public class Position {
 
     @NotNull
     @Size(max=20)
-    private String indexName; // nombre de la posición; no puede repetirse
+    private String indexName; // nombre del stock; no puede repetirse
 
     private double price; // precio medio ponderado de la posición
 

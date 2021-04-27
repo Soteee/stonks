@@ -7,7 +7,7 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+import lombok.Getter;
 import lombok.Data;
 
 /**
@@ -29,12 +29,17 @@ import lombok.Data;
             query="SELECT r FROM Membership m "
             + "JOIN Room r ON m.room = r.id "
             + "WHERE m.user = :user")
+
 })
 public class Room {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private long id;
+
+   @Column
+   @ManyToOne
+   private Market market;
 
    @NotNull
    @Size(max=20)

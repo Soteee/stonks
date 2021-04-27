@@ -3,6 +3,8 @@ package es.ucm.fdi.stonks.control;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import es.ucm.fdi.stonks.model.Market;
 import es.ucm.fdi.stonks.model.Membership;
 import es.ucm.fdi.stonks.model.Position;
 import es.ucm.fdi.stonks.model.Room;
@@ -42,8 +44,18 @@ public class ApiController {
                         Model model,
                         HttpServletResponse response) throws Exception{
 
-        String stockValue = getSymbol(stockName);
+        
+        
 
+        Room r = entityManager.find(Room.class, room_id);
+        Market m = (Market) r.getMarket();
+        if(!m.getListElement(stockName)){
+            System.out.print("funcionando depta madre");
+            m.getStocks().add(stockName);
+        }
+        
+        String stockValue = getSymbol(stockName);
+        
         if (stockValue.equals("error")){
             response.sendError(400);
         }
@@ -70,6 +82,8 @@ public class ApiController {
         headers.put(headerkey, headerkeyp2);
         headers.put(authname1, authname2);
         headers.put("useQueryString", "true");
+
+
            
         JSONObject json = Unirest.get(url + name + "/financial-data")
                                 .headers(headers)
@@ -80,9 +94,10 @@ public class ApiController {
         if (json == null) {
             return "error";
         }
+        else{
 
-        return json.getJSONObject("financialData")
-                    .getJSONObject("currentPrice")
-                    .getString("fmt");
+            
+        }
+        return json.getJSONObject("financialData").getJSONObject("currentPrice").getString("fmt");
     }
 }
