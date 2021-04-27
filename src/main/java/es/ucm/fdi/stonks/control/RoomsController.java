@@ -72,6 +72,11 @@ public class RoomsController{
                         .getSingleResult();
             model.addAttribute("membership", membership);
 
+            List<?> symbols = entityManager
+                        .createNamedQuery("Symbol.all")
+                        .getResultList();
+            model.addAttribute("symbols", symbols);
+
             List<?> positions = entityManager
                         .createNamedQuery("Position.byMembership")
                         .setParameter("membership", membership)

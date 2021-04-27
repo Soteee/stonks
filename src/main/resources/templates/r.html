@@ -37,12 +37,7 @@
             <form class="action_buy" method="POST" th:action="@{/action_buy}">
                 <input type="hidden" name="room_id" th:value="${room.id}">
                 <select name="stockName">
-                <!-- TODO: parsear esto desde el TH, con el valor de la hora -->
-                    <option name="TSLA"> TSLA </option>
-                    <option name="AAPL"> AAPL </option>
-                    <option name="MSFT"> MSFT </option>
-                    <option name="AMZN"> AMZN </option>
-                    <option name="FB"> FB </option>
+                    <option th:each="symbol: ${symbols}" th:name="${symbol.name}" th:text="${symbol.name}"></option>
                 </select>
                 <input type="number" id="amount" placeholder="Cantidad" name="amount" size="20">
                 <input type="submit" value="Comprar">
@@ -59,7 +54,7 @@
                 <p th:if="${#lists.size(positions) == 0}">Todavía no tienes posiciones</p>
                 <table>
                     <tr th:each="position: ${positions}">
-                        <td th:text="${position.indexName}"></td>
+                        <td th:text="${position.symbol.name}"></td>
                         <td th:text="${position.quantity}"></td>
                     </tr>
                 </table>

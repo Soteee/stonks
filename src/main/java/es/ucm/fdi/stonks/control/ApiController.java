@@ -54,7 +54,10 @@ public class ApiController {
         Position newPosition = new Position();
         newPosition.setMember(member);
 
-        Symbol symbol = (Symbol) entityManager.createNamedQuery("Symbol.byName").setParameter("name", stockName).getSingleResult();
+        Symbol symbol = (Symbol) entityManager
+                                .createNamedQuery("Symbol.byName")
+                                .setParameter("name", stockName)
+                                .getSingleResult();
 
         newPosition.setSymbol(symbol);
         newPosition.setPurchaseDate(java.time.LocalDateTime.now());
@@ -65,12 +68,14 @@ public class ApiController {
         response.sendRedirect("/r/" + room_id);
     }
 
-    // Solo se puede llamar desde admin
+    // Sólo se puede llamar desde admin
     @PostMapping("/refresh")
     @Transactional
     public void refreshAll(HttpServletResponse response) throws Exception{
 
-        List<Symbol> symbolList = entityManager.createNamedQuery("Symbol.all").getResultList();
+        List<Symbol> symbolList = entityManager
+                                .createNamedQuery("Symbol.all")
+                                .getResultList();
         for (Symbol o : symbolList) {
              o.setValue(getSymbol(o.getName()));
              o.setUpdatedOn(java.time.LocalDateTime.now());
