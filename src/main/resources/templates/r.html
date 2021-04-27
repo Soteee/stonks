@@ -14,7 +14,7 @@
     <div class="rightnavbar" id=right_navbar>
         <p>Usuarios en la sala</p>
         <ul>
-            <li th:each="user: ${users_inroom}" th:text="${user.username}">No se han encontrado usuarios en esta sala</li>
+            <li th:each="user: ${users_inroom}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios en esta sala</a></li>
         </ul>
     </div>
 
@@ -23,7 +23,7 @@
         <h1 th:text="${room.name}">No se encontró la sala</h1>
 
         <div th:if="${membership == null}">
-            <form method="POST" th:action="@{/joinRoom}">
+            <form method="POST" th:action="@{/r/joinRoom}">
                 No perteneces a esta sala
                 <input type="hidden" name="room_id" th:value="${room.id}">
                 <input type="submit" value="Unirme">

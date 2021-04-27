@@ -25,8 +25,7 @@ import javax.transaction.Transactional;
 
 import org.json.JSONObject;
 
-@Data
-@Controller("action_buy")
+@Controller
 public class ApiController {
     @Autowired
     private EntityManager entityManager;

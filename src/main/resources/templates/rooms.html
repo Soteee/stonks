@@ -22,12 +22,10 @@
             </select>
         </form>
         <ol id="results-rooms">
-           <li th:each="room: ${topRooms}">
-               <a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}"></a>
-            </li>
+            <li th:each="room: ${topRooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
         </ol>
 
-        <button id="createRoom" onclick="window.location = 'createRoom'">Crear sala</button>
+        <a th:href='@{/r/createRoom}'>Crear sala</a>
     </div>
     
 </body>
