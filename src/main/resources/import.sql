@@ -52,14 +52,14 @@ Insert into user(id,enabled,username,password,roles,name,first_name) VALUES (
 
 insert into symbol(name, updated_on, value) values ('TSLA',NULL,0.0);
 insert into symbol(name, updated_on, value) values ('AAPL',NULL,0.0);
-insert into symbol(name, updated_on, value) values ('AMZN',NULL,0.0);
-insert into symbol(name, updated_on, value) values ('MSFT',NULL,0.0);
-insert into symbol(name, updated_on, value) values ('NIO',NULL,0.0);
-insert into symbol(name, updated_on, value) values ('NVDIA',NULL,0.0);
-insert into symbol(name, updated_on, value) values ('MRNA',NULL,0.0);
-insert into symbol(name, updated_on, value) values ('NKLA',NULL,0.0);
-insert into symbol(name, updated_on, value) values ('FB',NULL,0.0);
-insert into symbol(name, updated_on, value) values ('AMD',NULL,0.0);
+--insert into symbol(name, updated_on, value) values ('AMZN',NULL,0.0);
+--insert into symbol(name, updated_on, value) values ('MSFT',NULL,0.0);
+--insert into symbol(name, updated_on, value) values ('NIO',NULL,0.0);
+--insert into symbol(name, updated_on, value) values ('NVDIA',NULL,0.0);
+--insert into symbol(name, updated_on, value) values ('MRNA',NULL,0.0);
+--insert into symbol(name, updated_on, value) values ('NKLA',NULL,0.0);
+--insert into symbol(name, updated_on, value) values ('FB',NULL,0.0);
+--insert into symbol(name, updated_on, value) values ('AMD',NULL,0.0);
 
 
 -- Salas de prueba

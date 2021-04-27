@@ -8,7 +8,7 @@
 <body>
     <nav th:replace="fragments/menu.html :: topbar"></nav>
     <div id="stats">
-        <form th:action="@{/admin/refresh}" method="POST">
+        <form th:action="@{/refresh}" method="POST">
             <input type="submit" value="Actualizar stocks">
         </form>
         <h2>Estadísticas</h2>

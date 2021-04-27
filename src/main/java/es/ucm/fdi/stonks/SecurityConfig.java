@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    http
 	        .authorizeRequests()
 	            .antMatchers("/css/**", "/js/**", "/images/**", "/", "/error", "/register").permitAll() // Borra entrada /** cuando consigamos hacer funcionar el login
-	            .antMatchers("/admin/**").hasRole("ADMIN")		  // <-- administration
+	            .antMatchers("/admin/**", "/refresh").hasRole("ADMIN")		  // <-- administration
 	            .anyRequest().authenticated()
 	            .and()
 			.formLogin()

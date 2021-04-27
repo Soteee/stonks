@@ -53,14 +53,6 @@ public class AdminController {
 		
 		return "admin";
 	}
-	
-	@PostMapping("/refresh")
-	@Transactional
-	public String refresh() throws Exception{
-		ApiController.refreshAll();
-		
-		return "admin";
-	}
 
 	@PostMapping("/toggleuser")
 	@Transactional

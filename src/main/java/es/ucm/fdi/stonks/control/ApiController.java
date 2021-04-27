@@ -29,7 +29,8 @@ import org.json.JSONObject;
 @Controller
 public class ApiController {
     @Autowired
-    private static EntityManager entityManager;
+    private EntityManager entityManager;
+
     private static String url = "https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/";
     private static String headerkey = "x-rapidapi-key";
     private static String headerkeyp2 = "1a2c0118edmsh2fe8520e5114c90p147e61jsn9a2bc42af118";
@@ -64,16 +65,19 @@ public class ApiController {
         response.sendRedirect("/r/" + room_id);
     }
 
-
-    public static void refreshAll() throws Exception{
+    // Solo se puede llamar desde admin
+    @PostMapping("/refresh")
+    @Transactional
+    public void refreshAll(HttpServletResponse response) throws Exception{
 
         List<Symbol> symbolList = entityManager.createNamedQuery("Symbol.all").getResultList();
         for (Symbol o : symbolList) {
-            System.out.println(o.getName());
              o.setValue(getSymbol(o.getName()));
              o.setUpdatedOn(java.time.LocalDateTime.now());
              entityManager.persist(o);
         }
+
+        response.sendRedirect("/admin/");
     }
 
     public static float getSymbol(String name) throws Exception {
