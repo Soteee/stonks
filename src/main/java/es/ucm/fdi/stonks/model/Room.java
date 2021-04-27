@@ -37,9 +37,7 @@ public class Room {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private long id;
 
-   @Column
-   @ManyToOne
-   private Market market;
+   
 
    @NotNull
    @Size(max=20)

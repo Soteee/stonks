@@ -8,13 +8,15 @@
 <body>
     <nav th:replace="fragments/menu.html :: topbar"></nav>
     <div id="stats">
+        <form th:action="@{/admin/refresh}" method="POST">
+            <input type="submit" value="Actualizar stocks">
+        </form>
         <h2>Estadísticas</h2>
         <ul>
             <li>Puntos estables: 78%</li>
             <li>Usuarios invitados: 34%</li>
             <li>Usuarios VIP: 15%</li>
-            <li>Salas de pago: 12%</li>
-        </ul>
+            <li>Salas de pago: 12%</li>        </ul>
     </div>
     <div id="users">
         <h2>Usuarios activos</h2>
