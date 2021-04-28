@@ -49,12 +49,11 @@ Insert into user(id,enabled,username,password,roles,name,first_name) VALUES (
 
 
 --Stocks en mercados
-
 insert into symbol(name, updated_on, value) values ('TSLA',NULL,0.0);
 insert into symbol(name, updated_on, value) values ('AAPL',NULL,0.0);
 --insert into symbol(name, updated_on, value) values ('AMZN',NULL,0.0);
---insert into symbol(name, updated_on, value) values ('MSFT',NULL,0.0);
---insert into symbol(name, updated_on, value) values ('NIO',NULL,0.0);
+insert into symbol(name, updated_on, value) values ('MSFT',NULL,0.0);
+insert into symbol(name, updated_on, value) values ('NIO',NULL,0.0);
 --insert into symbol(name, updated_on, value) values ('NVDIA',NULL,0.0);
 --insert into symbol(name, updated_on, value) values ('MRNA',NULL,0.0);
 --insert into symbol(name, updated_on, value) values ('NKLA',NULL,0.0);
@@ -65,6 +64,12 @@ insert into symbol(name, updated_on, value) values ('AAPL',NULL,0.0);
 -- Salas de prueba
 INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (1,'Andorra', TRUE, 1000, 10, 3000, 100000, 2);
 INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (2,'Me encanta pagar impuestos', TRUE, 1000, 10, 3000, 100000, 4);
+
+-- Stocks de cada sala
+INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (1, 1);
+INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (1, 2);
+INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (2, 3);
+INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (2, 4);
 
 -- Memberships de prueba
 INSERT INTO membership VALUES (1, 10000, NULL, 1, 1);

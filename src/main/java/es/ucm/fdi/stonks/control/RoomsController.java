@@ -73,7 +73,8 @@ public class RoomsController{
             model.addAttribute("membership", membership);
 
             List<?> symbols = entityManager
-                        .createNamedQuery("Symbol.all")
+                        .createNamedQuery("Symbol.byRoom")
+                        .setParameter("room", room)
                         .getResultList();
             model.addAttribute("symbols", symbols);
 
@@ -145,7 +146,8 @@ public class RoomsController{
 
         List<?> previousMembers = entityManager.createNamedQuery("Membership.byUserAndRoom")
                             .setParameter("user", user)
-                            .setParameter("room", room).getResultList();
+                            .setParameter("room", room)
+                            .getResultList();
 
         // Checks if user is already in the room and if room is full
         if (previousMembers.size() == 0 &&
