@@ -9,8 +9,8 @@
 <body>
     <nav class="topnavbar" th:fragment="topbar">
         <a th:href="@{/}"><img th:src="@{/images/logo200x200.png}"/></a>
-        <!-- Si no está loggeado -->
-        <div th:unless="${session.isEmpty()}">
+        <!-- Si está loggeado -->
+        <div th:if="${session.u}">
             <a th:if="${session.u.hasRole(1)}" th:href="@{/admin/}" class="btnMenu">Administrador</a>
             <a th:href="@{/r/}" class="btnMenu">Salas</a>
             <a th:href="@{/users}" class="btnMenu">Usuarios</a>
@@ -20,8 +20,8 @@
                 <button class="btnMenu" type="submit">Cerrar sesión</button>
             </form>
         </div>
-        <!-- Si está loggeado -->
-        <div th:if="${session.isEmpty()}">
+        <!-- Si no está loggeado -->
+        <div th:unless="${session.u}">
             <a th:href="@{/login}" class="btnMenu">Iniciar Sesión</a>
             <a th:href="@{/register}" class="btnMenu">Registrarse</a>
         </div>
