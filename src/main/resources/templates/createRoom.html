@@ -95,7 +95,7 @@
     <div class="visualizer">
 
         <!-- CREAR UNA SALA -->
-        <form class="Formulario" method="POST" th:action="@{/createRoom}">
+        <form class="Formulario" method="POST" th:action="@{/r/createRoom}">
             <h1 class="form-text">CREAR UNA SALA</h1>
 
             <!-- NOMBRE DE LA SALA -->
@@ -121,8 +121,6 @@
             <p class="form-text">Cantidad de dinero inicial</p>
             <input type="number" id="startBalance" maxlength="7" name="startBalance" placeholder="Dinero inicial">
             
-           
-
             <!-- Dinero extra -->
             <p class="form-text">Cantidad de dinero extra</p>
             <select class="likeInput">
@@ -130,7 +128,6 @@
                 <option id="2">Semanalmente</option>
                 <option id="3">Mensualmente</option>
                 <option id="4">Nunca</option>
-
             </select>
             <input type="number" id="weeklyCash" maxlength="7" name="weeklyCash" placeholder="Dinero extra">
 
@@ -143,13 +140,15 @@
             <input type="checkbox" id="cash2WinBool">
             <input type="number" id="cash2Win" maxlength="8" name="cash2Win" placeholder="Dinero para ganar">
             <br>
-            <input type="submit" placeholder="Check" value="Crear sala">
 
-             <!--Elegir mercado-->
-            <p class="form-text">Elige un mercado para jugar</p>
-            <select name="selectMarket">
-                <option value="nasdaq">Nasdaq🤑</option>
-                <option value="crypto">Crypto🚀</option>
+            <p class="form-text">Símbolos de la sala</p>
+            <th:block th:each="symbol : ${symbols}">
+                <input type="checkbox" name="symbols" th:value="${symbol.name}">
+                <label th:text="${symbol.name}"></label>
+            </th:block>
+            <br>
+
+            <input type="submit" placeholder="Check" value="Crear sala">
         </form>
     </div>
 </body>

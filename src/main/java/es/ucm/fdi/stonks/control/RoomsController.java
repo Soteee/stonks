@@ -2,6 +2,7 @@ package es.ucm.fdi.stonks.control;
 
 import es.ucm.fdi.stonks.model.Membership;
 import es.ucm.fdi.stonks.model.Room;
+import es.ucm.fdi.stonks.model.Symbol;
 import es.ucm.fdi.stonks.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -90,6 +92,12 @@ public class RoomsController{
 
     @GetMapping("/createRoom")
     public String createRoom(Model model) {
+
+        List<?> symbols = entityManager
+                        .createNamedQuery("Symbol.all")
+                        .getResultList();
+        model.addAttribute("symbols", symbols);
+
         return "createRoom";
     }
 
@@ -103,6 +111,7 @@ public class RoomsController{
             @RequestParam int startBalance,
             @RequestParam int cash2Win,
             @RequestParam String expirationDate,
+            @RequestParam String[] symbols,
             HttpServletResponse response,
             HttpSession session) throws Exception{
 
@@ -111,6 +120,15 @@ public class RoomsController{
         Membership adminMember = new Membership();
         ArrayList<Membership> memberList = new ArrayList<>();
         LocalDateTime currentDate = LocalDateTime.now();
+
+        List<Symbol> symbolList = new ArrayList<>();
+        for (int i = 0; i < symbols.length; ++i) {
+
+            symbolList.add((Symbol) entityManager
+                .createNamedQuery("Symbol.byName")
+                .setParameter("name", symbols[i])
+                .getSingleResult());
+        }
 
         adminMember.setUser(room_admin);
         adminMember.setRoom(newRoom);
@@ -130,9 +148,10 @@ public class RoomsController{
         newRoom.setCreationDate(currentDate);
         newRoom.setExpirationDate(LocalDate.parse(expirationDate));
         newRoom.setMemberList(memberList);
+        newRoom.setSymbols(symbolList);
         entityManager.persist(newRoom);
 
-        response.sendRedirect("/rooms");
+        response.sendRedirect("/r/");
     }
 
     @PostMapping("/joinRoom")
@@ -165,7 +184,7 @@ public class RoomsController{
 
             response.sendRedirect("/r/" + room_id);
         }
-        else{
+        else{ // TODO devolver mensaje de error con parámetro GET?
             response.sendError(400);
         }
     }
