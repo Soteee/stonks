@@ -54,8 +54,8 @@
                 <p th:if="${#lists.size(positions) == 0}">Todavía no tienes posiciones</p>
                 <table>
                     <tr th:each="position: ${positions}">
-                        <td th:text="${position.symbol.name}"></td>
-                        <td th:text="${position.quantity}"></td>
+                        <td th:text="${position[0].name}"></td>
+                        <td th:text="${position[1]}"></td>
                     </tr>
                 </table>
             </div>

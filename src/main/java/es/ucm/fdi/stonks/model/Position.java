@@ -13,9 +13,11 @@ import lombok.Data;
 @Entity
 @Data
 @NamedQueries({
+    // Produce una lista de arrays de object (Object), en las que el primer elemento es el símbolo y el segundo es sum(quantity)
 	@NamedQuery(name="Position.byMembership",
-	        query="SELECT p FROM Position p "
-                + "WHERE p.member = :membership")
+	        query="SELECT p.symbol, sum(p.quantity) FROM Position p "
+                + "WHERE p.member = :membership "
+                + "GROUP BY p.symbol")
 })
 public class Position {
 
