@@ -1,27 +1,66 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Stonks</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}" />
+        <link rel="stylesheet" type="text/css" th:href="@{/css/logIn.css}" />
 
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/logIn.css}" />
-    <title>Stonks</title>
-</head>
+        <!-- <script src="../static/js/c3.js"></script>
+        <script src="../static/js/d3.js"></script> -->
 
-<body>
-    <nav th:replace="fragments/menu.html :: topbar"></nav>
-    <div class="visualizer">
+        <script th:src="@{/js/c3.js}"></script>
+        <script th:src="@{/js/d3.js}"></script>
 
-        <h2>Top Jugadores</h2>
-        <ol>
-            <li th:each="user: ${topUsers}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios</a></li>
-        </ol>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/c3.css}">
+    </head>
 
-        <h2>Top Salas</h2>
-        <ol>
-            <li th:each="room: ${topRooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
-        </ol>
-    </div>
-</body>
+    <body>
+        <nav th:replace="fragments/menu.html :: topbar"></nav>
+        <div class="visualizer">
 
+            <h2>Top Jugadores</h2>
+            <ol>
+                <li th:each="user: ${topUsers}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios</a></li>
+            </ol>
+
+            <h2>Top Salas</h2>
+            <ol>
+                <li th:each="room: ${topRooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
+            </ol>
+        </div>
+        <div id="chart">
+            <h1>Mayor crecimiento hoy</h1>
+            <script>
+                var chart = c3.generate({
+                    data: {
+                        x: 'x',
+                        //  xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
+                        columns: [
+                            ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06'],
+                        //  ['x', '20130101', '20130102', '20130103', '20130104', '20130105', '20130106'],
+                            ['data1', 30, 200, 100, 400, 150, 250],
+                            ['data2', 130, 340, 200, 500, 250, 350]
+                        ]
+                    },
+                    axis: {
+                        x: {
+                            type: 'timeseries',
+                            tick: {
+                                format: '%Y-%m-%d'
+                            }
+                        }
+                    }
+                })
+
+                setTimeout(function () {
+                    chart.load({
+                        columns: [
+                            ['data3', 400, 500, 450, 700, 600, 500]
+                        ]
+                    });
+                }, 1000);
+            </script>
+        </div>
+    </body>
 </html>
