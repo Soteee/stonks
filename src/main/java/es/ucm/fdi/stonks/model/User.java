@@ -66,7 +66,6 @@ public class User implements Transferable<User.Transfer> {
 	}
 	
 	// do not change these fields
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;

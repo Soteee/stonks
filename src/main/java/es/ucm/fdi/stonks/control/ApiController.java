@@ -9,7 +9,6 @@ import es.ucm.fdi.stonks.model.Membership;
 import es.ucm.fdi.stonks.model.Position;
 import es.ucm.fdi.stonks.model.Room;
 import es.ucm.fdi.stonks.model.Symbol;
-import lombok.Data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +36,7 @@ public class ApiController {
     private static String authname1 = "x-rapidapi-host";
     private static String authname2 = "yahoo-finance15.p.rapidapi.com";
     
-    @PostMapping("/action_buy")
+    @PostMapping("/buy")
     @Transactional
     public void actionBuy(HttpSession session,
                         @RequestParam String stockName,
@@ -46,26 +45,37 @@ public class ApiController {
                         Model model,
                         HttpServletResponse response) throws Exception{    
         
-        Membership member = (Membership) entityManager.createNamedQuery("Membership.byUserAndRoom")
+        Membership member = (Membership) entityManager
+                                        .createNamedQuery("Membership.byUserAndRoom")
                                         .setParameter("user", session.getAttribute("u"))
                                         .setParameter("room", entityManager.find(Room.class, room_id))
                                         .getSingleResult();
-
-        Position newPosition = new Position();
-        newPosition.setMember(member);
 
         Symbol symbol = (Symbol) entityManager
                                 .createNamedQuery("Symbol.byName")
                                 .setParameter("name", stockName)
                                 .getSingleResult();
 
-        newPosition.setSymbol(symbol);
-        newPosition.setPurchaseDate(java.time.LocalDateTime.now());
-        newPosition.setQuantity(Integer.parseInt(amount));
-        newPosition.setActive(true);
-        entityManager.persist(newPosition);
+        double price = symbol.getValue() * Double.parseDouble(amount);
 
-        response.sendRedirect("/r/" + room_id);
+        // Si el usuario tiene dinero suficiente
+        if(member.getBalance() >= price){
+            member.setBalance(member.getBalance() - price);
+            entityManager.persist(member);
+    
+            Position newPosition = new Position();
+            newPosition.setMember(member);
+            newPosition.setSymbol(symbol);
+            newPosition.setPurchaseDate(java.time.LocalDateTime.now());
+            newPosition.setQuantity(Integer.parseInt(amount));
+            newPosition.setActive(true);
+            entityManager.persist(newPosition);
+    
+            response.sendRedirect("/r/" + room_id);
+        }
+        else{
+            response.sendError(400);    // TODO: Enviar error informativo (no un 400 xd)
+        }
     }
 
     // Sólo se puede llamar desde admin
@@ -76,6 +86,7 @@ public class ApiController {
         List<Symbol> symbolList = entityManager
                                 .createNamedQuery("Symbol.all")
                                 .getResultList();
+
         for (Symbol o : symbolList) {
              o.setValue(getSymbol(o.getName()));
              o.setUpdatedOn(java.time.LocalDateTime.now());
@@ -85,7 +96,7 @@ public class ApiController {
         response.sendRedirect("/admin/");
     }
 
-    public static float getSymbol(String name) throws Exception {
+    public static double getSymbol(String name) throws Exception {
         Map<String, String> headers = new HashMap<>();
         headers.put(headerkey, headerkeyp2);
         headers.put(authname1, authname2);
@@ -101,6 +112,6 @@ public class ApiController {
             return -1.f;
         }
         
-        return Float.parseFloat(json.getJSONObject("financialData").getJSONObject("currentPrice").getString("fmt"));
+        return Double.parseDouble(json.getJSONObject("financialData").getJSONObject("currentPrice").getString("fmt"));
     }
 }

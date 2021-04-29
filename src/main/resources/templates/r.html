@@ -34,7 +34,7 @@
 
         <div th:if="${membership != null}">
             <!-- Buy stocks -->
-            <form class="action_buy" method="POST" th:action="@{/action_buy}">
+            <form class="action_buy" method="POST" th:action="@{/buy}">
                 <input type="hidden" name="room_id" th:value="${room.id}">
                 <select name="stockName">
                     <option th:each="symbol: ${symbols}" th:name="${symbol.name}" th:text="${symbol.name}"></option>
