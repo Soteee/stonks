@@ -64,7 +64,7 @@
   
   /*-- Point --*/
   .c3-circle {
-    fill: currentColor;
+    fill: none;
   }
   
   .c3-circle._expanded_ {
