@@ -28,9 +28,9 @@
             <ol>
                 <li th:each="room: ${topRooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
             </ol>
+            <h2>Mayor crecimiento hoy</h1>
         </div>
         <div id="chart">
-            <h1>Mayor crecimiento hoy</h1>
             <script>
                 var chart = c3.generate({
                     data: {
