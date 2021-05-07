@@ -36,7 +36,7 @@ public class Membership {
     private double balance;
 
     @OneToMany
-    @JoinColumn (name = "position_id")
+    @JoinColumn (name = "member_id")
     private List<Position> positionList = new ArrayList<>(); // lista de posiciones 
 }
 
