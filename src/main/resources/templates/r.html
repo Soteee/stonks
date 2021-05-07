@@ -33,19 +33,6 @@
         <span><img th:src="@{/images/stockexample.jpg}" /></span>
 
         <div th:if="${membership != null}">
-            <!-- Buy stocks -->
-            <form class="action_buy" method="POST" th:action="@{/buy}">
-                <input type="hidden" name="room_id" th:value="${room.id}">
-                <select name="stockName">
-                    <option th:each="symbol: ${symbols}" th:name="${symbol.name}" th:text="${symbol.name}"></option>
-                </select>
-                <input type="number" id="amount" placeholder="Cantidad" name="amount" size="20">
-                <input type="submit" value="Comprar">
-            </form>
-
-            <button>Vender</button>
-            <button>Vender todo</button>
-
             <!-- Información de las acciones del usuario -->
             <div class="player_info">
                 <p>Balance: <span th:text="${membership.balance}"></span></p>
@@ -59,6 +46,26 @@
                     </tr>
                 </table>
             </div>
+
+            <!-- Buy stocks -->
+            <form class="action_buy" method="POST" th:action="@{/buy}">
+                <input type="hidden" name="room_id" th:value="${room.id}">
+                <select name="symbol_id">
+                    <option th:each="symbol: ${symbols}" th:value="${symbol.id}" th:text="${symbol.name}"></option>
+                </select>
+                <input type="number" id="quantity" placeholder="Cantidad" name="quantity"`>
+                <button type="submit">Comprar</button>
+            </form>
+
+            <!-- Sell stocks (only if user has)-->
+            <form th:if="${#lists.size(positions) != 0}" class="action_sell" method="POST" th:action="@{/sell}">
+                <input type="hidden" name="room_id" th:value="${room.id}">
+                <select name="symbol_id">
+                    <option th:each="position: ${positions}" th:value="${position[0].id}" th:text="${position[0].name}"></option>
+                </select>
+                <input type="number" id="quantity" placeholder="Cantidad" name="quantity">
+                <button type="submit">Vender</button>
+            </form>
         </div>
     </div>
 

@@ -37,6 +37,6 @@ public class Membership {
 
     @OneToMany
     @JoinColumn (name = "position_id")
-    private List<Position> positionList = new ArrayList<>(); // lista de posiciones   
+    private List<Position> positionList = new ArrayList<>(); // lista de posiciones 
 }
 

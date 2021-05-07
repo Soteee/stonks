@@ -81,7 +81,7 @@ public class RoomsController{
             model.addAttribute("symbols", symbols);
 
             List<?> positions = entityManager
-                        .createNamedQuery("Position.byMembership")
+                        .createNamedQuery("Position.quantityByMembership")
                         .setParameter("membership", membership)
                         .getResultList();
             model.addAttribute("positions", positions);

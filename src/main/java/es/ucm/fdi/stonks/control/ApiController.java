@@ -2,6 +2,7 @@ package es.ucm.fdi.stonks.control;
 
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import es.ucm.fdi.stonks.model.Membership;
 import es.ucm.fdi.stonks.model.Position;
 import es.ucm.fdi.stonks.model.Room;
 import es.ucm.fdi.stonks.model.Symbol;
+import es.ucm.fdi.stonks.model.Position.Side;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,9 +40,9 @@ public class ApiController {
     
     @PostMapping("/buy")
     @Transactional
-    public void actionBuy(HttpSession session,
-                        @RequestParam String stockName,
-                        @RequestParam String amount,
+    public void buy(HttpSession session,
+                        @RequestParam long symbol_id,
+                        @RequestParam String quantity,
                         @RequestParam long room_id,
                         Model model,
                         HttpServletResponse response) throws Exception{    
@@ -51,26 +53,63 @@ public class ApiController {
                                         .setParameter("room", entityManager.find(Room.class, room_id))
                                         .getSingleResult();
 
-        Symbol symbol = (Symbol) entityManager
-                                .createNamedQuery("Symbol.byName")
-                                .setParameter("name", stockName)
-                                .getSingleResult();
+        Symbol symbol = entityManager.find(Symbol.class, symbol_id);
 
-        double price = symbol.getValue() * Double.parseDouble(amount);
-
-        // Si el usuario tiene dinero suficiente
-        if(member.getBalance() >= price){
-            member.setBalance(member.getBalance() - price);
-            entityManager.persist(member);
+        int quantityToBuy = Integer.parseInt(quantity);
+        double price = symbol.getValue() * quantityToBuy;
     
+        if (member.getBalance() >= price){
             Position newPosition = new Position();
             newPosition.setMember(member);
             newPosition.setSymbol(symbol);
             newPosition.setPurchaseDate(java.time.LocalDateTime.now());
-            newPosition.setQuantity(Integer.parseInt(amount));
-            newPosition.setActive(true);
+            newPosition.setQuantity(quantityToBuy);
+            newPosition.setSide(Side.BUY);
+            newPosition.setValue(price);
             entityManager.persist(newPosition);
-    
+
+            member.setBalance(member.getBalance() - newPosition.getValue());
+            entityManager.persist(member);
+        
+            response.sendRedirect("/r/" + room_id);
+        }
+        else{
+            response.sendError(400);    // TODO: Enviar error informativo (no un 400 xd)
+        }
+    }
+
+    @PostMapping("/sell")
+    @Transactional
+    public void sell(HttpSession session,
+                        @RequestParam long symbol_id,
+                        @RequestParam String quantity,
+                        @RequestParam long room_id,
+                        Model model,
+                        HttpServletResponse response) throws Exception{
+
+        Membership member = (Membership) entityManager
+                                        .createNamedQuery("Membership.byUserAndRoom")
+                                        .setParameter("user", session.getAttribute("u"))
+                                        .setParameter("room", entityManager.find(Room.class, room_id))
+                                        .getSingleResult();
+        Symbol symbol = entityManager.find(Symbol.class, symbol_id);
+
+        int quantityToSell = Integer.parseInt(quantity);
+        int userQuantity = computeQuantity(member, symbol);
+
+        if (quantityToSell <= userQuantity){
+            Position newPosition = new Position();
+            newPosition.setMember(member);
+            newPosition.setSymbol(symbol);
+            newPosition.setPurchaseDate(java.time.LocalDateTime.now());
+            newPosition.setQuantity(quantityToSell);
+            newPosition.setSide(Side.SELL);
+            newPosition.setValue(symbol.getValue() * quantityToSell);
+            entityManager.persist(newPosition);
+
+            member.setBalance(member.getBalance() + newPosition.getValue());
+            entityManager.persist(member);
+
             response.sendRedirect("/r/" + room_id);
         }
         else{
@@ -97,6 +136,7 @@ public class ApiController {
     }
 
     public static double getSymbol(String name) throws Exception {
+        /*
         Map<String, String> headers = new HashMap<>();
         headers.put(headerkey, headerkeyp2);
         headers.put(authname1, authname2);
@@ -113,5 +153,27 @@ public class ApiController {
         }
         
         return Double.parseDouble(json.getJSONObject("financialData").getJSONObject("currentPrice").getString("fmt"));
+        */
+
+        return 500.0;
+    }
+
+    // Calcula la cantidad de acciones de una símbolo que tiene un usuario en una sala
+    public int computeQuantity(Membership m, Symbol s){
+        int quantity = 0;
+        List<Position> positions = entityManager
+                            .createNamedQuery("Position.byMembershipAndSymbol")
+                            .setParameter("symbol", s)
+                            .setParameter("membership", m)
+                            .getResultList();
+
+        for (Position position : positions) {
+            if (position.getSide() == Side.BUY)
+                quantity += position.getQuantity();
+            else
+                quantity -= position.getQuantity();
+        }
+    
+        return quantity;
     }
 }
