@@ -16,11 +16,14 @@
 
     <body>
         <nav th:replace="fragments/menu.html :: topbar"></nav>
+        <div class="content m-3">
+            <h1>Bienvenido a stonks</h1>
+        </div>
         <div class="columns m-3">
             <div class="column is-2">
                 <aside class="menu">
                     <p class="menu-label">
-                        Top jugadores
+                        Top usuarios
                     </p>
                     <ul class="menu-list">
                         <li th:each="user: ${topUsers}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios</a></li>
@@ -35,7 +38,7 @@
             </div>
             <div class="column">
                 <div class="content">
-                    <h1>Mayor crecimiento hoy</h1>
+                    <h2>Mayor crecimiento hoy</h2>
                         <div id="chart">
                             <script>
                                 cargarIndices();

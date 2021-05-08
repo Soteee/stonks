@@ -8,18 +8,33 @@
 </head>
 <body>
     <nav th:replace="fragments/menu.html :: topbar"></nav>
-    <div class="visualizer">
+    <div class="content m-3">
         <h1>Usuarios</h1>
-        <h2>Buscador de usuarios</h2>
-        <form>
-            <input type="text" name="roomSearch"><input type="submit" value="Buscar">
-        </form>
-
-        <h2>Top usuarios</h2>
-        <ol>
-            <li th:each="user: ${topUsers}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios en esta sala</a></li>
-        </ol>
     </div>
-    
+    <div class="columns m-3">
+        <div class="column is-one-fifth">
+        <div class="field">
+            <label class="label">Buscar usuarios</label>
+        </div>
+        <form>
+            <div class="field is-grouped">
+                    <div class="control">
+                        <input class="input" type="text" name="userSearch" placeholder="Usuario">
+                    </div>
+                    <div class="control">
+                        <button class="button is-link" type="submit">Buscar</button>
+                    </div>
+            </div>
+        </form>
+        </div>
+        <div class="column">
+            <div class="content">
+                <h2>Top usuarios</h2>
+                <ol>
+                    <li th:each="user: ${topUsers}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios en esta sala</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Panel de administrador</title>
+    <title>Panel de administración</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
 </head>
 <body>
     <nav th:replace="fragments/menu.html :: topbar"></nav>
+    <div class="content m-3">
+        <h1>Panel de administración</h1>
+    </div>
     <div class="columns m-3">
         <div class="column is-one-fifth" id="stats">
             <form th:action="@{/refresh}" method="POST">
@@ -28,24 +31,26 @@
             <div class="field">
                 <label class="label">Usuarios activos</label>
             </div>
-            <div class="field is-grouped">
-                <div class="control">
-                    <input class="input" type="text" placeholder="Usuario">
-                </div>
-                <div class="control">
-                    <div class="select">
-                        <select name="filtro">
-                            <option id="1">VIPs</option>
-                            <option id="2">Invitados</option>
-                            <option id="3">Nuevos</option>
-                            <option id="4">Top</option>
-                        </select>
+            <form>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <input class="input" type="text" name="userSearch" placeholder="Usuario">
+                    </div>
+                    <div class="control">
+                        <div class="select">
+                            <select name="filtro">
+                                <option id="1">VIPs</option>
+                                <option id="2">Invitados</option>
+                                <option id="3">Nuevos</option>
+                                <option id="4">Top</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <button class="button is-link" type="submit">Buscar</button>
                     </div>
                 </div>
-                <div class="control">
-                    <button class="button is-link" type="submit">Buscar</button>
-                </div>
-            </div>
+            </form>
             <div class="content">
                 <ul>
                     <li th:each="user: ${users}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios</a></li>
@@ -56,24 +61,26 @@
             <div class="field">
                 <label class="label">Salas activas</label>
             </div>
-            <div class="field is-grouped">
-                <div class="control">
-                    <input class="input" type="text" placeholder="Sala">
-                </div>
-                <div class="control">
-                    <div class="select">
-                        <select name="filtro">
-                            <option id="1">Gratis</option>
-                            <option id="2">De pago</option>
-                            <option id="3">Nuevas</option>
-                            <option id="4">Top</option>
-                        </select>
+            <form>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <input class="input" type="text" name="roomSearch" placeholder="Sala">
+                    </div>
+                    <div class="control">
+                        <div class="select">
+                            <select name="filtro">
+                                <option id="1">Gratis</option>
+                                <option id="2">De pago</option>
+                                <option id="3">Nuevas</option>
+                                <option id="4">Top</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <button class="button is-link" type="submit">Buscar</button>
                     </div>
                 </div>
-                <div class="control">
-                    <button class="button is-link" type="submit">Buscar</button>
-                </div>
-            </div>
+            </form>
             <div class="content">
                 <ul>
                     <li th:each="room: ${rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
