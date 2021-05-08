@@ -7,27 +7,42 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
 </head>
 <body>
-
     <nav th:replace="fragments/menu.html :: topbar"></nav>
-    <nav th:replace="fragments/left_navbar :: my_rooms"></nav>
-
-    <div class="visualizer">
-        <h1>Salas</h1>
-        <h2>Buscador de salas</h2>
-        <form>
-            <input type="text" name="roomSearch"><input type="submit" value="Buscar">
-            <select name="roomType">
-                <option id="1">Públicas</option>
-                <option id="2">Privadas</option>
-                <option id="3">Todas</option>
-            </select>
-        </form>
-        <ol id="results-rooms">
-            <li th:each="room: ${topRooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
-        </ol>
-
-        <a th:href='@{/r/createRoom}'>Crear sala</a>
+    <div class="columns m-3">
+        <div class="column is-2">
+            <nav th:replace="fragments/left_navbar :: my_rooms"></nav>
+        </div>
+        <div class="column">
+            <div class="content">
+                <h1>Salas</h1>
+            </div>
+            <div class="field">
+                <label class="label">Buscar salas</label>
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                    <input class="input" type="text" placeholder="Sala">
+                </div>
+                <div class="control">
+                    <div class="select">
+                        <select name="roomType">
+                            <option id="1">Públicas</option>
+                            <option id="2">Privadas</option>
+                            <option id="3">Todas</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control">
+                    <button class="button is-link" type="submit">Buscar</button>
+                </div>
+            </div>
+            <a class="button is-danger" th:href='@{/r/createRoom}'>Crear sala</a>
+            <div class="content">
+                <ul id="results-rooms">
+                    <li th:each="room: ${topRooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-    
 </body>
 </html>
