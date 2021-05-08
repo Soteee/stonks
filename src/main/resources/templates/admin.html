@@ -8,48 +8,78 @@
 </head>
 <body>
     <nav th:replace="fragments/menu.html :: topbar"></nav>
-    <div id="stats">
-        <form th:action="@{/refresh}" method="POST">
-            <input type="submit" value="Actualizar stocks">
-        </form>
-        <h2>Estadísticas</h2>
-        <ul>
-            <li>Puntos estables: 78%</li>
-            <li>Usuarios invitados: 34%</li>
-            <li>Usuarios VIP: 15%</li>
-            <li>Salas de pago: 12%</li>        </ul>
-    </div>
-    <div id="users">
-        <h2>Usuarios activos</h2>
-        <form>
-            <input type="text" name="userSearch">
-            <select name="filtro">
-                <option id="1">VIPs</option>
-                <option id="2">Invitados</option>
-                <option id="3">Nuevos</option>
-                <option id="4">Top</option>
-            </select>
-            <input type="submit" value="Buscar">
-        </form>
-        <ul>
-            <li th:each="user: ${users}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios</a></li>
-        </ul>
-    </div>
-    <div id="rooms">
-        <h2>Salas activas</h2>
-        <form>
-            <input type="text" name="roomSearch">
-            <select name="filtro">
-                <option id="1">Gratis</option>
-                <option id="2">De pago</option>
-                <option id="3">Nuevas</option>
-                <option id="4">Top</option>
-            </select>
-            <input type="submit" value="Buscar">
-        </form>
-        <ul>
-            <li th:each="room: ${rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
-        </ul>
+    <div class="columns m-3">
+        <div class="column is-one-fifth" id="stats">
+            <form th:action="@{/refresh}" method="POST">
+                <input class="button is-danger" type="submit" value="Actualizar stocks">
+            </form>
+            <br>
+            <div class="content">
+                <h2>Estadísticas</h2>
+                <ul>
+                    <li>Puntos estables: 78%</li>
+                    <li>Usuarios invitados: 34%</li>
+                    <li>Usuarios VIP: 15%</li>
+                    <li>Salas de pago: 12%</li>
+                </ul>
+            </div>
+        </div>
+        <div class="column" id="users">
+            <div class="field">
+                <label class="label">Usuarios activos</label>
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                    <input class="input" type="text" placeholder="Usuario">
+                </div>
+                <div class="control">
+                    <div class="select">
+                        <select name="filtro">
+                            <option id="1">VIPs</option>
+                            <option id="2">Invitados</option>
+                            <option id="3">Nuevos</option>
+                            <option id="4">Top</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control">
+                    <button class="button is-link" type="submit">Buscar</button>
+                </div>
+            </div>
+            <div class="content">
+                <ul>
+                    <li th:each="user: ${users}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="column" id="rooms">
+            <div class="field">
+                <label class="label">Salas activas</label>
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                    <input class="input" type="text" placeholder="Sala">
+                </div>
+                <div class="control">
+                    <div class="select">
+                        <select name="filtro">
+                            <option id="1">Gratis</option>
+                            <option id="2">De pago</option>
+                            <option id="3">Nuevas</option>
+                            <option id="4">Top</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control">
+                    <button class="button is-link" type="submit">Buscar</button>
+                </div>
+            </div>
+            <div class="content">
+                <ul>
+                    <li th:each="room: ${rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </body>
 </html>
