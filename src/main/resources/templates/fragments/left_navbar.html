@@ -3,16 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
 </head>
 
 <body>
-    <nav class="leftnavbar" th:fragment="my_rooms">
-        <p>Mis salas</p>
-        <ul>
+    <aside class="menu" th:fragment="my_rooms">
+        <p class="menu-label">
+            Mis salas
+        </p>
+        <ul class="menu-list">
             <li th:each="room: ${user_rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}"></a></li>
         </ul>
-    </nav>
+    </aside>
 </body>
 
 </html>
