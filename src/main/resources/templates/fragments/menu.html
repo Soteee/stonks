@@ -1,29 +1,59 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/test.css}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
 </head>
 
 <body>
-    <nav class="topnavbar" th:fragment="topbar">
-        <a th:href="@{/}"><img th:src="@{/images/logo200x200.png}"/></a>
-        <!-- Si está loggeado -->
-        <div th:if="${session.u}">
-            <a th:if="${session.u.hasRole(1)}" th:href="@{/admin/}" class="btnMenu">Administrador</a>
-            <a th:href="@{/r/}" class="btnMenu">Salas</a>
-            <a th:href="@{/users}" class="btnMenu">Usuarios</a>
-            <a th:href="@{/social}" class="btnMenu">Amigos</a>
-            <a th:href="@{/u/{id}(id=${session.u.id})}" class="btnMenu">Perfil</a>
-            <form method="POST" th:action="@{/logout}">
-                <button class="btnMenu" type="submit">Cerrar sesión</button>
-            </form>
+    <nav class="navbar is-info" role="navigation" aria-label="main navigation" th:fragment="topbar">
+        <div class="navbar-brand">
+            <a class="navbar-item" th:href="@{/}">
+                <img th:src="@{/images/logo_mini.png}">
+            </a>
         </div>
-        <!-- Si no está loggeado -->
-        <div th:unless="${session.u}">
-            <a th:href="@{/login}" class="btnMenu">Iniciar Sesión</a>
-            <a th:href="@{/register}" class="btnMenu">Registrarse</a>
+        <div id="navbarMenu" class="navbar-menu" th:if="${session.u}">
+            <div class="navbar-start">
+                <a class="navbar-item" th:if="${session.u.hasRole(1)}" th:href="@{/admin/}">
+                    Administrador
+                </a>
+                <a class="navbar-item" th:href="@{/r/}">
+                    Salas
+                </a>
+                <a class="navbar-item" th:href="@{/users}">
+                    Usuarios
+                </a>
+                <a class="navbar-item" th:href="@{/social}">
+                    Amigos
+                </a>
+                <a class="navbar-item" th:href="@{/u/{id}(id=${session.u.id})}">
+                    Perfil
+                </a>
+            </div>
+        </div>
+        <div class="navbar-end" th:if="${session.u}">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <form method="POST" th:action="@{/logout}">
+                        <button class="button is-light" type="submit">
+                            <strong>Cerrar sesión</strong>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-end" th:unless="${session.u}">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-warning" th:href="@{/register}">
+                        <strong>Registrarse</strong>
+                    </a>
+                    <a class="button is-light" th:href="@{/login}">
+                        <strong>Iniciar sesión</strong>
+                    </a>
+                </div>
+            </div>
         </div>
     </nav>
 </body>
