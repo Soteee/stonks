@@ -21,7 +21,9 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("r")
@@ -80,11 +82,15 @@ public class RoomsController{
                         .getResultList();
             model.addAttribute("symbols", symbols);
 
-            List<?> positions = entityManager
-                        .createNamedQuery("Position.quantityByMembership")
-                        .setParameter("membership", membership)
-                        .getResultList();
-            model.addAttribute("positions", positions);
+            // Crea un objeto stocks para almacenar la cantidad acciones de cada símbolo que tiene el usuario
+            Map<Symbol, Integer> stocks = new HashMap<Symbol, Integer>();
+            for (Symbol symbol : (List<Symbol>) symbols) {
+                int quantity = ApiController.computeQuantity(entityManager, membership, symbol);
+                if (quantity != 0){
+                    stocks.put(symbol, quantity);
+                }
+            }
+            model.addAttribute("stocks", stocks);
         }
 
         return "r";

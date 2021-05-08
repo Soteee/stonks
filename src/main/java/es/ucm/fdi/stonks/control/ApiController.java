@@ -95,7 +95,7 @@ public class ApiController {
         Symbol symbol = entityManager.find(Symbol.class, symbol_id);
 
         int quantityToSell = Integer.parseInt(quantity);
-        int userQuantity = computeQuantity(member, symbol);
+        int userQuantity = computeQuantity(entityManager, member, symbol);
 
         if (quantityToSell <= userQuantity){
             Position newPosition = new Position();
@@ -158,10 +158,11 @@ public class ApiController {
         return 500.0;
     }
 
-    // Calcula la cantidad de acciones de una símbolo que tiene un usuario en una sala
-    public int computeQuantity(Membership m, Symbol s){
+    // TODO: Dónde ponemos esta función para que la pueda usar quien quiera
+    // Calcula la cantidad de acciones de un símbolo que tiene un usuario en una sala
+    public static int computeQuantity(EntityManager em, Membership m, Symbol s){
         int quantity = 0;
-        List<Position> positions = entityManager
+        List<Position> positions = em
                             .createNamedQuery("Position.byMembershipAndSymbol")
                             .setParameter("symbol", s)
                             .setParameter("membership", m)
