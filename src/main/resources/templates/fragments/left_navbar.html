@@ -12,7 +12,7 @@
         <p class="menu-label">
             Mis salas
         </p>
-        <ul class="menu-list">
+        <ul class="menu-list"> <!--TODO: marcar como activa la sala actual (class="is-active")-->
             <li th:each="room: ${user_rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}"></a></li>
         </ul>
     </aside>
