@@ -154,7 +154,6 @@ public class RoomsController{
         newRoom.setCreationDate(currentDate);
         newRoom.setExpirationDate(LocalDate.parse(expirationDate));
         newRoom.setMemberList(memberList);
-        newRoom.setSymbols(symbolList);
         entityManager.persist(newRoom);
 
         response.sendRedirect("/r/");

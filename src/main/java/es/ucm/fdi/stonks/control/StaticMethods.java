@@ -66,12 +66,9 @@ public class StaticMethods {
                     newSymbol.setValue(getSymbol(o.getName()));
                     
 
-                    // Insert new symbols in their respective rooms and those rooms in their respective symbols
+                    // Tell new symbols which room is serving them
                     List<Room> roomsWithNewSymbol = new ArrayList<>();
                     for (Room r : o.getRooms()){
-                        r.getSymbols().add(newSymbol);
-                        em.persist(r);
-
                         roomsWithNewSymbol.add(r);
                     }
                     newSymbol.setRooms(roomsWithNewSymbol);

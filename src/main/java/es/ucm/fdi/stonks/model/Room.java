@@ -59,7 +59,4 @@ public class Room {
    @OneToMany
    @JoinColumn(name = "room_id")
    private List<Membership> memberList; // lista de relaciones usuario-sala
-
-   @ManyToMany
-   private List<Symbol> symbols; // Lists de símbolos dentro de una sala
 }

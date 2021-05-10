@@ -109,16 +109,16 @@ INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash
 INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (2,'Me encanta pagar impuestos', TRUE, 1000, 10, 3000, 100000, 4);
 
 -- Stocks de cada sala
-INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (1, 1);
-INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (1, 2);
-INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (1, 3);
-INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (1, 4);
-INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (1, 5);
-INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (2, 6);
-INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (2, 7);
-INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (2, 8);
-INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (2, 9);
-INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (2, 10);
+INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (1, 1);
+INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (1, 2);
+INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (1, 3);
+INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (1, 4);
+INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (1, 5);
+INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (2, 6);
+INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (2, 7);
+INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (2, 8);
+INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (2, 9);
+INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (2, 10);
 
 -- Memberships de prueba
 INSERT INTO membership VALUES (1, 10000, NULL, 1, 1);

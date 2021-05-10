@@ -57,6 +57,6 @@ public class Symbol {
    
     private LocalDateTime updatedOn;
 
-    @ManyToMany(mappedBy = "symbols")
+    @ManyToMany
     private List<Room> rooms; // Salas que utilizan este símbolo
 }
