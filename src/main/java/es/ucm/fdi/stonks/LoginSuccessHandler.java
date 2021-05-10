@@ -1,12 +1,16 @@
 package es.ucm.fdi.stonks;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +19,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import es.ucm.fdi.stonks.control.StaticMethods;
+import es.ucm.fdi.stonks.model.Symbol;
 import es.ucm.fdi.stonks.model.User;
 
 /**
@@ -28,7 +34,6 @@ import es.ucm.fdi.stonks.model.User;
  */
 @Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
-
     @Autowired 
     private HttpSession session;
     
@@ -41,6 +46,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
      * Called whenever a user authenticates correctly.
      */
     @Override
+	@Transactional
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 	    String username = ((org.springframework.security.core.userdetails.User)
@@ -73,6 +79,26 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 		log.info("LOG IN: {} (id {}) -- session is {}, websocket is {} -- redirected to {}",
 			u.getUsername(), u.getId(), session.getId(), ws, nextUrl);
+
+
+		// Update symbol values if more than 24 hours have passed
+		List<Symbol> symbolList = entityManager
+								.createNamedQuery("Symbol.all")
+								.getResultList();
+		try {
+			for (Symbol o : symbolList) {
+				// If last updated value is null or more than 24 hours have passed
+				if(o.getUpdatedOn() == null ||
+					Duration.between(o.getUpdatedOn(), LocalDateTime.now()).compareTo(Duration.ofHours(24)) > 0){
+
+					o.setValue(StaticMethods.getSymbol(o.getName()));
+					o.setUpdatedOn(java.time.LocalDateTime.now());
+					entityManager.persist(o);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		// note that this is a 302, and will result in a new request
 		response.sendRedirect(nextUrl);

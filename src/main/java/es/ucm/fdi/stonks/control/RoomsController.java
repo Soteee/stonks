@@ -85,7 +85,7 @@ public class RoomsController{
             // Crea un objeto stocks para almacenar la cantidad acciones de cada símbolo que tiene el usuario
             Map<Symbol, Integer> stocks = new HashMap<Symbol, Integer>();
             for (Symbol symbol : (List<Symbol>) symbols) {
-                int quantity = ApiController.computeQuantity(entityManager, membership, symbol);
+                int quantity = StaticMethods.computeQuantity(entityManager, membership, symbol);
                 if (quantity != 0){
                     stocks.put(symbol, quantity);
                 }
