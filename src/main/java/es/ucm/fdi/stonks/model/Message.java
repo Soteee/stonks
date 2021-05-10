@@ -42,7 +42,10 @@ public class Message implements Transferable<Message.Transfer> {
 	@ManyToOne
 	private User recipient;
 	private String text;
-	
+	private MessageType type;
+	public enum MessageType{
+		CHAT,LEAVE,JOIN
+	}
 	private LocalDateTime dateSent;
 	private LocalDateTime dateRead;
 	

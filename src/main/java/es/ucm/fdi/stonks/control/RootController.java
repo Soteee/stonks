@@ -106,6 +106,11 @@ public class RootController {
         return "users";
     }
 
+    @GetMapping("/chat")
+    public String chat(Model model){
+        return "chat";
+    }
+
     @GetMapping("/u/{id}") // /user/uid
     public String user(@PathVariable long id, Model model) {
 
