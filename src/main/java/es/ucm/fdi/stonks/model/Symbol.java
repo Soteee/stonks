@@ -18,15 +18,34 @@ import lombok.Data;
 @Data
 @NamedQueries({
     @NamedQuery(name="Symbol.all",
-                query = "SELECT s FROM Symbol s"),
+                query="SELECT s FROM Symbol s "
+                    + "ORDER BY s.updatedOn DESC"),
+    @NamedQuery(name="Symbol.lasts",
+                query="SELECT s FROM Symbol s "
+                    + "WHERE s.updatedOn = ("
+                    +   "SELECT MAX(updatedOn) "
+                    +   "FROM Symbol"
+                    + ")"),
     @NamedQuery(name="Symbol.byName",
-                query = "SELECT s FROM Symbol s "
-                        + "WHERE s.name = :name"),
+                query="SELECT s FROM Symbol s "
+                    + "WHERE s.name = :name "
+                    + "AND s.updatedOn = ("
+                    +   "SELECT MAX(updatedOn) "
+                    +   "FROM Symbol"
+                    + ")"),
     @NamedQuery(name="Symbol.byRoom",
-                query = "SELECT r.symbols FROM Room r "
-                        + "WHERE r = :room")
+                query="SELECT s FROM Symbol s "
+                    + "JOIN s.rooms r "
+                    + "WHERE s.updatedOn = ("
+                    +   "SELECT MAX(updatedOn) "
+                    +   "FROM Symbol"
+                    + ") "
+                    + "AND r = :room")
 })
 public class Symbol {
+    // Number of different symbols
+    public static final int NUM_SYMBOLS = 10;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

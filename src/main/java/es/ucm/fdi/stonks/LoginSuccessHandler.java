@@ -2,7 +2,9 @@ package es.ucm.fdi.stonks;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -20,7 +22,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import es.ucm.fdi.stonks.control.StaticMethods;
-import es.ucm.fdi.stonks.model.Symbol;
 import es.ucm.fdi.stonks.model.User;
 
 /**
@@ -82,23 +83,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 
 		// Update symbol values if more than 24 hours have passed
-		List<Symbol> symbolList = entityManager
-								.createNamedQuery("Symbol.all")
-								.getResultList();
-		try {
-			for (Symbol o : symbolList) {
-				// If last updated value is null or more than 24 hours have passed
-				if(o.getUpdatedOn() == null ||
-					Duration.between(o.getUpdatedOn(), LocalDateTime.now()).compareTo(Duration.ofHours(24)) > 0){
-
-					o.setValue(StaticMethods.getSymbol(o.getName()));
-					o.setUpdatedOn(java.time.LocalDateTime.now());
-					entityManager.persist(o);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		StaticMethods.refreshStockValues(entityManager);
 
 		// note that this is a 302, and will result in a new request
 		response.sendRedirect(nextUrl);

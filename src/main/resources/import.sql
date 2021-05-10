@@ -47,18 +47,61 @@ Insert into user(id,enabled,username,password,roles,name,first_name) VALUES (
 );
 
 
-
 --Stocks en mercados
-insert into symbol(name, updated_on, value) values ('TSLA',NULL,0.0);
-insert into symbol(name, updated_on, value) values ('AAPL',NULL,0.0);
---insert into symbol(name, updated_on, value) values ('AMZN',NULL,0.0);
-insert into symbol(name, updated_on, value) values ('MSFT',NULL,0.0);
-insert into symbol(name, updated_on, value) values ('NIO',NULL,0.0);
---insert into symbol(name, updated_on, value) values ('NVDIA',NULL,0.0);
---insert into symbol(name, updated_on, value) values ('MRNA',NULL,0.0);
---insert into symbol(name, updated_on, value) values ('NKLA',NULL,0.0);
---insert into symbol(name, updated_on, value) values ('FB',NULL,0.0);
---insert into symbol(name, updated_on, value) values ('AMD',NULL,0.0);
+insert into symbol(name, updated_on, value) values ('TSLA',CURRENT_DATE,641.5);
+insert into symbol(name, updated_on, value) values ('AAPL',CURRENT_DATE,128.25);
+insert into symbol(name, updated_on, value) values ('AMZN',CURRENT_DATE,3218.61);
+insert into symbol(name, updated_on, value) values ('MSFT',CURRENT_DATE,250.43);
+insert into symbol(name, updated_on, value) values ('NIO',CURRENT_DATE,35.56);
+insert into symbol(name, updated_on, value) values ('NVDA',CURRENT_DATE,576.48);
+insert into symbol(name, updated_on, value) values ('MRNA',CURRENT_DATE,158.61);
+insert into symbol(name, updated_on, value) values ('NKLA',CURRENT_DATE,11.43);
+insert into symbol(name, updated_on, value) values ('FB',CURRENT_DATE,308.22);
+insert into symbol(name, updated_on, value) values ('AMD',CURRENT_DATE,76.88);
+
+insert into symbol(name, updated_on, value) values ('TSLA',DATEADD('DAY',-1, CURRENT_DATE),650.5);
+insert into symbol(name, updated_on, value) values ('AAPL',DATEADD('DAY',-1, CURRENT_DATE),100.25);
+insert into symbol(name, updated_on, value) values ('AMZN',DATEADD('DAY',-1, CURRENT_DATE),3260.61);
+insert into symbol(name, updated_on, value) values ('MSFT',DATEADD('DAY',-1, CURRENT_DATE),230.43);
+insert into symbol(name, updated_on, value) values ('NIO',DATEADD('DAY',-1, CURRENT_DATE),70.56);
+insert into symbol(name, updated_on, value) values ('NVDA',DATEADD('DAY',-1, CURRENT_DATE),590.48);
+insert into symbol(name, updated_on, value) values ('MRNA',DATEADD('DAY',-1, CURRENT_DATE),170.61);
+insert into symbol(name, updated_on, value) values ('NKLA',DATEADD('DAY',-1, CURRENT_DATE),15.43);
+insert into symbol(name, updated_on, value) values ('FB',DATEADD('DAY',-1, CURRENT_DATE),340.22);
+insert into symbol(name, updated_on, value) values ('AMD',DATEADD('DAY',-1, CURRENT_DATE),50.88);
+
+insert into symbol(name, updated_on, value) values ('TSLA',DATEADD('DAY',-2, CURRENT_DATE),611.5);
+insert into symbol(name, updated_on, value) values ('AAPL',DATEADD('DAY',-2, CURRENT_DATE),168.25);
+insert into symbol(name, updated_on, value) values ('AMZN',DATEADD('DAY',-2, CURRENT_DATE),3288.61);
+insert into symbol(name, updated_on, value) values ('MSFT',DATEADD('DAY',-2, CURRENT_DATE),200.43);
+insert into symbol(name, updated_on, value) values ('NIO',DATEADD('DAY',-2, CURRENT_DATE),40.6);
+insert into symbol(name, updated_on, value) values ('NVDA',DATEADD('DAY',-2, CURRENT_DATE),570.8);
+insert into symbol(name, updated_on, value) values ('MRNA',DATEADD('DAY',-2, CURRENT_DATE),108.1);
+insert into symbol(name, updated_on, value) values ('NKLA',DATEADD('DAY',-2, CURRENT_DATE),40.43);
+insert into symbol(name, updated_on, value) values ('FB',DATEADD('DAY',-2, CURRENT_DATE),320.22);
+insert into symbol(name, updated_on, value) values ('AMD',DATEADD('DAY',-2, CURRENT_DATE),80.88);
+
+insert into symbol(name, updated_on, value) values ('TSLA',DATEADD('DAY',-3, CURRENT_DATE),645.5);
+insert into symbol(name, updated_on, value) values ('AAPL',DATEADD('DAY',-3, CURRENT_DATE),124.25);
+insert into symbol(name, updated_on, value) values ('AMZN',DATEADD('DAY',-3, CURRENT_DATE),3056.61);
+insert into symbol(name, updated_on, value) values ('MSFT',DATEADD('DAY',-3, CURRENT_DATE),221.43);
+insert into symbol(name, updated_on, value) values ('NIO',DATEADD('DAY',-3, CURRENT_DATE),20.56);
+insert into symbol(name, updated_on, value) values ('NVDA',DATEADD('DAY',-3, CURRENT_DATE),491.48);
+insert into symbol(name, updated_on, value) values ('MRNA',DATEADD('DAY',-3, CURRENT_DATE),200.61);
+insert into symbol(name, updated_on, value) values ('NKLA',DATEADD('DAY',-3, CURRENT_DATE),20.43);
+insert into symbol(name, updated_on, value) values ('FB',DATEADD('DAY',-3, CURRENT_DATE),290.22);
+insert into symbol(name, updated_on, value) values ('AMD',DATEADD('DAY',-3, CURRENT_DATE),50.88);
+
+insert into symbol(name, updated_on, value) values ('TSLA',DATEADD('DAY',-4, CURRENT_DATE),640.5);
+insert into symbol(name, updated_on, value) values ('AAPL',DATEADD('DAY',-4, CURRENT_DATE),160.25);
+insert into symbol(name, updated_on, value) values ('AMZN',DATEADD('DAY',-4, CURRENT_DATE),2980.61);
+insert into symbol(name, updated_on, value) values ('MSFT',DATEADD('DAY',-4, CURRENT_DATE),269.43);
+insert into symbol(name, updated_on, value) values ('NIO',DATEADD('DAY',-4, CURRENT_DATE),40.56);
+insert into symbol(name, updated_on, value) values ('NVDA',DATEADD('DAY',-4, CURRENT_DATE),510.48);
+insert into symbol(name, updated_on, value) values ('MRNA',DATEADD('DAY',-4, CURRENT_DATE),180.61);
+insert into symbol(name, updated_on, value) values ('NKLA',DATEADD('DAY',-4, CURRENT_DATE),15.43);
+insert into symbol(name, updated_on, value) values ('FB',DATEADD('DAY',-4, CURRENT_DATE),3010.22);
+insert into symbol(name, updated_on, value) values ('AMD',DATEADD('DAY',-4, CURRENT_DATE),80.88);
 
 
 -- Salas de prueba
@@ -68,8 +111,14 @@ INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash
 -- Stocks de cada sala
 INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (1, 1);
 INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (1, 2);
-INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (2, 3);
-INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (2, 4);
+INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (1, 3);
+INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (1, 4);
+INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (1, 5);
+INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (2, 6);
+INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (2, 7);
+INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (2, 8);
+INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (2, 9);
+INSERT INTO ROOM_SYMBOLS(rooms_id, symbols_id) VALUES (2, 10);
 
 -- Memberships de prueba
 INSERT INTO membership VALUES (1, 10000, NULL, 1, 1);
