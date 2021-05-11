@@ -38,10 +38,10 @@
             </div>
             <div class="column">
                 <div class="content">
-                    <h2>Mayor crecimiento hoy</h2>
+                    <h2>Acciones</h2>
                         <div id="chart">
-                            <script>
-                                cargarIndices();
+                            <script th:inline="javascript">
+                                cargarIndices(/*[[${dates}]]*/ null, /*[[${stocks}]]*/ null);
                             </script>
                         </div>
                 </div>

@@ -100,4 +100,24 @@ public class StaticMethods {
     
         return quantity;
     }
+
+    public static void symbolsToGraphic(List<Symbol> symbols, List<String> dates, Map<String, List<Double>> stocks){
+        for (Symbol symbol : symbols) {
+            // Insert date if not already inserted
+            LocalDateTime date = symbol.getUpdatedOn();
+            String dateString = date.getYear()+"-"+date.getMonthValue()+"-"+date.getDayOfMonth();
+            if (!dates.contains(dateString)){
+                dates.add(dateString);
+            }
+
+            // Insert stock name if not already inserted
+            String name = symbol.getName();
+            if(!stocks.containsKey(name)){
+                stocks.put(name, new ArrayList<>());
+            }
+
+            // Add value to correspondant stock list
+            stocks.get(name).add(symbol.getValue());
+        }
+    }
 }

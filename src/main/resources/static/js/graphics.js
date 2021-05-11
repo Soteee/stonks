@@ -1,20 +1,44 @@
-function cargarIndices(indices) {
+/**
+ * Builds graphic based on provided dates and stocks
+ * 
+ * @param {Array} dates Format: [{"stockName1":[value1, value2, ...]},{"stockName2": [value1, value2, ...]},...]
+ * @param {Object} stocks Format: ["date1","date2",...]
+ */
+function cargarIndices(dates, stocks) {
+    data = [];
 
-    // TODO
-    let dates = ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06'];
-    let indexes = [ ['data1', 30, 200, 100, 400, 150, 250], ['data2', 130, 340, 200, 500, 250, 350] ];
-    let data = [];
-    data.push(dates);
-    indexes.forEach(function(element, index, array) {
-        data.push(element);
-    })
+    // TODO: Acabar esto
+    // Construct header
+    let head = [];
+    Object.keys(stocks).forEach((stockName) =>{
+        head.push(stockName);
+    });
+    head.push('date');
+    data.push(head);
 
-    var chart = c3.generate({
+
+
+    /**
+     * Format:
+     * data = [
+     *   ['TSLA', 'NVDA', 'AMZN', 'date'],
+     *   [123, 156, 432, '2010-10-4'],
+     *   [123, 156, 432, '2010-10-5'],
+     *   [123, 156, 432, '2010-10-6'],
+     *   [123, 156, 432, '2010-10-7']
+     * ]
+     */
+
+    c3.generate({
         data: {
-            x: 'x',
-            //  xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
-            columns: 
-                data
+            x: 'date',
+            rows: [
+                ['TSLA', 'NVDA', 'AMZN', 'date'],
+                [1000, 156, 432, '2010-10-4'],
+                [123, 156, 432, '2010-10-5'],
+                [123, 156, 432, '2010-10-6'],
+                [123, 156, 432, '2010-10-7'],
+            ]
         },
         axis: {
             x: {
@@ -25,12 +49,4 @@ function cargarIndices(indices) {
             }
         }
     })
-    
-    setTimeout(function () {
-        chart.load({
-            columns: [
-                ['data3', 400, 500, 450, 700, 600, 500]
-            ]
-        });
-    }, 1000);
 }

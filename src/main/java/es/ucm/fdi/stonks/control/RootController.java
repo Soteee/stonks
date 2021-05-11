@@ -3,6 +3,7 @@ package es.ucm.fdi.stonks.control;
 
 import es.ucm.fdi.stonks.model.Membership;
 import es.ucm.fdi.stonks.model.Room;
+import es.ucm.fdi.stonks.model.Symbol;
 import es.ucm.fdi.stonks.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,7 +25,9 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class RootController {
@@ -41,16 +44,26 @@ public class RootController {
     @GetMapping("/")
     public String index(Model model) {
         List<?> topUsers = entityManager
-            .createNamedQuery("User.top")
-            .setMaxResults(5)
-            .getResultList();
+                            .createNamedQuery("User.top")
+                            .setMaxResults(5)
+                            .getResultList();
         model.addAttribute("topUsers", topUsers);
 
         List<?> topRooms = entityManager
-            .createNamedQuery("Room.top")
-            .setMaxResults(5)
-            .getResultList();
+                            .createNamedQuery("Room.top")
+                            .setMaxResults(5)
+                            .getResultList();
         model.addAttribute("topRooms", topRooms);
+
+
+        List<Symbol> symbols = (List<Symbol>)entityManager
+                            .createNamedQuery("Symbol.all")
+                            .getResultList();
+        List<String> dates = new ArrayList<>();
+        Map<String, List<Double>> stocks = new HashMap<>();
+        StaticMethods.symbolsToGraphic(symbols, dates, stocks);
+        model.addAttribute("dates", dates);
+        model.addAttribute("stocks", stocks);
 
         return "index";
     }

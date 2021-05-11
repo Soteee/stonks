@@ -56,7 +56,7 @@ insert into symbol(name, updated_on, value) values ('NIO',CURRENT_DATE,35.56);
 insert into symbol(name, updated_on, value) values ('NVDA',CURRENT_DATE,576.48);
 insert into symbol(name, updated_on, value) values ('MRNA',CURRENT_DATE,158.61);
 insert into symbol(name, updated_on, value) values ('NKLA',CURRENT_DATE,11.43);
-insert into symbol(name, updated_on, value) values ('FB',CURRENT_DATE,308.22);
+insert into symbol(name, updated_on, value) values ('FB',CURRENT_DATE,5.22);
 insert into symbol(name, updated_on, value) values ('AMD',CURRENT_DATE,76.88);
 
 insert into symbol(name, updated_on, value) values ('TSLA',DATEADD('DAY',-1, CURRENT_DATE),650.5);
@@ -73,7 +73,7 @@ insert into symbol(name, updated_on, value) values ('AMD',DATEADD('DAY',-1, CURR
 insert into symbol(name, updated_on, value) values ('TSLA',DATEADD('DAY',-2, CURRENT_DATE),611.5);
 insert into symbol(name, updated_on, value) values ('AAPL',DATEADD('DAY',-2, CURRENT_DATE),168.25);
 insert into symbol(name, updated_on, value) values ('AMZN',DATEADD('DAY',-2, CURRENT_DATE),3288.61);
-insert into symbol(name, updated_on, value) values ('MSFT',DATEADD('DAY',-2, CURRENT_DATE),200.43);
+insert into symbol(name, updated_on, value) values ('MSFT',DATEADD('DAY',-2, CURRENT_DATE),1000.43);
 insert into symbol(name, updated_on, value) values ('NIO',DATEADD('DAY',-2, CURRENT_DATE),40.6);
 insert into symbol(name, updated_on, value) values ('NVDA',DATEADD('DAY',-2, CURRENT_DATE),570.8);
 insert into symbol(name, updated_on, value) values ('MRNA',DATEADD('DAY',-2, CURRENT_DATE),108.1);
@@ -83,8 +83,8 @@ insert into symbol(name, updated_on, value) values ('AMD',DATEADD('DAY',-2, CURR
 
 insert into symbol(name, updated_on, value) values ('TSLA',DATEADD('DAY',-3, CURRENT_DATE),645.5);
 insert into symbol(name, updated_on, value) values ('AAPL',DATEADD('DAY',-3, CURRENT_DATE),124.25);
-insert into symbol(name, updated_on, value) values ('AMZN',DATEADD('DAY',-3, CURRENT_DATE),3056.61);
-insert into symbol(name, updated_on, value) values ('MSFT',DATEADD('DAY',-3, CURRENT_DATE),221.43);
+insert into symbol(name, updated_on, value) values ('AMZN',DATEADD('DAY',-3, CURRENT_DATE),1000.61);
+insert into symbol(name, updated_on, value) values ('MSFT',DATEADD('DAY',-3, CURRENT_DATE),10.43);
 insert into symbol(name, updated_on, value) values ('NIO',DATEADD('DAY',-3, CURRENT_DATE),20.56);
 insert into symbol(name, updated_on, value) values ('NVDA',DATEADD('DAY',-3, CURRENT_DATE),491.48);
 insert into symbol(name, updated_on, value) values ('MRNA',DATEADD('DAY',-3, CURRENT_DATE),200.61);
@@ -100,7 +100,7 @@ insert into symbol(name, updated_on, value) values ('NIO',DATEADD('DAY',-4, CURR
 insert into symbol(name, updated_on, value) values ('NVDA',DATEADD('DAY',-4, CURRENT_DATE),510.48);
 insert into symbol(name, updated_on, value) values ('MRNA',DATEADD('DAY',-4, CURRENT_DATE),180.61);
 insert into symbol(name, updated_on, value) values ('NKLA',DATEADD('DAY',-4, CURRENT_DATE),15.43);
-insert into symbol(name, updated_on, value) values ('FB',DATEADD('DAY',-4, CURRENT_DATE),3010.22);
+insert into symbol(name, updated_on, value) values ('FB',DATEADD('DAY',-4, CURRENT_DATE),301.22);
 insert into symbol(name, updated_on, value) values ('AMD',DATEADD('DAY',-4, CURRENT_DATE),80.88);
 
 
