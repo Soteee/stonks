@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${room.name}">No se encontró la sala</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <script th:src="@{/js/c3.js}"></script>
+    <script th:src="@{/js/d3.js}"></script>
+    <script th:src="@{/js/graphics.js}"></script>
 </head>
 
 <body>
@@ -31,7 +34,14 @@
             </form>
         </div>
 
-        <span><img th:src="@{/images/stockexample.jpg}" /></span>
+        <div class="content">
+            <h2>Acciones</h2>
+            <div id="chart">
+                <script th:inline="javascript">
+                    cargarIndices(/*[[${roomStocks}]]*/ null);
+                </script>
+            </div>
+        </div>
 
         <div th:if="${membership != null}">
             <!-- Información de las acciones del usuario -->
@@ -39,9 +49,9 @@
                 <p>Balance: <span th:text="${membership.balance}"></span></p>
 
                 <p>Posiciones</p>
-                <p th:if="${#maps.isEmpty(stocks)}">Todavía no tienes posiciones</p>
+                <p th:if="${#maps.isEmpty(userStocks)}">Todavía no tienes posiciones</p>
                 <table>
-                    <tr th:each="stock: ${stocks}">
+                    <tr th:each="stock: ${userStocks}">
                         <td th:text="${stock.key.name}"></td>
                         <td th:text="${stock.value}"></td>
                     </tr>
@@ -59,7 +69,7 @@
             </form>
 
             <!-- Sell stocks (only if user has)-->
-            <form th:unless="${#maps.isEmpty(stocks)}" class="action_sell" method="POST" th:action="@{/sell}">
+            <form th:unless="${#maps.isEmpty(userStocks)}" class="action_sell" method="POST" th:action="@{/sell}">
                 <input type="hidden" name="room_id" th:value="${room.id}">
                 <select name="symbol_id">
                     <option th:each="symbol: ${symbols}" th:value="${symbol.id}" th:text="${symbol.name}"></option>

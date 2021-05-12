@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,17 +65,11 @@ public class StaticMethods {
                     newSymbol.setName(o.getName());
                     newSymbol.setUpdatedOn(now);
                     newSymbol.setValue(getSymbol(o.getName()));
-                    
-
-                    // Tell new symbols which room is serving them
-                    List<Room> roomsWithNewSymbol = new ArrayList<>();
-                    for (Room r : o.getRooms()){
-                        roomsWithNewSymbol.add(r);
-                    }
-                    newSymbol.setRooms(roomsWithNewSymbol);
+                    List<Room> newList = new ArrayList<>();
+                    newList.addAll(o.getRooms());
+                    newSymbol.setRooms(newList);
 
                     em.persist(newSymbol);
-                    
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -101,23 +96,34 @@ public class StaticMethods {
         return quantity;
     }
 
-    public static void symbolsToGraphic(List<Symbol> symbols, List<String> dates, Map<String, List<Double>> stocks){
+    /** Converts a list of symbols to a map of stock names and maps of dates and values:
+     * format: 
+     *  {
+     *      {stockName1:[
+     *          {date1:value1}, 
+     *          {date2:value2}
+     *      ]}, 
+     *      {stockName2:[
+     *          {date1:value1}, 
+     *          {date2:value2}
+     *      ]}
+     *  }
+     */ 
+    public static Map<String, Map<String, Double>> symbolsToStocks(List<Symbol> symbols){
+        Map<String, Map<String, Double>> stocks = new HashMap<>();
         for (Symbol symbol : symbols) {
-            // Insert date if not already inserted
-            LocalDateTime date = symbol.getUpdatedOn();
-            String dateString = date.getYear()+"-"+date.getMonthValue()+"-"+date.getDayOfMonth();
-            if (!dates.contains(dateString)){
-                dates.add(dateString);
-            }
 
             // Insert stock name if not already inserted
             String name = symbol.getName();
-            if(!stocks.containsKey(name)){
-                stocks.put(name, new ArrayList<>());
+            if (!stocks.containsKey(name)){
+                stocks.put(name, new LinkedHashMap<>());
             }
 
-            // Add value to correspondant stock list
-            stocks.get(name).add(symbol.getValue());
+            // Insert date and value
+            String date = symbol.getUpdatedOn().getYear()+"-"+symbol.getUpdatedOn().getMonthValue()+"-"+symbol.getUpdatedOn().getDayOfMonth();
+            stocks.get(name).put(date, symbol.getValue());
         }
+
+        return stocks;
     }
 }

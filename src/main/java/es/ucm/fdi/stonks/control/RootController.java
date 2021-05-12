@@ -59,11 +59,7 @@ public class RootController {
         List<Symbol> symbols = (List<Symbol>)entityManager
                             .createNamedQuery("Symbol.all")
                             .getResultList();
-        List<String> dates = new ArrayList<>();
-        Map<String, List<Double>> stocks = new HashMap<>();
-        StaticMethods.symbolsToGraphic(symbols, dates, stocks);
-        model.addAttribute("dates", dates);
-        model.addAttribute("stocks", stocks);
+        model.addAttribute("stocks", StaticMethods.symbolsToStocks(symbols));
 
         return "index";
     }

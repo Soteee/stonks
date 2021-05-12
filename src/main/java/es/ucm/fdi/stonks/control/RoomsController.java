@@ -70,27 +70,33 @@ public class RoomsController{
         // Si el usuario pertenece a la sala
         if (users_inroom.contains(user)){
             Membership membership = (Membership) entityManager
-                        .createNamedQuery("Membership.byUserAndRoom")
-                        .setParameter("user", user)
-                        .setParameter("room", room)
-                        .getSingleResult();
+                                                .createNamedQuery("Membership.byUserAndRoom")
+                                                .setParameter("user", user)
+                                                .setParameter("room", room)
+                                                .getSingleResult();
             model.addAttribute("membership", membership);
 
-            List<?> symbols = entityManager
-                        .createNamedQuery("Symbol.byRoom")
-                        .setParameter("room", room)
-                        .getResultList();
-            model.addAttribute("symbols", symbols);
+            List<?> lastSymbols = entityManager
+                                    .createNamedQuery("Symbol.lastsByRoom")
+                                    .setParameter("room", room)
+                                    .getResultList();
+            model.addAttribute("symbols", lastSymbols);
+
+            List<Symbol> allSymbols = entityManager
+                                        .createNamedQuery("Symbol.allByRoom")
+                                        .setParameter("room", room)
+                                        .getResultList();
+            model.addAttribute("roomStocks", StaticMethods.symbolsToStocks(allSymbols));
 
             // Crea un objeto stocks para almacenar la cantidad acciones de cada símbolo que tiene el usuario
             Map<Symbol, Integer> stocks = new HashMap<Symbol, Integer>();
-            for (Symbol symbol : (List<Symbol>) symbols) {
+            for (Symbol symbol : (List<Symbol>) lastSymbols) {
                 int quantity = StaticMethods.computeQuantity(entityManager, membership, symbol);
                 if (quantity != 0){
                     stocks.put(symbol, quantity);
                 }
             }
-            model.addAttribute("stocks", stocks);
+            model.addAttribute("userStocks", stocks);
         }
 
         return "r";
@@ -131,7 +137,7 @@ public class RoomsController{
         for (int i = 0; i < symbols.length; ++i) {
 
             symbolList.add((Symbol) entityManager
-                .createNamedQuery("Symbol.byName")
+                .createNamedQuery("Symbol.lastByName")
                 .setParameter("name", symbols[i])
                 .getSingleResult());
         }

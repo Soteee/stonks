@@ -109,16 +109,62 @@ INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash
 INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (2,'Me encanta pagar impuestos', TRUE, 1000, 10, 3000, 100000, 4);
 
 -- Stocks de cada sala
-INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (1, 1);
-INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (1, 2);
-INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (1, 3);
-INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (1, 4);
-INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (1, 5);
-INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (2, 6);
-INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (2, 7);
-INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (2, 8);
-INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (2, 9);
-INSERT INTO SYMBOL_ROOMS(rooms_id, symbol_id) VALUES (2, 10);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (1, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (2, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (3, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (4, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (5, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (6, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (7, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (8, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (9, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (10, 2);
+
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (11, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (12, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (13, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (14, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (15, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (16, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (17, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (18, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (19, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (20, 2);
+
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (21, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (22, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (23, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (24, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (25, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (26, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (27, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (28, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (29, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (30, 2);
+
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (31, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (32, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (33, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (34, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (35, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (36, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (37, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (38, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (39, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (40, 2);
+
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (41, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (42, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (43, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (44, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (45, 1);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (46, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (47, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (48, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (49, 2);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (50, 2);
+
+
 
 -- Memberships de prueba
 INSERT INTO membership VALUES (1, 10000, NULL, 1, 1);

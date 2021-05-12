@@ -1,13 +1,24 @@
 /**
  * Builds graphic based on provided dates and stocks
  * 
- * @param {Array} dates Format: [{"stockName1":[value1, value2, ...]},{"stockName2": [value1, value2, ...]},...]
- * @param {Object} stocks Format: ["date1","date2",...]
+ * stocks format: 
+ *  {
+ *      {stockName1:[
+ *          {date1:value1}, 
+ *          {date2:value2},
+ *          ...
+ *      ]}, 
+ *      {stockName2:[
+ *          {date1:value1}, 
+ *          {date2:value2},
+ *          ...
+ *      ]},
+ *      ...
+ *  }
  */
-function cargarIndices(dates, stocks) {
+function cargarIndices(stocks) {
     data = [];
 
-    // TODO: Acabar esto
     // Construct header
     let head = [];
     Object.keys(stocks).forEach((stockName) =>{
@@ -16,7 +27,18 @@ function cargarIndices(dates, stocks) {
     head.push('date');
     data.push(head);
 
+    // Construct values
+    numStocks = Object.values(stocks).length
+    numValues = Object.values(Object.values(stocks)[0]).length
+    for(let i = 0; i < numValues; i++){
+        let newSetOfValues = [];
 
+        for(let j = 0; j < numStocks; j++){
+            newSetOfValues.push(Object.values(Object.values(stocks)[j])[i]);
+        }
+        newSetOfValues.push(Object.keys(Object.values(stocks)[0])[i]);
+        data.push(newSetOfValues);
+    }
 
     /**
      * Format:
@@ -32,13 +54,7 @@ function cargarIndices(dates, stocks) {
     c3.generate({
         data: {
             x: 'date',
-            rows: [
-                ['TSLA', 'NVDA', 'AMZN', 'date'],
-                [1000, 156, 432, '2010-10-4'],
-                [123, 156, 432, '2010-10-5'],
-                [123, 156, 432, '2010-10-6'],
-                [123, 156, 432, '2010-10-7'],
-            ]
+            rows: data
         },
         axis: {
             x: {

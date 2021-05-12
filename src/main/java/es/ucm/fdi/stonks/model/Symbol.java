@@ -26,21 +26,27 @@ import lombok.Data;
                     +   "SELECT MAX(updatedOn) "
                     +   "FROM Symbol"
                     + ")"),
-    @NamedQuery(name="Symbol.byName",
+    @NamedQuery(name="Symbol.lastByName",
                 query="SELECT s FROM Symbol s "
                     + "WHERE s.name = :name "
                     + "AND s.updatedOn = ("
                     +   "SELECT MAX(updatedOn) "
                     +   "FROM Symbol"
                     + ")"),
-    @NamedQuery(name="Symbol.byRoom",
+    @NamedQuery(name="Symbol.lastsByRoom",
                 query="SELECT s FROM Symbol s "
                     + "JOIN s.rooms r "
                     + "WHERE s.updatedOn = ("
                     +   "SELECT MAX(updatedOn) "
                     +   "FROM Symbol"
                     + ") "
-                    + "AND r = :room")
+                    + "AND r = :room"),
+    @NamedQuery(name="Symbol.allByRoom",
+                query="SELECT s FROM Symbol s "
+                    + "JOIN s.rooms r "
+                    + "WHERE r = :room "
+                    + "ORDER BY s.updatedOn DESC")
+    
 })
 public class Symbol {
     // Number of different symbols
