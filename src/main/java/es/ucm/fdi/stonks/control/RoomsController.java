@@ -106,7 +106,7 @@ public class RoomsController{
     public String createRoom(Model model) {
 
         List<?> symbols = entityManager
-                        .createNamedQuery("Symbol.all")
+                        .createNamedQuery("Symbol.lasts")
                         .getResultList();
         model.addAttribute("symbols", symbols);
 
@@ -135,11 +135,10 @@ public class RoomsController{
 
         List<Symbol> symbolList = new ArrayList<>();
         for (int i = 0; i < symbols.length; ++i) {
-
-            symbolList.add((Symbol) entityManager
-                .createNamedQuery("Symbol.lastByName")
+            symbolList.addAll((List<Symbol>) entityManager
+                .createNamedQuery("Symbol.allByName")
                 .setParameter("name", symbols[i])
-                .getSingleResult());
+                .getResultList());
         }
 
         adminMember.setUser(room_admin);
@@ -161,6 +160,11 @@ public class RoomsController{
         newRoom.setExpirationDate(LocalDate.parse(expirationDate));
         newRoom.setMemberList(memberList);
         entityManager.persist(newRoom);
+
+        for(Symbol symbol : symbolList){
+            symbol.getRooms().add(newRoom);
+            entityManager.persist(symbol);
+        }
 
         response.sendRedirect("/r/");
     }

@@ -20,6 +20,15 @@ import lombok.Data;
     @NamedQuery(name="Symbol.all",
                 query="SELECT s FROM Symbol s "
                     + "ORDER BY s.updatedOn DESC"),
+    @NamedQuery(name="Symbol.allByName",
+                query="SELECT s FROM Symbol s "
+                    + "WHERE s.name = :name "
+                    + "ORDER BY s.updatedOn DESC"),
+    @NamedQuery(name="Symbol.allByRoom",
+                query="SELECT s FROM Symbol s "
+                    + "JOIN s.rooms r "
+                    + "WHERE r = :room "
+                    + "ORDER BY s.updatedOn DESC"),
     @NamedQuery(name="Symbol.lasts",
                 query="SELECT s FROM Symbol s "
                     + "WHERE s.updatedOn = ("
@@ -40,13 +49,7 @@ import lombok.Data;
                     +   "SELECT MAX(updatedOn) "
                     +   "FROM Symbol"
                     + ") "
-                    + "AND r = :room"),
-    @NamedQuery(name="Symbol.allByRoom",
-                query="SELECT s FROM Symbol s "
-                    + "JOIN s.rooms r "
-                    + "WHERE r = :room "
-                    + "ORDER BY s.updatedOn DESC")
-    
+                    + "AND r = :room")
 })
 public class Symbol {
     // Number of different symbols
