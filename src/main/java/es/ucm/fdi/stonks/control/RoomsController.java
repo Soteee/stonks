@@ -1,10 +1,13 @@
 package es.ucm.fdi.stonks.control;
 
 import es.ucm.fdi.stonks.model.Membership;
+import es.ucm.fdi.stonks.model.Message;
 import es.ucm.fdi.stonks.model.Room;
 import es.ucm.fdi.stonks.model.Symbol;
 import es.ucm.fdi.stonks.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -94,6 +97,12 @@ public class RoomsController{
         }
 
         return "r";
+    }
+
+    @MessageMapping("/{id}")
+    @SendTo("/{id}/chat")
+    public void showMessage(Message ms){
+        
     }
 
     @GetMapping("/createRoom")
