@@ -28,7 +28,7 @@ Scenario: buy and sell actions
   * delay(500)
 
   # Comprar acciones
-  * input('#buyQuantity', '1')
+  * input('#buyQuantity', '2')
   # Hacer click en el botón de Comprar
   * submit().click("button[id=buy]")
 
@@ -37,7 +37,21 @@ Scenario: buy and sell actions
    # TODO quitar
 #  * delay(50000)
 
+  # TODO preguntar cómo comprobar que se han comprado bien las acciones
+
   # Comprobar que se han comprado bien las acciones TODO: mirar por atributos
-  * def positions = locateAll('td')
+#  * def filter = function(x) { x.attribute('data-label').startsWith('TSLA') }
+#  * def list = locateAll('td', filter)
+#  * def el = list[0]
+#  * print el
+#
+#  * delay(50000)
 #  * match locateAll('td') contains 'TSLA'
   #* match html('td') contains '1000'
+
+  # Vender acciones
+  * input('#sellQuantity', '1')
+  # Hacer click en el botón de Vender
+  * submit().click("button[id=sell]")
+
+  * delay(500000)
