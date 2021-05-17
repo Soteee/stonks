@@ -2,6 +2,7 @@ package es.ucm.fdi.stonks.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -47,6 +48,10 @@ public class Room {
    private int maxUsers; // número máximo de usuarios que admite la sala
    private int startBalance; // dinero con el que se empieza en la sala
    private int cash2Win; // dinero con el que se gana la partida en la sala; si es 0 no tiene esta función
+
+   @OneToMany
+	@JoinColumn(name = "room_id")	
+	private List<Message> received = new ArrayList<>();	
 
    @NotNull
    private LocalDateTime creationDate; // fecha de creación

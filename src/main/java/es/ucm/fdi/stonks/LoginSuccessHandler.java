@@ -58,20 +58,12 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			.setParameter("username", username)
 			.getSingleResult();		
 		session.setAttribute("u", u);
-
-		// find count of unread messages
-		long unread = entityManager.createNamedQuery("Message.countUnread", Long.class)
-			.setParameter("userId", u.getId())
-			.getSingleResult();	
-		session.setAttribute("unread", unread);
 		
 		// add a 'ws' session variable
 		String ws = request.getRequestURL().toString()
 				.replaceFirst("[^:]*", "ws")		// http[s]://... => ws://...
 				.replaceFirst("/[^/]*$", "/ws");	// .../foo		 => .../ws
 		session.setAttribute("ws", ws);
-		
-		// Intentar que si estabas accediendo a una página protegida, vuelvas a ella una vez te hayas loggeado
 
 		// redirects to 'admin' or 'user/{id}', depending on the user
 		String nextUrl = u.hasRole(User.Role.ADMIN) ? 

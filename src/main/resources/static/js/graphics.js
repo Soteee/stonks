@@ -21,7 +21,7 @@ function cargarIndices(stocks) {
 
     // Construct header
     let head = [];
-    Object.keys(stocks).forEach((stockName) =>{
+    Object.keys(stocks).forEach((stockName) => {
         head.push(stockName);
     });
     head.push('date');
@@ -30,10 +30,10 @@ function cargarIndices(stocks) {
     // Construct values
     numStocks = Object.values(stocks).length
     numValues = Object.values(Object.values(stocks)[0]).length
-    for(let i = 0; i < numValues; i++){
+    for (let i = 0; i < numValues; i++) {
         let newSetOfValues = [];
 
-        for(let j = 0; j < numStocks; j++){
+        for (let j = 0; j < numStocks; j++) {
             newSetOfValues.push(Object.values(Object.values(stocks)[j])[i]);
         }
         newSetOfValues.push(Object.keys(Object.values(stocks)[0])[i]);
