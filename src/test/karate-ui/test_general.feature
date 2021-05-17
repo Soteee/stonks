@@ -1,11 +1,11 @@
-Feature: login, acceso a perfil, ver mensajes + enviar y recibir un mensaje via WS
+Feature: registro, login, crear sala y comprar acciones
 
 Background:
   # para escribir tus propias pruebas, lee https://github.com/intuit/karate/tree/master/karate-core
   # driver: chromium bajo linux; si usas google-chrome, puedes quitar executable (que es lo que usaría por defecto)
   * configure driver = { type: 'chrome', executable: '/usr/bin/chromium', showDriverLog: true }
     
-Scenario: login using chrome
+Scenario: register, login, create room, buy stocks
 
   # Ir a register
   Given driver 'http://localhost:8080/register'
@@ -46,7 +46,7 @@ Scenario: login using chrome
   * input('#name', 'La Salita')
   * select('#isPublic', '1')
   * input('#maxUsers', '5')
-  * input('#startBalance', '500')
+  * input('#startBalance', '50000')
   * input('#weeklyCash', '1000')
   * input('#expirationDate', '22/07/2021')
   * input('#cash2Win', '5000')
@@ -60,7 +60,7 @@ Scenario: login using chrome
   * delay(500)
 
   # Comprar acciones
-  * input('#buyQuantity', '1000')
+  * input('#buyQuantity', '50')
   # Hacer click en el botón de Comprar
   * submit().click("button[id=buy]")
 
