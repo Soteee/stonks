@@ -22,6 +22,9 @@ Scenario: login using chrome
   # Delay de 500 ms para que el siguiente input se haga bien
   * delay(500)
 
+  # Ir a login
+  Given driver 'http://localhost:8080/login'
+
   # Rellenar formulario
   * input('#username', 'pepito')
   * input('#password', 'abcdef')
@@ -32,10 +35,10 @@ Scenario: login using chrome
   # Comprobar que el título de la página a la que se ha llegado es el de la principal
   * match html('title') contains 'Stonks'
   # Hacer click en el botón de Salas
-  * submit().click("button[id=rooms]")
+  * submit().click("[id=rooms]")
 
   # Hacer click en el botón de Crear sala
-  * submit().click("button[id=createRoom]")
+  * submit().click("[id=createRoom]")
   # Delay de 500 ms para que el siguiente input se haga bien
   * delay(500)
 
@@ -47,6 +50,7 @@ Scenario: login using chrome
   * input('#weeklyCash', '1000')
   * input('#expirationDate', '22/07/2021')
   * input('#cash2Win', '5000')
+  * leftOf('{}TSLA').click()
   # Hacer click en el botón de submit
   * submit().click("input[type=submit]")
 
@@ -56,9 +60,9 @@ Scenario: login using chrome
   * delay(500)
 
   # Comprar acciones
-  * input('#amount', '1000')
+  * input('#buyQuantity', '1000')
   # Hacer click en el botón de Comprar
-  * submit().click("input[type=submit]")
+  * submit().click("button[id=buy]")
 
   * delay(500)
 

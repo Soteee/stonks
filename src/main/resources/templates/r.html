@@ -71,8 +71,8 @@
                 <select name="symbol_id">
                     <option th:each="symbol: ${symbols}" th:value="${symbol.id}" th:text="${symbol.name}"></option>
                 </select>
-                <input type="number" id="quantity" placeholder="Cantidad" name="quantity"`>
-                <button type="submit">Comprar</button>
+                <input type="number" id="buyQuantity" placeholder="Cantidad" name="quantity"`>
+                <button type="submit" id="buy">Comprar</button>
             </form>
 
             <!-- Sell stocks (only if user has)-->
@@ -81,8 +81,8 @@
                 <select name="symbol_id">
                     <option th:each="symbol: ${symbols}" th:value="${symbol.id}" th:text="${symbol.name}"></option>
                 </select>
-                <input type="number" id="quantity" placeholder="Cantidad" name="quantity">
-                <button type="submit">Vender</button>
+                <input type="number" id="sellQuantity" placeholder="Cantidad" name="quantity">
+                <button type="submit" id="sell">Vender</button>
             </form>
         </div>
     </div>

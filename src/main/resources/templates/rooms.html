@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </form>
-            <a class="button is-danger" th:href='@{/r/createRoom}'>Crear sala</a>
+            <a class="button is-danger" th:href='@{/r/createRoom}' id="createRoom">Crear sala</a>
             <div class="content">
                 <ul id="results-rooms">
                     <li th:each="room: ${topRooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
