@@ -2,14 +2,13 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <th:block th:replace="fragments/head ::header" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${room.name}">No se encontró la sala</title>
+    <th:block th:replace="fragments/head ::header" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
-    <script th:src="@{/js/simple-datatables-2.1.10.min.js}">
-    </script>
     <link th:href="@{/css/simple-datatables-2.1.10.css}" rel="stylesheet">
+    <script th:src="@{/js/simple-datatables-2.1.10.min.js}"></script>
     <script th:src="@{/js/c3.js}"></script>
     <script th:src="@{/js/d3.js}"></script>
     <script th:src="@{/js/graphics.js}"></script>
@@ -55,18 +54,17 @@
             </table>
         </div>
 
-        <div class="chatcontent" id="chat">
-
+        <div class="chatcontent" id="chat" th:if="${membership != null}">
             <table class="datatable" id="datatable"></table>
 
             <form th:action="@{/chat/{id}(id=${room.id})}" method="POST">
                 <div id="chatbox"></div>
-                <textarea id="message" placeholder="escribe el mensaje seleccionado" rows="4" cols="20"></textarea>
+                <textarea id="message" placeholder="Escribe en el chat"></textarea>
                 <button id="sendmsg" type="submit">Enviar</button>
             </form>
         </div>
 
-        <div th:if="${membership != null}">
+        <div id="player_panel" th:if="${membership != null}">
             <!-- Información de las acciones del usuario -->
             <div class="player_info">
                 <p>Balance: <span th:text="${membership.balance}"></span></p>
@@ -103,6 +101,11 @@
         </div>
     </div>
     <script>
+        function formatDate(d) {
+            // 2020-03-23T10:48:11.074 => 23/3/2020@10:48:18
+            return new Date(d).toLocaleString("es-ES").split(" ").join("@")
+        }
+
         // mostrando una tabla dinámica con datos cargados del servidor vía AJAX
         let dt = new simpleDatatables.DataTable(
             '#datatable', {
@@ -113,9 +116,6 @@
                         for (let i = 0; i < data.length; i++) {
                             let row = data[i];
                             row.sent = formatDate(row.sent);
-                            if (row.received) {
-                                row.received = formatDate(row.received);
-                            }
                         }
 
                         return JSON.stringify(data);
@@ -123,6 +123,26 @@
                 }
             }
         );
+
+        // envío de mensajes vía AJAX, sin recargar la página
+        document.addEventListener("DOMContentLoaded", () => {
+            let b = document.getElementById("sendmsg");
+            b.onclick = (e) => {
+                let url = b.parentNode.action;
+                e.preventDefault();
+                console.log(b, b.parentNode)
+                go(url, 'POST', {
+                        message: document.getElementById("message").value
+                    })
+                    .then(d => console.log("happy", d))
+                    .catch(e => console.log("sad", e))
+            }
+        });
+
+        // Cuando llega un mensahe, se añade a la tabla
+        ws.receive = (m) => {
+            dt.rows().add([m.from, formatDate(new Date().toISOString()), m.text, m.id]);
+        }
     </script>
 </body>
 
