@@ -166,9 +166,9 @@ INSERT INTO membership VALUES (5, 40000, NULL, 2, 5);
 INSERT INTO membership VALUES (6, 8000, NULL, 2, 1);
 
 -- Unos pocos auto-mensajes de prueba
-INSERT INTO MESSAGE (user_id, room_id, date_sent, date_read, text) VALUES(1,1,'2020-03-23 10:48:11.074000',NULL,'probando 1');
-INSERT INTO MESSAGE (user_id, room_id, date_sent, date_read, text) VALUES(2,1,'2020-03-23 10:48:15.149000',NULL,'probando 2');
-INSERT INTO MESSAGE (user_id, room_id, date_sent, date_read, text) VALUES(1,1,'2020-03-23 10:48:18.005000',NULL,'probando 3');
-INSERT INTO MESSAGE (user_id, room_id, date_sent, date_read, text) VALUES(2,1,'2020-03-23 10:48:20.971000',NULL,'probando 4');
-INSERT INTO MESSAGE (user_id, room_id, date_sent, date_read, text) VALUES(1,1,'2020-03-23 10:48:22.926000',NULL,'probando 5');
+INSERT INTO MESSAGE (user_id, room_id, date_sent, text) VALUES(1,1,'2020-03-23 10:48:11.074000','probando 1');
+INSERT INTO MESSAGE (user_id, room_id, date_sent, text) VALUES(2,1,'2020-03-23 10:48:15.149000','probando 2');
+INSERT INTO MESSAGE (user_id, room_id, date_sent, text) VALUES(1,1,'2020-03-23 10:48:18.005000','probando 3');
+INSERT INTO MESSAGE (user_id, room_id, date_sent, text) VALUES(2,1,'2020-03-23 10:48:20.971000','probando 4');
+INSERT INTO MESSAGE (user_id, room_id, date_sent, text) VALUES(1,1,'2020-03-23 10:48:22.926000','probando 5');
 

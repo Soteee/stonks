@@ -4,8 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/logIn.css}" />
-    <!-- ERROR 404 NO ENCUENTRA EL .JS, DE MOMENTO DEJO EL SCRIPT AQUI QUE YA ESTOY CANSADO DE PROBAR COSAS-->
-    <!--<script type="text/javascript" src="../static/js/password_test.js"></script>-->
     <script>
         var numeros = "0123456789";
         var letras = "abcdefghyjklmnñopqrstuvwxyz";
@@ -89,6 +87,7 @@
         }
     </script>
     <title>Registrarse</title>
+    <th:block th:replace="fragments/head ::header" />
 </head>
 
 <body>
