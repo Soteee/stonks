@@ -25,7 +25,6 @@ import es.ucm.fdi.stonks.model.Transferable;
 import es.ucm.fdi.stonks.model.User;
 import es.ucm.fdi.stonks.model.Message;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,7 +48,7 @@ public class ChatController {
         return room.getReceived().stream().map(Transferable::toTransfer).collect(Collectors.toList());       
     }
 
-    @PostMapping("/{id}")
+    @PostMapping(path = "/{id}")
 	@ResponseBody
 	@Transactional
     public String sendMsg(@PathVariable long id,

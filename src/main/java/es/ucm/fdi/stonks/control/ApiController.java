@@ -7,16 +7,17 @@ import es.ucm.fdi.stonks.model.Symbol;
 import es.ucm.fdi.stonks.model.User;
 import es.ucm.fdi.stonks.model.Position.Side;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletResponse;
@@ -30,12 +31,12 @@ public class ApiController {
     @Autowired
     private EntityManager entityManager;
     
-    @GetMapping("/userStocks")
-    public Map<String, Integer> getUserStocks(HttpSession session,
-                                @RequestBody JsonNode o,
+    @GetMapping(path = "/userInfo", produces = "application/json")
+    @ResponseBody
+    public String getUserStocks(HttpSession session,
+                                @RequestParam(value = "r") long room_id,
                                 HttpServletResponse response) throws Exception{
         
-        long room_id = o.get("room_id").asLong();
         Room room = entityManager.find(Room.class, room_id);
         
         Membership membership = (Membership) entityManager
@@ -44,20 +45,31 @@ public class ApiController {
                                         .setParameter("room", room)
                                         .getSingleResult();
 
+        if (membership == null){
+            response.sendError(400);
+        }
+
         List<?> lastSymbols = entityManager
                                 .createNamedQuery("Symbol.lastsByRoom")
                                 .setParameter("room", room)
                                 .getResultList();
 
-        Map<String, Integer> stocks = new HashMap<String, Integer>();
+        JSONObject json = new JSONObject();
+
+        json.put("balance", String.format("%.02f",membership.getBalance()));
+
+        JSONArray stocks = new JSONArray();
         for (Symbol symbol : (List<Symbol>) lastSymbols) {
             int quantity = StaticMethods.computeQuantity(entityManager, membership, symbol);
             if (quantity != 0){
-                stocks.put(symbol.getName(), quantity);
+                JSONObject stock = new JSONObject();
+                stock.put(symbol.getName(), quantity);
+                stocks.put(stock);
             }
         }
+        json.put("stocks", stocks);
 
-        return stocks;
+        return json.toString();
     }
 
     @PostMapping("/buy")
@@ -66,10 +78,6 @@ public class ApiController {
     public String buy(HttpSession session,
                         @RequestBody JsonNode o,
                         HttpServletResponse response) throws Exception{    
-
-        if (session.getAttribute("u") == null){
-            response.sendError(403);
-        }
         
         long symbol_id = o.get("symbol_id").asLong();
         int quantity = o.get("quantity").asInt();
@@ -114,10 +122,6 @@ public class ApiController {
     public String sell(HttpSession session,
                         @RequestBody JsonNode o,
                         HttpServletResponse response) throws Exception{
-
-        if (session.getAttribute("u") == null){
-            response.sendError(403);
-        }
 
         long symbol_id = o.get("symbol_id").asLong();
         int quantity = o.get("quantity").asInt();

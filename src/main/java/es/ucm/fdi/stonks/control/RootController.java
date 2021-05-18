@@ -1,8 +1,5 @@
 package es.ucm.fdi.stonks.control;
 
-
-import es.ucm.fdi.stonks.model.Membership;
-import es.ucm.fdi.stonks.model.Room;
 import es.ucm.fdi.stonks.model.Symbol;
 import es.ucm.fdi.stonks.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class RootController {

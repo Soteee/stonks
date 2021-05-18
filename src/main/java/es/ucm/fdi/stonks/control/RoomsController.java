@@ -87,16 +87,6 @@ public class RoomsController{
                                         .setParameter("room", room)
                                         .getResultList();
             model.addAttribute("roomStocks", StaticMethods.symbolsToStocks(allSymbols));
-
-            // Crea un objeto stocks para almacenar la cantidad acciones de cada símbolo que tiene el usuario
-            Map<Symbol, Integer> stocks = new HashMap<Symbol, Integer>();
-            for (Symbol symbol : (List<Symbol>) lastSymbols) {
-                int quantity = StaticMethods.computeQuantity(entityManager, membership, symbol);
-                if (quantity != 0){
-                    stocks.put(symbol, quantity);
-                }
-            }
-            model.addAttribute("userStocks", stocks);
         }
 
         return "r";
