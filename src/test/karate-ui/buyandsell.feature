@@ -16,16 +16,26 @@ Scenario: buy and sell actions
   # Hacer click en el botón de submit
   * submit().click("input[type=submit]")
   # Delay de 500 ms para que la página se cargue
-  * delay(500)
+#  * delay(500)
   # Comprobar que el título de la página a la que se ha llegado es el de la principal
-  * match html('title') contains 'Panel de administración'
+#  * match html('title') contains 'Panel de administración'
+
+  # Comprobar que se ha llegado a la página de administrador
+  * waitForUrl("/admin")
+
   # Hacer click en el botón de Salas
   * submit().click("[id=rooms]")
 
   # Hacer click en el nombre de la sala
   * click("a[id='Andorra']")
 
-  * delay(500)
+  # Comprobar que se ha llegado a la página de la sala
+  * waitForUrl("/r/1")
+
+#  * delay(500)
+
+  * match text("span[id=balance]") == '10000.0'
+#  * match text("p[id=positions]") == 'Todavía no tienes posiciones'
 
   # Comprar acciones
   * input('#buyQuantity', '2')
@@ -34,10 +44,11 @@ Scenario: buy and sell actions
 
   * delay(500)
 
-   # TODO quitar
-#  * delay(50000)
 
-  # TODO preguntar cómo comprobar que se han comprado bien las acciones
+  # TODO falta comprobar que las posiciones son correctas (no tenemos span)
+  # Comprobar poniendo span en los campos
+
+  * match text("span[id=balance]") == '8717.0'
 
   # Comprobar que se han comprado bien las acciones TODO: mirar por atributos
 #  * def filter = function(x) { x.attribute('data-label').startsWith('TSLA') }
@@ -54,4 +65,4 @@ Scenario: buy and sell actions
   # Hacer click en el botón de Vender
   * submit().click("button[id=sell]")
 
-  * delay(500000)
+  * match text("span[id=balance]") == '9358.5'

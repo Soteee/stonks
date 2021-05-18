@@ -67,7 +67,7 @@
         <div id="player_panel" th:if="${membership != null}">
             <!-- Información de las acciones del usuario -->
             <div class="player_info">
-                <p>Balance: <span th:text="${membership.balance}"></span></p>
+                <p>Balance: <span id="balance" th:text="${membership.balance}"></span></p>
 
                 <p>Posiciones</p>
                 <p th:if="${#maps.isEmpty(userStocks)}">Todavía no tienes posiciones</p>
