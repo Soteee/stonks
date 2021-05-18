@@ -67,7 +67,7 @@ public class ChatController {
         entityManager.persist(newMessage);
 
         room.getReceived().add(newMessage);
-        user.getSent().add(newMessage);  // TODO: -> org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: es.ucm.fdi.stonks.model.User.sent, could not initialize proxy - no Session
+        user.getSent().add(newMessage);
         
         entityManager.flush(); // to get Id before commit
 

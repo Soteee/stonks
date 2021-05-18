@@ -4,6 +4,7 @@ import es.ucm.fdi.stonks.model.Membership;
 import es.ucm.fdi.stonks.model.Position;
 import es.ucm.fdi.stonks.model.Room;
 import es.ucm.fdi.stonks.model.Symbol;
+import es.ucm.fdi.stonks.model.User;
 import es.ucm.fdi.stonks.model.Position.Side;
 
 import org.springframework.beans.factory.annotation.Autowired;
