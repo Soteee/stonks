@@ -35,7 +35,7 @@ public class RoomsController{
     public String rooms(Model model, HttpSession session) {
         List<?> user_rooms = entityManager
                 .createNamedQuery("Room.byUser")
-                .setParameter("user", session.getAttribute("u"))
+                .setParameter("user", entityManager.find(User.class,((User)session.getAttribute("u")).getId()))
                 .getResultList();
         model.addAttribute("user_rooms", user_rooms);
 
@@ -50,7 +50,7 @@ public class RoomsController{
 
     @GetMapping("/{id}") // /s/idsala sala por dentro.
     public String room(@PathVariable long id, Model model, HttpSession session) {
-        User user = (User) session.getAttribute("u");
+        User user = entityManager.find(User.class,((User)session.getAttribute("u")).getId());
 
         List<?> user_rooms = entityManager
                 .createNamedQuery("Room.byUser")
@@ -128,7 +128,7 @@ public class RoomsController{
             HttpSession session) throws Exception{
 
         Room newRoom = new Room();
-        User room_admin = (User) session.getAttribute("u");
+        User room_admin = entityManager.find(User.class,((User)session.getAttribute("u")).getId());
         Membership adminMember = new Membership();
         ArrayList<Membership> memberList = new ArrayList<>();
         LocalDateTime currentDate = LocalDateTime.now();
@@ -175,7 +175,7 @@ public class RoomsController{
                         HttpServletResponse response,
                         HttpSession session) throws Exception{
 
-        User user = (User) session.getAttribute("u");
+        User user = entityManager.find(User.class,((User)session.getAttribute("u")).getId());
         Room room = entityManager.find(Room.class, room_id);
 
         List<?> previousMembers = entityManager.createNamedQuery("Membership.byUserAndRoom")

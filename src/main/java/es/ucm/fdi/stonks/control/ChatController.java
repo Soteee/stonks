@@ -57,7 +57,7 @@ public class ChatController {
                             HttpSession session) throws JsonProcessingException{
         String text = o.get("message").asText();
         Room room = entityManager.find(Room.class, id);
-        User user = (User) session.getAttribute("u");
+        User user = entityManager.find(User.class,((User)session.getAttribute("u")).getId());
 
         Message newMessage = new Message();
         newMessage.setRoom(room);

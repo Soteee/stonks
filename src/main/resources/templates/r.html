@@ -110,7 +110,7 @@
         let dt = new simpleDatatables.DataTable(
             '#datatable', {
                 ajax: {
-                    url: config.rootUrl + "/chat/1", // empieza siempre por config.rootUrl
+                    url: config.rootUrl + "chat/1", // empieza siempre por config.rootUrl
                     load: function(xhr) {
                         let data = JSON.parse(xhr.responseText);
                         for (let i = 0; i < data.length; i++) {

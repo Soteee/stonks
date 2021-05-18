@@ -33,7 +33,7 @@ public class ApiController {
         
         Membership member = (Membership) entityManager
                                         .createNamedQuery("Membership.byUserAndRoom")
-                                        .setParameter("user", session.getAttribute("u"))
+                                        .setParameter("user", entityManager.find(User.class,((User)session.getAttribute("u")).getId()))
                                         .setParameter("room", entityManager.find(Room.class, room_id))
                                         .getSingleResult();
 
@@ -73,7 +73,7 @@ public class ApiController {
 
         Membership member = (Membership) entityManager
                                         .createNamedQuery("Membership.byUserAndRoom")
-                                        .setParameter("user", session.getAttribute("u"))
+                                        .setParameter("user", entityManager.find(User.class,((User)session.getAttribute("u")).getId()))
                                         .setParameter("room", entityManager.find(Room.class, room_id))
                                         .getSingleResult();
         Symbol symbol = entityManager.find(Symbol.class, symbol_id);
