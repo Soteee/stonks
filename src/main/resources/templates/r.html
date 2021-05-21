@@ -15,211 +15,242 @@
 </head>
 
 <body>
-
-
     <nav th:replace="fragments/menu.html :: topbar"></nav>
-    <nav th:replace="fragments/left_navbar :: my_rooms"></nav>
 
-    <div class="rightnavbar" id=right_navbar>
-        <p>Usuarios en la sala</p>
-        <ul>
-            <li th:each="user: ${users_inroom}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios en esta sala</a></li>
-        </ul>
-    </div>
-
-    <div class="visualizer">
-
-        <h1 th:text="${room.name}">No se encontró la sala</h1>
-        <div th:if="${membership == null}">
-            <form method="POST" th:action="@{/r/joinRoom}">
-                No perteneces a esta sala
-                <input type="hidden" name="room_id" th:value="${room.id}">
-                <input type="submit" value="Unirme">
-            </form>
+    <div class="columns m-3">
+        <div class="column is-2">
+            <nav th:replace="fragments/left_navbar :: my_rooms"></nav>
+            <br>
+            <aside class="menu" th:fragment="my_rooms">
+                <p class="menu-label">
+                    Usuarios en la sala
+                </p>
+                <ul class="menu-list">
+                    <li th:each="user: ${users_inroom}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios en esta sala</a></li>
+                </ul>
+            </aside>
         </div>
+        <div class="column">
+            <div class="content">
+                <h1 th:text="${room.name}">No se encontró la sala</h1>
+            </div>
 
-        <div class="content">
-            <h2>Historial de valores</h2>
-            <div id="chart">
+            <div th:if="${membership == null}">
+                <form method="POST" th:action="@{/r/joinRoom}">
+                    <div class="content">
+                        <h2>No perteneces a esta sala</h2>
+                    </div>
+                    <button class="button is-large is-info" type="submit">
+                        Unirme
+                    </button>
+                    <input type="hidden" name="room_id" th:value="${room.id}">
+                </form>
+            </div>
+
+            <div th:unless="${membership == null}">
+
+                <div class="content">
+                    <h2>Historial de valores</h2>
+                    <div id="chart">
+                        <script th:inline="javascript">
+                            cargarIndices( /*[[${roomStocks}]]*/ null);
+                        </script>
+                    </div>
+                    <div class="columns m-2">
+                        <div class="column is-half">
+                            <h2>Valores actuales</h2>
+                            <table id='currentValues'>
+                                <tr th:each="stock : ${roomStocks}">
+                                    <td th:text="${stock.key}"></td>
+                                    <td th:text="${stock.value[stock.value.keySet()[0]]}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="column">
+                            <h2>Operaciones</h2>
+                            <div class="columns m-2">
+                                <div id="user_panel" th:if="${membership != null}">
+                                    <!-- Información de las acciones del usuario -->
+                                    <div class="user_info">
+                                        <h3>Balance</h3>
+                                        <p><span id="balance"></span></p>
+
+                                        <h3>Posiciones</h3>
+                                        <table id='stocks' class="table is-striped"></table>
+                                    </div>
+
+                                    <!-- Buy stocks -->
+                                    <form method="POST" th:action="@{/buy}">
+                                        <div class="select">
+                                            <select id='buySymbol' name="symbol_id">
+                                                <option th:each="symbol: ${symbols}" th:value="${symbol.id}" th:text="${symbol.name}"></option>
+                                            </select>
+                                        </div>
+                                        <input type="hidden" name="room_id" th:value="${room.id}">
+                                        <input class="input" type="number" id="buyQuantity" placeholder="Cantidad" name="quantity">
+                                        <button class="button is-primary" type="submit" id="buy">Comprar</button>
+                                    </form>
+                                    <!-- Sell stocks (only if user has)-->
+                                    <form id="sell_form" method="POST" th:action="@{/sell}">
+                                        <input type="hidden" name="room_id" th:value="${room.id}">
+                                        <div class="select">
+                                            <select id='sellSymbol' name="symbol_id">
+                                                <option th:each="symbol: ${symbols}" th:value="${symbol.id}" th:text="${symbol.name}"></option>
+                                            </select>
+                                        </div>
+                                        <input class="input" type="number" id="sellQuantity" placeholder="Cantidad" name="quantity">
+                                        <button class="button is-danger" type="submit" id="sell">Vender</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chatcontent" id="chat" th:if="${membership != null}">
+                    <table class="datatable" id="datatable"></table>
+
+                    <form th:action="@{/chat/{id}(id=${room.id})}" method="POST">
+                        <div id="chatbox"></div>
+                        <textarea class="textarea" id="message" placeholder="Escribe en el chat"></textarea>
+                        <br>
+                        <button class="button is-primary" id="sendmsg" type="submit">Enviar</button>
+                    </form>
+                </div>
+
+
+
                 <script th:inline="javascript">
-                    cargarIndices( /*[[${roomStocks}]]*/ null);
+                    // Tiene que ser global para poder borrarlo del DOM y seguir teniendo el formulario
+                    var sell_form = document.getElementById("sell_form");
+                    sell_form.parentNode.removeChild(sell_form);
+
+                    // Actualiza todos los valores del panel del usuario
+                    function updateUserPanel(){
+
+                        go (config.rootUrl + 'userInfo?r=' + /*[[${room.id}]]*/ '', 'GET')
+                            .then(function (response){
+                                // Actualiza el balance
+                                document.getElementById("balance").innerHTML = response.balance;
+
+                                // Borra la tabla de posiciones
+                                let table = document.getElementById("stocks");
+                                while (table.hasChildNodes()){
+                                    table.removeChild(table.firstChild);
+                                }
+
+                                if (Object.entries(response.stocks).length !== 0){
+                                    // Actualiza la barra de posiciones con los valores actuales
+                                    response.stocks.forEach( stock => {
+                                        let row = table.insertRow();
+                                        row.insertCell(0).innerHTML = Object.keys(stock)[0];
+                                        row.insertCell(1).innerHTML = stock[Object.keys(stock)[0]];
+                                    })
+
+                                    if (sell_form.parentNode === null){
+                                        // Muestra el formulario de venta
+                                        let user_panel = document.getElementById('user_panel');
+                                        user_panel.appendChild(sell_form);
+                                    }
+                                }
+                                else {
+                                    table.insertRow().insertCell(0).innerHTML = "Todavía no tienes posiciones";
+
+                                    if (sell_form.parentNode !== null){
+                                        // Oculta el formulario de venta
+                                        sell_form.parentNode.removeChild(sell_form);
+                                    }
+                                }
+                            })
+                    }
+                    updateUserPanel();
+
+                    // envío de transacciones con AJAX
+                    document.addEventListener("DOMContentLoaded", () => {
+                        let b = document.getElementById("buy");
+                        b.onclick = (e) => {
+                            let url = b.parentNode.action;
+                            e.preventDefault();
+                            console.log(b, b.parentNode)
+                            go(url, 'POST', {
+                                room_id: /*[[${room.id}]]*/ null,
+                                symbol_id: document.getElementById("buySymbol").value,
+                                quantity: document.getElementById("buyQuantity").value
+                            })
+                                .then(()=>{
+                                    updateUserPanel();
+                                    document.getElementById("buyQuantity").value = null;
+                                });
+                        }
+                    });
+
+                    document.addEventListener("DOMContentLoaded", () => {
+                        let b = sell_form.childNodes[8]; // Si se intenta coger con getElementById, no lo encuentra porque al principio se saca del DOM
+                        b.onclick = (e) => {
+                            let url = b.parentNode.action;
+                            e.preventDefault();
+                            console.log(b, b.parentNode)
+                            go(url, 'POST', {
+                                room_id: /*[[${room.id}]]*/ null,
+                                symbol_id: document.getElementById("sellSymbol").value,
+                                quantity: document.getElementById("sellQuantity").value
+                            })
+                                .then(()=>{
+                                    updateUserPanel();
+                                    document.getElementById("sellQuantity").value = null;
+                                });
+                        }
+                    });
+
+                    function formatDate(d) {
+                        // 2020-03-23T10:48:11.074 => 23/3/2020@10:48:18
+                        return new Date(d).toLocaleString("es-ES").split(" ").join("@")
+                    }
+
+                    // mostrando una tabla dinámica con datos cargados del servidor vía AJAX
+                    let dt = new simpleDatatables.DataTable(
+                        '#datatable', {
+                            ajax: {
+                                url: config.rootUrl + "chat/" + /*[[${room.id}]]*/ "", // empieza siempre por config.rootUrl
+                                load: function(xhr) {
+                                    let data = JSON.parse(xhr.responseText);
+                                    for (let i = 0; i < data.length; i++) {
+                                        let row = data[i];
+                                        row.sent = formatDate(row.sent);
+                                    }
+
+                                    return JSON.stringify(data);
+                                }
+                            }
+                        }
+                    );
+
+                    // envío de mensajes vía AJAX, sin recargar la página
+                    document.addEventListener("DOMContentLoaded", () => {
+                        let b = document.getElementById("sendmsg");
+                        b.onclick = (e) => {
+                            let url = b.parentNode.action;
+                            e.preventDefault();
+                            console.log(b, b.parentNode)
+                            go(url, 'POST', {
+                                message: document.getElementById("message").value
+                            })
+                                .then(d => console.log("happy", d))
+                                .catch(e => console.log("sad", e))
+                            document.getElementById("message").value = "";
+                        }
+                    });
+
+                    // Cuando llega un mensahe, se añade a la tabla
+                    ws.receive = (m) => {
+                        dt.rows().add([m.from, formatDate(new Date().toISOString()), m.text, m.id]);
+                    }
                 </script>
             </div>
-            <h2>Valores actuales</h2>
-            <table id='currentValues'>
-                <tr th:each="stock : ${roomStocks}">
-                    <td th:text="${stock.key}"></td>
-                    <td th:text="${stock.value[stock.value.keySet()[0]]}"></td>
-                </tr>
-            </table>
-        </div>
 
-        <div class="chatcontent" id="chat" th:if="${membership != null}">
-            <table class="datatable" id="datatable"></table>
-
-            <form th:action="@{/chat/{id}(id=${room.id})}" method="POST">
-                <div id="chatbox"></div>
-                <textarea id="message" placeholder="Escribe en el chat"></textarea>
-                <button id="sendmsg" type="submit">Enviar</button>
-            </form>
-        </div>
-
-        <div id="user_panel" th:if="${membership != null}">
-            <!-- Información de las acciones del usuario -->
-            <div class="user_info">
-                <p>Balance: <span id="balance"></span></p>
-
-                <p>Posiciones</p>
-                <table id='stocks'></table>
-            </div>
-
-            <!-- Buy stocks -->
-            <form method="POST" th:action="@{/buy}">
-                <input type="hidden" name="room_id" th:value="${room.id}">
-                <select id='buySymbol' name="symbol_id">
-                    <option th:each="symbol: ${symbols}" th:value="${symbol.id}" th:text="${symbol.name}"></option>
-                </select>
-                <input type="number" id="buyQuantity" placeholder="Cantidad" name="quantity" `>
-                <button type="submit" id="buy">Comprar</button>
-            </form>
-
-            <!-- Sell stocks (only if user has)-->
-            <form id="sell_form" method="POST" th:action="@{/sell}">
-                <input type="hidden" name="room_id" th:value="${room.id}">
-                <select id='sellSymbol' name="symbol_id">
-                    <option th:each="symbol: ${symbols}" th:value="${symbol.id}" th:text="${symbol.name}"></option>
-                </select>
-                <input type="number" id="sellQuantity" placeholder="Cantidad" name="quantity">
-                <button type="submit" id="sell">Vender</button>
-            </form>
-        </div>
     </div>
-    <script th:inline="javascript">
-        // Tiene que ser global para poder borrarlo del DOM y seguir teniendo el formulario
-        var sell_form = document.getElementById("sell_form");
-        sell_form.parentNode.removeChild(sell_form);
 
-        // Actualiza todos los valores del panel del usuario
-        function updateUserPanel(){
 
-            go (config.rootUrl + 'userInfo?r=' + /*[[${room.id}]]*/ '', 'GET')
-            .then(function (response){
-                // Actualiza el balance
-                document.getElementById("balance").innerHTML = response.balance;
-
-                // Borra la tabla de posiciones
-                let table = document.getElementById("stocks");
-                while (table.hasChildNodes()){
-                    table.removeChild(table.firstChild);
-                }
-
-                if (Object.entries(response.stocks).length !== 0){
-                    // Actualiza la barra de posiciones con los valores actuales
-                    response.stocks.forEach( stock => {
-                        let row = table.insertRow();
-                        row.insertCell(0).innerHTML = Object.keys(stock)[0];
-                        row.insertCell(1).innerHTML = stock[Object.keys(stock)[0]];
-                    })
-
-                    if (sell_form.parentNode === null){
-                        // Muestra el formulario de venta
-                        let user_panel = document.getElementById('user_panel');
-                        user_panel.appendChild(sell_form);
-                    }
-                }
-                else {
-                    table.insertRow().insertCell(0).innerHTML = "Todavía no tienes posiciones";
-                    
-                    if (sell_form.parentNode !== null){
-                        // Oculta el formulario de venta
-                        sell_form.parentNode.removeChild(sell_form);
-                    }
-                }
-            })
-        }
-        updateUserPanel();
-
-        // envío de transacciones con AJAX
-        document.addEventListener("DOMContentLoaded", () => {
-            let b = document.getElementById("buy");
-            b.onclick = (e) => {
-                let url = b.parentNode.action;
-                e.preventDefault();
-                console.log(b, b.parentNode)
-                go(url, 'POST', {
-                    room_id: /*[[${room.id}]]*/ null,
-                    symbol_id: document.getElementById("buySymbol").value,
-                    quantity: document.getElementById("buyQuantity").value 
-                })
-                .then(()=>{
-                    updateUserPanel(); 
-                    document.getElementById("buyQuantity").value = null;
-                });
-            }
-        });
-
-        document.addEventListener("DOMContentLoaded", () => {
-            let b = sell_form.childNodes[8]; // Si se intenta coger con getElementById, no lo encuentra porque al principio se saca del DOM
-            b.onclick = (e) => {
-                let url = b.parentNode.action;
-                e.preventDefault();
-                console.log(b, b.parentNode)
-                go(url, 'POST', {
-                    room_id: /*[[${room.id}]]*/ null,
-                    symbol_id: document.getElementById("sellSymbol").value,
-                    quantity: document.getElementById("sellQuantity").value 
-                })
-                .then(()=>{
-                    updateUserPanel(); 
-                    document.getElementById("sellQuantity").value = null;
-                });
-            }
-        });
-
-        function formatDate(d) {
-            // 2020-03-23T10:48:11.074 => 23/3/2020@10:48:18
-            return new Date(d).toLocaleString("es-ES").split(" ").join("@")
-        }
-
-        // mostrando una tabla dinámica con datos cargados del servidor vía AJAX
-        let dt = new simpleDatatables.DataTable(
-            '#datatable', {
-                ajax: {
-                    url: config.rootUrl + "chat/" + /*[[${room.id}]]*/ "", // empieza siempre por config.rootUrl
-                    load: function(xhr) {
-                        let data = JSON.parse(xhr.responseText);
-                        for (let i = 0; i < data.length; i++) {
-                            let row = data[i];
-                            row.sent = formatDate(row.sent);
-                        }
-
-                        return JSON.stringify(data);
-                    }
-                }
-            }
-        );
-
-        // envío de mensajes vía AJAX, sin recargar la página
-        document.addEventListener("DOMContentLoaded", () => {
-            let b = document.getElementById("sendmsg");
-            b.onclick = (e) => {
-                let url = b.parentNode.action;
-                e.preventDefault();
-                console.log(b, b.parentNode)
-                go(url, 'POST', {
-                    message: document.getElementById("message").value
-                })
-                .then(d => console.log("happy", d))
-                .catch(e => console.log("sad", e))
-                document.getElementById("message").value = "";
-            }
-        });
-
-        // Cuando llega un mensahe, se añade a la tabla
-        ws.receive = (m) => {
-            dt.rows().add([m.from, formatDate(new Date().toISOString()), m.text, m.id]);
-        }
-    </script>
 </body>
 
 </html>
