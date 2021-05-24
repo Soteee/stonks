@@ -51,6 +51,8 @@ function cargarIndices(stocks) {
      * ]
      */
 
+    console.log(data)
+
     c3.generate({
         data: {
             x: 'date',
