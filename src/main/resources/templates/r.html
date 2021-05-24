@@ -126,7 +126,6 @@
 
                     // Tiene que ser global para poder borrarlo del DOM y seguir teniendo el formulario
                     var sell_form = document.getElementById("sell_form");
-                    var sell_input = document.getElementById("sellQuantity");
                     sell_form.parentNode.removeChild(sell_form);
 
                     // Actualiza todos los valores del panel del usuario
@@ -176,6 +175,7 @@
                         document.getElementById("buy_price").innerHTML = stock_value * buy_input.value;
                     };
                         
+                    let sell_input = sell_form.children.item(3);
                     sell_input.oninput = function(){
                         let selected_stock = document.getElementById('sellSymbol').options.item(document.getElementById('sellSymbol').options.selectedIndex).text;
                         let stock_value = parseFloat(document.getElementById(selected_stock).innerHTML);
@@ -219,22 +219,6 @@
                                 });
                         }
                     });
-
-                    let buy_input = document.getElementById("buyQuantity");
-                    buy_input.oninput = function(){
-                        let selected_stock = document.getElementById('buySymbol').options.item(document.getElementById('buySymbol').options.selectedIndex).text;
-                        let stock_value = parseFloat(document.getElementById(selected_stock).innerHTML);
-
-                        document.getElementById("buy_price").innerHTML = stock_value * buy_input.value;
-                    };
-
-                    let sell_input = sell_form.children.item(3);
-                    sell_input.oninput = function(){
-                        let selected_stock = document.getElementById('sellSymbol').options.item(document.getElementById('sellSymbol').options.selectedIndex).text;
-                        let stock_value = parseFloat(document.getElementById(selected_stock).innerHTML);
-                        
-                        document.getElementById("sell_price").innerHTML = stock_value * sell_input.value;
-                    };
                     
                     ///////////////////// CHAT //////////////////////
 
