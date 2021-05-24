@@ -63,7 +63,7 @@
                             <table id='currentValues'>
                                 <tr th:each="stock : ${roomStocks}">
                                     <td th:text="${stock.key}"></td>
-                                    <td th:text="${stock.value[stock.value.keySet()[0]]}"></td>
+                                    <td th:id="${stock.key}" th:text="${stock.value[stock.value.keySet()[0]]}"></td>
                                 </tr>
                             </table>
                         </div>
@@ -81,7 +81,7 @@
                                     </div>
 
                                     <!-- Buy stocks -->
-                                    <form method="POST" th:action="@{/buy}">
+                                    <form id="buy_form" method="POST" th:action="@{/buy}">
                                         <div class="select">
                                             <select id='buySymbol' name="symbol_id">
                                                 <option th:each="symbol: ${symbols}" th:value="${symbol.id}" th:text="${symbol.name}"></option>
@@ -89,6 +89,7 @@
                                         </div>
                                         <input type="hidden" name="room_id" th:value="${room.id}">
                                         <input class="input" type="number" id="buyQuantity" placeholder="Cantidad" name="quantity">
+                                        <label>Precio total: <span id='buy_price'>0</span>€</label>
                                         <button class="button is-primary" type="submit" id="buy">Comprar</button>
                                     </form>
                                     <!-- Sell stocks (only if user has)-->
@@ -100,6 +101,7 @@
                                             </select>
                                         </div>
                                         <input class="input" type="number" id="sellQuantity" placeholder="Cantidad" name="quantity">
+                                        <label>Precio total: <span id='sell_price'>0</span>€</label>
                                         <button class="button is-danger" type="submit" id="sell">Vender</button>
                                     </form>
                                 </div>
@@ -186,7 +188,7 @@
                     });
 
                     document.addEventListener("DOMContentLoaded", () => {
-                        let b = sell_form.childNodes[8]; // Si se intenta coger con getElementById, no lo encuentra porque al principio se saca del DOM
+                        let b = sell_form.children.item(5); // Si se intenta coger con getElementById, no lo encuentra porque al principio se saca el form del DOM
                         b.onclick = (e) => {
                             let url = b.parentNode.action;
                             e.preventDefault();
@@ -202,6 +204,22 @@
                                 });
                         }
                     });
+
+                    let buy_input = document.getElementById("buyQuantity");
+                    buy_input.oninput = function(){
+                        let selected_stock = document.getElementById('buySymbol').options.item(document.getElementById('buySymbol').options.selectedIndex).text;
+                        let stock_value = parseFloat(document.getElementById(selected_stock).innerHTML);
+
+                        document.getElementById("buy_price").innerHTML = stock_value * buy_input.value;
+                    };
+
+                    let sell_input = sell_form.children.item(3);
+                    sell_input.oninput = function(){
+                        let selected_stock = document.getElementById('sellSymbol').options.item(document.getElementById('sellSymbol').options.selectedIndex).text;
+                        let stock_value = parseFloat(document.getElementById(selected_stock).innerHTML);
+                        
+                        document.getElementById("sell_price").innerHTML = stock_value * sell_input.value;
+                    };
 
                     function formatDate(d) {
                         // 2020-03-23T10:48:11.074 => 23/3/2020@10:48:18
