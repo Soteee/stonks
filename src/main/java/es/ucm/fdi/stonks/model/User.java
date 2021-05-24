@@ -39,20 +39,21 @@ import lombok.AllArgsConstructor;
 				query = "SELECT u FROM User u"),
         @NamedQuery(name="User.byUsername",
                 query="SELECT u FROM User u "
-                        + "WHERE u.username = :username AND u.enabled = 1"),
+                    + "WHERE u.username = :username AND u.enabled = 1"),
         @NamedQuery(name="User.hasUsername",
                 query="SELECT COUNT(u) "
-                        + "FROM User u "
-                        + "WHERE u.username = :username"),
+                    + "FROM User u "
+                    + "WHERE u.username = :username"),
 		@NamedQuery(name="User.top",
 				query="SELECT u FROM Membership m "
-				+ "INNER JOIN User u ON m.user = u.id "
-				+ "GROUP BY m.user "
-				+ "ORDER BY sum(m.balance) DESC"),
+					+ "INNER JOIN User u ON m.user = u.id "
+					+ "GROUP BY m.user "
+					+ "ORDER BY sum(m.balance) DESC"),
 		@NamedQuery(name="User.inRoom",
-				query="SELECT u FROM Membership m "
-						+ "INNER JOIN User u ON m.user = u.id "
-						+ "WHERE m.room = :room")
+				query="SELECT u, m.balance FROM Membership m "
+					+ "INNER JOIN User u ON m.user = u.id "
+					+ "WHERE m.room = :room "
+					+ "ORDER BY m.balance DESC")
 })
 public class User implements Transferable<User.Transfer> {
 

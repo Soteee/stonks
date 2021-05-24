@@ -27,7 +27,7 @@
                     Usuarios en la sala
                 </p>
                 <ul class="menu-list">
-                    <li th:each="user: ${users_inroom}"><a th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">No se han encontrado usuarios en esta sala</a></li>
+                    <li th:each="user: ${users_inroom}"><a th:href="@{/u/{id}(id=${user[0].id})}" th:text="|${user[0].username} - ${user[1]}€|">No se han encontrado usuarios en esta sala</a></li>
                 </ul>
             </aside>
         </div>
@@ -132,7 +132,7 @@
                         go (config.rootUrl + 'userInfo?r=' + /*[[${room.id}]]*/ '', 'GET')
                             .then(function (response){
                                 // Actualiza el balance
-                                document.getElementById("balance").innerHTML = response.balance;
+                                document.getElementById("balance").innerHTML = response.balance + '€';
 
                                 // Borra la tabla de posiciones
                                 let table = document.getElementById("stocks");

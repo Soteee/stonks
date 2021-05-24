@@ -21,9 +21,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("r")
@@ -53,29 +51,33 @@ public class RoomsController{
         User user = entityManager.find(User.class,((User)session.getAttribute("u")).getId());
 
         List<?> user_rooms = entityManager
-                .createNamedQuery("Room.byUser")
-                .setParameter("user", user)
-                .getResultList();
+                            .createNamedQuery("Room.byUser")
+                            .setParameter("user", user)
+                            .getResultList();
         model.addAttribute("user_rooms", user_rooms);
 
         Room room = entityManager.find(Room.class, id);
         model.addAttribute("room", room);
 
+        // List of users and its balance
         List<?> users_inroom = entityManager
-                    .createNamedQuery("User.inRoom")
-                    .setParameter("room", room)
-                    .getResultList();
+                                .createNamedQuery("User.inRoom")
+                                .setParameter("room", room)
+                                .getResultList();
         model.addAttribute("users_inroom", users_inroom);
 
-        // Si el usuario pertenece a la sala
-        if (users_inroom.contains(user)){
-            Membership membership = (Membership) entityManager
+        Membership membership = null;
+        try {
+            membership = (Membership) entityManager
                                                 .createNamedQuery("Membership.byUserAndRoom")
                                                 .setParameter("user", user)
                                                 .setParameter("room", room)
                                                 .getSingleResult();
             model.addAttribute("membership", membership);
+        } catch (Exception e) {}
 
+        // Si el usuario pertenece a la sala
+        if (membership != null){
             List<?> lastSymbols = entityManager
                                     .createNamedQuery("Symbol.lastsByRoom")
                                     .setParameter("room", room)
