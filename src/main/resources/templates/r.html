@@ -174,7 +174,7 @@
                         let selected_stock = document.getElementById('buySymbol').options.item(document.getElementById('buySymbol').options.selectedIndex).text;
                         let stock_value = parseFloat(document.getElementById(selected_stock).innerHTML);
 
-                        document.getElementById("buy_price").innerHTML = stock_value * buy_input.value;
+                        document.getElementById("buy_price").innerHTML = (stock_value * buy_input.value).toFixed(2);
                     };
                         
                     let sell_input = sell_form.children.item(4);
@@ -182,16 +182,23 @@
                         let selected_stock = document.getElementById('sellSymbol').options.item(document.getElementById('sellSymbol').options.selectedIndex).text;
                         let stock_value = parseFloat(document.getElementById(selected_stock).innerHTML);
                         
-                        document.getElementById("sell_price").innerHTML = stock_value * sell_input.value;
+                        document.getElementById("sell_price").innerHTML = (stock_value * sell_input.value).toFixed(2);
                     };
 
                     // envío de transacciones con AJAX
                     document.addEventListener("DOMContentLoaded", () => {
                         let b = document.getElementById("buy");
                         b.onclick = (e) => {
+                            // Update error message
+                            let error = document.getElementById('buy_error');
+                            console.log(error);
+                            if (error.innerHTML !== ''){
+                                error.innerHTML = '';
+                            }
+
+                            // Send ajax
                             let url = b.parentNode.action;
                             e.preventDefault();
-                            console.log(b, b.parentNode)
                             go(url, 'POST', {
                                 room_id: /*[[${room.id}]]*/ null,
                                 symbol_id: document.getElementById("buySymbol").value,
@@ -203,18 +210,24 @@
                                         document.getElementById("buyQuantity").value = null;
                                     }
                                     else{
-                                        document.getElementById('buy_error').innerHTML = data.result;
+                                        error.innerHTML = data.result;
                                     }
                                 });
                         }
                     });
 
                     document.addEventListener("DOMContentLoaded", () => {
-                        let b = sell_form.children.item(5); // Si se intenta coger con getElementById, no lo encuentra porque al principio se saca el form del DOM
+                        let b = sell_form.children.item(6); // Si se intenta coger con getElementById, no lo encuentra porque al principio se saca el form del DOM
                         b.onclick = (e) => {
+                            // Update error message
+                            let error = document.getElementById('sell_error');
+                            if (error.innerHTML !== ''){
+                                error.innerHTML = '';
+                            }
+
+                            // Send ajax
                             let url = b.parentNode.action;
                             e.preventDefault();
-                            console.log(b, b.parentNode)
                             go(url, 'POST', {
                                 room_id: /*[[${room.id}]]*/ null,
                                 symbol_id: document.getElementById("sellSymbol").value,
@@ -226,7 +239,7 @@
                                         document.getElementById("sellQuantity").value = null;
                                     }
                                     else{
-                                        document.getElementById('sell_error').innerHTML = data.result;
+                                        error.innerHTML = data.result;
                                     }
                                 });
                         }
