@@ -56,8 +56,6 @@ import lombok.AllArgsConstructor;
 					+ "ORDER BY m.balance DESC")
 })
 public class User implements Transferable<User.Transfer> {
-
-
 	private static Logger log = LogManager.getLogger(User.class);	
 
 	public enum Role {
@@ -85,6 +83,7 @@ public class User implements Transferable<User.Transfer> {
 	private String firstName;
 	private String lastName;
 	private String mail;
+	private int wonRooms;
 
 	@OneToMany
 	@JoinColumn(name = "user_id")

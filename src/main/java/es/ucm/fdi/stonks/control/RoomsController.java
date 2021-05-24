@@ -66,29 +66,27 @@ public class RoomsController{
                                 .getResultList();
         model.addAttribute("users_inroom", users_inroom);
 
-        Membership membership = null;
+        List<?> lastSymbols = entityManager
+                                .createNamedQuery("Symbol.lastsByRoom")
+                                .setParameter("room", room)
+                                .getResultList();
+        model.addAttribute("symbols", lastSymbols);
+
+        List<Symbol> allSymbols = entityManager
+                                    .createNamedQuery("Symbol.allByRoom")
+                                    .setParameter("room", room)
+                                    .getResultList();
+        model.addAttribute("roomStocks", StaticMethods.symbolsToStocks(allSymbols));
+
         try {
-            membership = (Membership) entityManager
+            Membership membership = (Membership) entityManager
                                                 .createNamedQuery("Membership.byUserAndRoom")
                                                 .setParameter("user", user)
                                                 .setParameter("room", room)
                                                 .getSingleResult();
             model.addAttribute("membership", membership);
-        } catch (Exception e) {}
-
-        // Si el usuario pertenece a la sala
-        if (membership != null){
-            List<?> lastSymbols = entityManager
-                                    .createNamedQuery("Symbol.lastsByRoom")
-                                    .setParameter("room", room)
-                                    .getResultList();
-            model.addAttribute("symbols", lastSymbols);
-
-            List<Symbol> allSymbols = entityManager
-                                        .createNamedQuery("Symbol.allByRoom")
-                                        .setParameter("room", room)
-                                        .getResultList();
-            model.addAttribute("roomStocks", StaticMethods.symbolsToStocks(allSymbols));
+        } catch (Exception e) {
+            // El usuario no pertenece a la sala (no pasa nada)
         }
 
         return "r";

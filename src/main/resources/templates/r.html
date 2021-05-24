@@ -36,20 +36,7 @@
                 <h1 th:text="${room.name}">No se encontró la sala</h1>
             </div>
 
-            <div th:if="${membership == null}">
-                <form method="POST" th:action="@{/r/joinRoom}">
-                    <div class="content">
-                        <h2>No perteneces a esta sala</h2>
-                    </div>
-                    <button class="button is-large is-info" type="submit">
-                        Unirme
-                    </button>
-                    <input type="hidden" name="room_id" th:value="${room.id}">
-                </form>
-            </div>
-
-            <div th:unless="${membership == null}">
-
+            <div>
                 <div class="content">
                     <h2>Historial de valores</h2>
                     <div id="chart">
@@ -63,11 +50,22 @@
                             <table id='currentValues'>
                                 <tr th:each="stock : ${roomStocks}">
                                     <td th:text="${stock.key}"></td>
-                                    <td th:text="${stock.value[stock.value.keySet()[0]]}"></td>
+                                    <td th:id="${stock.key}" th:text="${stock.value[stock.value.keySet()[0]]}"></td>
                                 </tr>
                             </table>
                         </div>
-                        <div class="column">
+                        <div class="column" th:if="${membership == null}">
+                            <form method="POST" th:action="@{/r/joinRoom}">
+                                <div class="content">
+                                    <h2>No perteneces a esta sala</h2>
+                                </div>
+                                <button class="button is-large is-info" type="submit">
+                                    Unirme
+                                </button>
+                                <input type="hidden" name="room_id" th:value="${room.id}">
+                            </form>
+                        </div>
+                        <div class="column" th:if="${membership != null}">
                             <h2>Operaciones</h2>
                             <div class="columns m-2">
                                 <div id="user_panel" th:if="${membership != null}">
@@ -81,7 +79,7 @@
                                     </div>
 
                                     <!-- Buy stocks -->
-                                    <form method="POST" th:action="@{/buy}">
+                                    <form id="buy_form" method="POST" th:action="@{/buy}">
                                         <div class="select">
                                             <select id='buySymbol' name="symbol_id">
                                                 <option th:each="symbol: ${symbols}" th:value="${symbol.id}" th:text="${symbol.name}"></option>
@@ -89,6 +87,7 @@
                                         </div>
                                         <input type="hidden" name="room_id" th:value="${room.id}">
                                         <input class="input" type="number" id="buyQuantity" placeholder="Cantidad" name="quantity">
+                                        <label>Precio total: <span id='buy_price'>0</span>€</label>
                                         <button class="button is-primary" type="submit" id="buy">Comprar</button>
                                     </form>
                                     <!-- Sell stocks (only if user has)-->
@@ -100,6 +99,7 @@
                                             </select>
                                         </div>
                                         <input class="input" type="number" id="sellQuantity" placeholder="Cantidad" name="quantity">
+                                        <label>Precio total: <span id='sell_price'>0</span>€</label>
                                         <button class="button is-danger" type="submit" id="sell">Vender</button>
                                     </form>
                                 </div>
@@ -122,13 +122,15 @@
 
 
                 <script th:inline="javascript">
+                    ///////////////// TRANSACCIONES /////////////////
+
                     // Tiene que ser global para poder borrarlo del DOM y seguir teniendo el formulario
                     var sell_form = document.getElementById("sell_form");
+                    var sell_input = document.getElementById("sellQuantity");
                     sell_form.parentNode.removeChild(sell_form);
 
                     // Actualiza todos los valores del panel del usuario
                     function updateUserPanel(){
-
                         go (config.rootUrl + 'userInfo?r=' + /*[[${room.id}]]*/ '', 'GET')
                             .then(function (response){
                                 // Actualiza el balance
@@ -166,6 +168,21 @@
                     }
                     updateUserPanel();
 
+                    let buy_input = document.getElementById("buyQuantity");
+                    buy_input.oninput = function(){
+                        let selected_stock = document.getElementById('buySymbol').options.item(document.getElementById('buySymbol').options.selectedIndex).text;
+                        let stock_value = parseFloat(document.getElementById(selected_stock).innerHTML);
+
+                        document.getElementById("buy_price").innerHTML = stock_value * buy_input.value;
+                    };
+                        
+                    sell_input.oninput = function(){
+                        let selected_stock = document.getElementById('sellSymbol').options.item(document.getElementById('sellSymbol').options.selectedIndex).text;
+                        let stock_value = parseFloat(document.getElementById(selected_stock).innerHTML);
+                        
+                        document.getElementById("sell_price").innerHTML = stock_value * sell_input.value;
+                    };
+
                     // envío de transacciones con AJAX
                     document.addEventListener("DOMContentLoaded", () => {
                         let b = document.getElementById("buy");
@@ -202,6 +219,8 @@
                                 });
                         }
                     });
+
+                    ///////////////////// CHAT //////////////////////
 
                     function formatDate(d) {
                         // 2020-03-23T10:48:11.074 => 23/3/2020@10:48:18

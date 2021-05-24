@@ -88,6 +88,7 @@ public class RootController {
         newUser.setPassword(encoder.encode(password));
         newUser.setEnabled((byte) 1);
         newUser.setRoles("USER");
+        newUser.setWonRooms(0);
         entityManager.persist(newUser);
 
         return "login";
