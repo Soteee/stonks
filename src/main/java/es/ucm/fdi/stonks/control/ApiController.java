@@ -98,7 +98,7 @@ public class ApiController {
         }
 
         if (member.getBalance() < price){
-            return "{\"result\": \"Not enough stocks\"}";
+            return "{\"result\": \"No tienes suficiente dinero\"}";
         }
 
         Position newPosition = new Position();
@@ -113,7 +113,7 @@ public class ApiController {
         member.setBalance(member.getBalance() - newPosition.getValue());
         entityManager.persist(member);
 
-        return "{\"result\": \"stocks bought.\"}";
+        return "{\"result\": \"success\"}";
     }
 
     @PostMapping("/sell")
@@ -141,7 +141,7 @@ public class ApiController {
         }
 
         if (quantity > userQuantity){
-            return "{\"result\": \"Not enough stocks\"}";
+            return "{\"result\": \"No tienes suficientes acciones\"}";
         }
 
         Position newPosition = new Position();
@@ -156,6 +156,6 @@ public class ApiController {
         member.setBalance(member.getBalance() + newPosition.getValue());
         entityManager.persist(member);
 
-        return "{\"result\": \"stocks sold.\"}";
+        return "{\"result\": \"success\"}";
     }
 }

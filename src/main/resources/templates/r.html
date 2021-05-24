@@ -80,6 +80,7 @@
 
                                     <!-- Buy stocks -->
                                     <form id="buy_form" method="POST" th:action="@{/buy}">
+                                        <label id='buy_error'></label>
                                         <div class="select">
                                             <select id='buySymbol' name="symbol_id">
                                                 <option th:each="symbol: ${symbols}" th:value="${symbol.id}" th:text="${symbol.name}"></option>
@@ -92,6 +93,7 @@
                                     </form>
                                     <!-- Sell stocks (only if user has)-->
                                     <form id="sell_form" method="POST" th:action="@{/sell}">
+                                        <label id='sell_error'></label>
                                         <input type="hidden" name="room_id" th:value="${room.id}">
                                         <div class="select">
                                             <select id='sellSymbol' name="symbol_id">
@@ -175,7 +177,7 @@
                         document.getElementById("buy_price").innerHTML = stock_value * buy_input.value;
                     };
                         
-                    let sell_input = sell_form.children.item(3);
+                    let sell_input = sell_form.children.item(4);
                     sell_input.oninput = function(){
                         let selected_stock = document.getElementById('sellSymbol').options.item(document.getElementById('sellSymbol').options.selectedIndex).text;
                         let stock_value = parseFloat(document.getElementById(selected_stock).innerHTML);
@@ -195,9 +197,14 @@
                                 symbol_id: document.getElementById("buySymbol").value,
                                 quantity: document.getElementById("buyQuantity").value
                             })
-                                .then(()=>{
-                                    updateUserPanel();
-                                    document.getElementById("buyQuantity").value = null;
+                                .then((data)=>{
+                                    if (data.result == 'success'){
+                                        updateUserPanel();
+                                        document.getElementById("buyQuantity").value = null;
+                                    }
+                                    else{
+                                        document.getElementById('buy_error').innerHTML = data.result;
+                                    }
                                 });
                         }
                     });
@@ -213,9 +220,14 @@
                                 symbol_id: document.getElementById("sellSymbol").value,
                                 quantity: document.getElementById("sellQuantity").value
                             })
-                                .then(()=>{
-                                    updateUserPanel();
-                                    document.getElementById("sellQuantity").value = null;
+                                .then((data)=>{
+                                    if (data.result == 'success'){
+                                        updateUserPanel();
+                                        document.getElementById("sellQuantity").value = null;
+                                    }
+                                    else{
+                                        document.getElementById('sell_error').innerHTML = data.result;
+                                    }
                                 });
                         }
                     });
