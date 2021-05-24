@@ -5,39 +5,48 @@
 
 
 -- Usuarios de prueba (todas las contraseñas son "aa")
-INSERT INTO user(id,enabled,username,password,roles,name,first_name) VALUES (
+INSERT INTO user(id,enabled,username,password,roles,name,first_name, won_rooms) VALUES (
 	1, 1, 'admin', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
 	'USER,ADMIN',
 	'Admi', 'Nistrador'
+	,0
 );
-INSERT INTO user(id,enabled,username,password,roles,name,first_name) VALUES (
+INSERT INTO user(id,enabled,username,password,roles,name,first_name, won_rooms) VALUES (
 	2, 1, 'juan', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
 	'USER',
 	'Juan', 'Pérez'
+	,0
 );
-INSERT INTO user(id,enabled,username,password,roles,name,first_name) VALUES (
+INSERT INTO user(id,enabled,username,password,roles,name,first_name, won_rooms) VALUES (
 	3, 1, 'bob', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
 	'USER',
 	'Bob', 'Smith'
+	,0
 );
-INSERT INTO user(id,enabled,username,password,roles,name,first_name) VALUES (
+INSERT INTO user(id,enabled,username,password,roles,name,first_name, won_rooms) VALUES (
 	4, 1, 'alice', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
 	'USER',
 	'Alice', 'Peralta'
+	,0
 );
-INSERT INTO user(id,enabled,username,password,roles,name,first_name) VALUES (
+INSERT INTO user(id,enabled,username,password,roles,name,first_name, won_rooms) VALUES (
 	5, 1, 'jhon', 
 	'{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u',
 	'USER',
 	'Jhon', 'Doe'
+	,0
 );
-Insert into user(id,enabled,username,password,roles,name,first_name) VALUES (
-	6,1, 'javi', '{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u', 'USER', 'javi', 'javi'
+Insert into user(id,enabled,username,password,roles,name,first_name, won_rooms) VALUES (
+	6,1, 'javi', '{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u', 'USER', 'javi', 'javi',0
 );
+
+-- Salas de prueba
+INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (1,'Andorra', TRUE, 1000, 10, 3000, 100000, 2);
+INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (2,'Me encanta pagar impuestos', TRUE, 1000, 10, 3000, 100000, 4);
 
 
 --Stocks en mercados
@@ -95,11 +104,6 @@ insert into symbol(name, updated_on, value) values ('MRNA',DATEADD('DAY',-4, CUR
 insert into symbol(name, updated_on, value) values ('NKLA',DATEADD('DAY',-4, CURRENT_DATE),15.43);
 insert into symbol(name, updated_on, value) values ('FB',DATEADD('DAY',-4, CURRENT_DATE),301.22);
 insert into symbol(name, updated_on, value) values ('AMD',DATEADD('DAY',-4, CURRENT_DATE),80.88);
-
-
--- Salas de prueba
-INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (1,'Andorra', TRUE, 1000, 10, 3000, 100000, 2);
-INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id) VALUES (2,'Me encanta pagar impuestos', TRUE, 1000, 10, 3000, 100000, 4);
 
 -- Stocks de cada sala
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (1, 1);

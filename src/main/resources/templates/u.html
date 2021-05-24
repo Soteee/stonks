@@ -23,11 +23,9 @@
         <div th:text="${user.roles}"></div>
 
         <h1>Salas de <span th:text="${user.username}"></span></h1>
+        <ul><li th:each="room: ${user_rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li></ul>
 
-        <ul>
-            <li th:each="room: ${user_rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
-        </ul>
-
+        <p>Partidas ganadas: <span th:text="${user.wonRooms}"></span></p>
         <!-- TODO activo en salas..., Ganancias, etc -->
 
     </div>
