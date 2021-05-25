@@ -4,16 +4,16 @@
 <head>ko
 	<th:block th:fragment="header">
 	<meta charset="utf-8">
-	<script type="text/javascript">
+	<script type="text/javascript" th:inline="javascript">
 		const config = {
-			socketUrl: "[[${session.ws}?:'']]",	// vacío indica falso
-			rootUrl: "[[${session.ws}?@{/}:'']]",
+			socketUrl: /*[[${session.ws}?:'']]*/ "",	// vacío indica falso
+			rootUrl: /*[[${session.ws}?@{/}:'']]*/ "",
 			csrf: {
-				name: "[[${_csrf.parameterName}]]",
-				value: "[[${_csrf.token}]]"
+				name: /*[[${_csrf.parameterName}]]*/ "",
+				value: /*[[${_csrf.token}]]*/ ""
 			},
-			admin: [[${session.u != null && session.u.hasRole('ADMIN')}?true:false]],
-			userId: [[${session.u != null}?${session.u.id}:-1]]
+			admin: /*[[${session.u != null && session.u.hasRole('ADMIN')}?true:false]]*/ "",
+			userId: /*[[${session.u != null}?${session.u.id}:-1]]*/ ""
 		};
 	</script>
 	<script th:src="@{/js/stomp.js}" src="js/stomp.js" type="text/javascript"></script>

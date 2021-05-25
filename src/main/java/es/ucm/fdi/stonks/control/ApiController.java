@@ -84,10 +84,10 @@ public class ApiController {
         User followed = entityManager.find(User.class, user_id);
             
         if (follower.getFollowing().contains(followed)){
-            return "{\"result\":\"true\"}";
+            return "{\"result\": true }";
         }
         else{
-            return "{\"result\":\"false\"}";
+            return "{\"result\": false }";
         }
     }
 
