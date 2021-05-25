@@ -54,7 +54,14 @@ import lombok.AllArgsConstructor;
 				query="SELECT u, m.balance FROM Membership m "
 					+ "INNER JOIN User u ON m.user = u.id "
 					+ "WHERE m.room = :room "
-					+ "ORDER BY m.balance DESC")
+					+ "ORDER BY m.balance DESC"),
+		@NamedQuery(name="User.following",
+				query="SELECT u.following FROM User u "
+					+ "WHERE u = :user"),
+		@NamedQuery(name="User.followers",
+				query="SELECT u FROM User u "
+					+ "JOIN u.following f "
+					+ "WHERE f = :user")
 })
 public class User implements Transferable<User.Transfer> {
 	private static Logger log = LogManager.getLogger(User.class);	
@@ -98,9 +105,7 @@ public class User implements Transferable<User.Transfer> {
 
 	@OneToMany
 	private List<User> following=new ArrayList<>();
-	
-	@OneToMany
-	private List<User> followers = new ArrayList<>();
+
 	// utility methods
 	
 	/**

@@ -76,10 +76,11 @@ public class ApiController {
 
     @GetMapping("isFollowing")
     @ResponseBody
+    @Transactional
     public String isFollowing(HttpSession session,
                             @RequestParam(value = "u") long user_id,
                             HttpServletResponse response){
-        User follower = entityManager.find(User.class, session.getAttribute("u"));
+        User follower = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
         User followed = entityManager.find(User.class, user_id);
             
         if (follower.getFollowing().contains(followed)){
@@ -105,10 +106,8 @@ public class ApiController {
         }
 
         follower.getFollowing().add(followed);
-        follower.getFollowers().add(follower);
 
         entityManager.persist(follower);
-        entityManager.persist(followed);
 
         return "{\"result\":\"success\"}";
     }
@@ -128,9 +127,7 @@ public class ApiController {
         }
         
         follower.getFollowing().remove(followed);
-        follower.getFollowers().remove(follower);
         entityManager.persist(follower);
-        entityManager.persist(followed);
 
         return "{\"result\":\"success\"}";
     }
