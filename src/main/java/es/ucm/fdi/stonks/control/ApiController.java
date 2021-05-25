@@ -74,6 +74,37 @@ public class ApiController {
         return json.toString();
     }
 
+    @GetMapping(path = "/usersInRoom", produces = "application/json")
+    @ResponseBody
+    public String getUsersInRoom(HttpSession session,
+                                @RequestParam(value = "r") long room_id,
+                                HttpServletResponse response) throws Exception{
+        
+        Room room = entityManager.find(Room.class, room_id);
+
+        List<User> users = entityManager
+                            .createNamedQuery("User.inRoom")
+                            .setParameter("room", room)
+                            .getResultList();
+
+        JSONArray json = new JSONArray();
+        for (User user : users) {
+            Membership m = (Membership) entityManager
+                            .createNamedQuery("Membership.byUserAndRoom")
+                            .setParameter("room", room)
+                            .setParameter("user", user)
+                            .getSingleResult();
+
+            JSONObject user_json = new JSONObject();
+            user_json.put("balance", String.format("%.02f",m.getBalance()));
+            user_json.put("id", user.getId());
+            user_json.put("username", user.getUsername());
+            json.put(user_json);
+        }
+
+        return json.toString();
+    }
+
     @GetMapping("isFollowing")
     @ResponseBody
     @Transactional

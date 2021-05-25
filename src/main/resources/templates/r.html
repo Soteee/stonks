@@ -26,9 +26,7 @@
                 <p class="menu-label">
                     Usuarios en la sala
                 </p>
-                <ul class="menu-list">
-                    <li th:each="user: ${users_inroom}"><a th:href="@{/u/{id}(id=${user[0].id})}" th:text="|${user[0].username} - ${user[1]}€|">No se han encontrado usuarios en esta sala</a></li>
-                </ul>
+                <ul id='users_inroom' class="menu-list"></ul>
             </aside>
         </div>
         <div class="column">
@@ -129,11 +127,28 @@
         var sell_form = document.getElementById("sell_form");
         sell_form.parentNode.removeChild(sell_form);
 
+        function updateUsersInRoom(){
+            go (config.rootUrl + 'api/usersInRoom?r=' + /*[[${room.id}]]*/ '', 'GET')
+                .then(function(response){
+                    let users = document.getElementById('users_inroom');
+                    response.forEach((user)=>{
+                        let newLi = document.createElement('li');
+                        let newA = document.createElement('a');
+                        
+                        newA.setAttribute('href', '/u/' + user.id);
+                        newA.innerHTML = user.username + " - " + user.balance;
+                        
+                        newLi.appendChild(newA);
+                        users.appendChild(newLi);
+                    })
+                });
+        }
+        updateUsersInRoom();
+
         // Actualiza todos los valores del panel del usuario
         function updateUserPanel(){
             go (config.rootUrl + 'api/userInfo?r=' + /*[[${room.id}]]*/ '', 'GET')
                 .then(function (response){
-                    console.log(response)
                     // Actualiza el balance
                     document.getElementById("balance").innerHTML = response.balance + '€';
 

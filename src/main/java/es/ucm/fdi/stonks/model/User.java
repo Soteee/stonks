@@ -51,7 +51,7 @@ import lombok.AllArgsConstructor;
 					+ "GROUP BY m.user "
 					+ "ORDER BY sum(m.balance) DESC"),
 		@NamedQuery(name="User.inRoom",
-				query="SELECT u, m.balance FROM Membership m "
+				query="SELECT u FROM Membership m "
 					+ "INNER JOIN User u ON m.user = u.id "
 					+ "WHERE m.room = :room "
 					+ "ORDER BY m.balance DESC"),

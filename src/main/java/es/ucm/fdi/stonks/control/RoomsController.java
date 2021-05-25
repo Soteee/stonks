@@ -59,13 +59,6 @@ public class RoomsController{
         Room room = entityManager.find(Room.class, id);
         model.addAttribute("room", room);
 
-        // List of users and its balance
-        List<?> users_inroom = entityManager
-                                .createNamedQuery("User.inRoom")
-                                .setParameter("room", room)
-                                .getResultList();
-        model.addAttribute("users_inroom", users_inroom);
-
         List<?> lastSymbols = entityManager
                                 .createNamedQuery("Symbol.lastsByRoom")
                                 .setParameter("room", room)
