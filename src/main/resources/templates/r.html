@@ -196,6 +196,10 @@
                                 error.innerHTML = '';
                             }
 
+                            // Actualizar el precio calculado
+                            let buy_price = document.getElementById("buy_price");
+                            buy_price.innerHTML = '0';
+
                             // Send ajax
                             let url = b.parentNode.action;
                             e.preventDefault();
@@ -224,6 +228,10 @@
                             if (error.innerHTML !== ''){
                                 error.innerHTML = '';
                             }
+
+                            // Actualizar el precio calculado
+                            let sell_price = document.getElementById("sell_price");
+                            sell_price.innerHTML = '0';
 
                             // Send ajax
                             let url = b.parentNode.action;
@@ -286,7 +294,7 @@
                         }
                     });
 
-                    // Cuando llega un mensahe, se añade a la tabla
+                    // Cuando llega un mensaje, se añade a la tabla
                     ws.receive = (m) => {
                         dt.rows().add([m.from, formatDate(new Date().toISOString()), m.text, m.id]);
                     }
