@@ -79,7 +79,7 @@
                                     </div>
 
                                     <!-- Buy stocks -->
-                                    <form id="buy_form" method="POST" th:action="@{/buy}">
+                                    <form id="buy_form" method="POST" th:action="@{/api/buy}">
                                         <label id='buy_error'></label>
                                         <div class="select">
                                             <select id='buySymbol' name="symbol_id">
@@ -92,7 +92,7 @@
                                         <button class="button is-primary" type="submit" id="buy">Comprar</button>
                                     </form>
                                     <!-- Sell stocks (only if user has)-->
-                                    <form id="sell_form" method="POST" th:action="@{/sell}">
+                                    <form id="sell_form" method="POST" th:action="@{/api/sell}">
                                         <label id='sell_error'></label>
                                         <input type="hidden" name="room_id" th:value="${room.id}">
                                         <div class="select">
@@ -132,7 +132,7 @@
 
                     // Actualiza todos los valores del panel del usuario
                     function updateUserPanel(){
-                        go (config.rootUrl + 'userInfo?r=' + /*[[${room.id}]]*/ '', 'GET')
+                        go (config.rootUrl + 'api/userInfo?r=' + /*[[${room.id}]]*/ '', 'GET')
                             .then(function (response){
                                 // Actualiza el balance
                                 document.getElementById("balance").innerHTML = response.balance + '€';
@@ -218,9 +218,7 @@
                                     }
                                 });
                         }
-                    });
 
-                    document.addEventListener("DOMContentLoaded", () => {
                         let b = sell_form.children.item(6); // Si se intenta coger con getElementById, no lo encuentra porque al principio se saca el form del DOM
                         b.onclick = (e) => {
                             // Update error message

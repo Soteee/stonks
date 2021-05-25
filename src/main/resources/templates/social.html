@@ -12,38 +12,32 @@
     <div class="visualizer">
         <!-- LISTA PRINCIPAL -->
             <div id="botones">
-                <button type="button">Mis amigos</button>
-                <button type="button">Solicitudes de amistad</button>
-                <button type="button">Buscar jugadores</button>
+                <button id=myFollowers type="button">Mis seguidores</button>
+                 <!-- HACEMOS QUE ESTE BOTÓN ENSEÑE CON AJAX MIS SEGUIDORES -->
+                <button id=myFollowing type="button">Mis seguidos</button>
+                 <!-- HACEMOS QUE ESTE BOTÓN ENSEÑE CON AJAX MIS seguidos -->
+                <button id=searchPlayers type="button">Buscar jugadores</button>
+                <!-- HACEMOS QUE ESTE BOTÓN ENSEÑE CON AJAX LA BUSQUEDA DE SEGUIDORES -->
             </div>
     </div>
-        <h2> LISTA DE AMIGOS </h2>
-            <div id="amigos">
+        <h2> Mis seguidos </h2>                          <!-- Segun entras -->
+            <div id="Seguidos">
                 <ol>
                     <li>
                         Amigo 1
                         <button type="button">Ver perfil</button>
+                         <!-- REDIRECT A /u/id  -->
                         <button type="button">Invitar a una sala</button>
-                        <button type="button">Mensajes</button>
-                        <button type="button">Eliminar amigo</button>
+                        <!-- TODO: MANERA DE QUE EN MI PERFIL ME SALGAN INVITACIONES A SALAS -->
+                        
+                        <button type="button">Eliminar seguidor</button>
+                        <!-- PEDIR A LA API QUE BORRE SEGUIDOR  -->
                     </li>
-                    <li>Amigo 2</li>
-                    <li>Amigo N</li>
+                    
                 </ol>
             </div>
 
-        <h2> SOLICITUDES DE AMISTAD </h2>
-            <div id="solicitudes">
-                <ol>
-                    <li>
-                        Solicitud 1
-                        <button type="button">Aceptar</button>
-                        <button type="button">Rechazar</button>
-                    </li>
-                    <li>Solicitud 2</li>
-                    <li>Solicitud N</li>
-                </ol>
-            </div>
+       
 
         <h2> BUSCAR UN JUGADOR </h2>
 
@@ -58,20 +52,7 @@
                 Nombre del jugador #12465 
                 <button type="button">Ver perfil</button>
                 <button type="button">Invitar a una sala</button>
-                <button type="button">Mandar solicitud de amistad</button>
+                <button type="buttonFollow">Seguir</button>
             </div>
-
-
-        <script>
-            function buscarJugador() {
-                var x = document.getElementById("playerFound");
-    
-                if (x.style.display === "none") {
-                    x.style.display = "block";
-                } else {
-                    x.style.display = "none";
-                }
-            }
-        </script>
     </body>
 </html>

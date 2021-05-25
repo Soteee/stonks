@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -89,11 +90,17 @@ public class User implements Transferable<User.Transfer> {
 	@JoinColumn(name = "user_id")
 	private List<Message> sent = new ArrayList<>();    
 
+	
     /** salas de las que soy socio */
     @OneToMany
     @JoinColumn(name = "user_id")
     private List<Membership> memberList = new ArrayList<>();
 
+	@OneToMany
+	private List<User> following=new ArrayList<>();
+	
+	@OneToMany
+	private List<User> followers = new ArrayList<>();
 	// utility methods
 	
 	/**

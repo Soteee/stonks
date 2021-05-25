@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,6 +28,7 @@ import javax.transaction.Transactional;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @Controller
+@RequestMapping("api")
 public class ApiController {
     @Autowired
     private EntityManager entityManager;
@@ -70,6 +72,67 @@ public class ApiController {
         json.put("stocks", stocks);
 
         return json.toString();
+    }
+
+    @GetMapping("isFollowing")
+    @ResponseBody
+    public String isFollowing(HttpSession session,
+                            @RequestParam(value = "u") long user_id,
+                            HttpServletResponse response){
+        User follower = entityManager.find(User.class, session.getAttribute("u"));
+        User followed = entityManager.find(User.class, user_id);
+            
+        if (follower.getFollowing().contains(followed)){
+            return "{\"result\":\"true\"}";
+        }
+        else{
+            return "{\"result\":\"false\"}";
+        }
+    }
+
+    @PostMapping("/follow")
+    @ResponseBody
+    @Transactional
+    public String follow(HttpSession session,
+                            @RequestBody JsonNode o,
+                            HttpServletResponse response) throws Exception{
+
+        User follower = entityManager.find(User.class, session.getAttribute("u"));
+        User followed = entityManager.find(User.class, o.get("user"));
+
+        if (follower.getFollowing().contains(followed)){
+            response.sendError(400);
+        }
+
+        follower.getFollowing().add(followed);
+        follower.getFollowers().add(follower);
+
+        entityManager.persist(follower);
+        entityManager.persist(followed);
+
+        return "{\"result\":\"success\"}";
+    }
+    
+    @PostMapping("/unfollow")
+    @ResponseBody
+    @Transactional
+    public String unfollow(HttpSession session, 
+                            @RequestBody JsonNode o, 
+                            HttpServletResponse response) throws Exception {
+
+        User follower = entityManager.find(User.class, session.getAttribute("u"));
+        User followed = entityManager.find(User.class, o.get("user"));
+
+        if (!follower.getFollowing().contains(followed)) { 
+            response.sendError(400);
+        }
+        
+        follower.getFollowing().remove(followed);
+        follower.getFollowers().remove(follower);
+        entityManager.persist(follower);
+        entityManager.persist(followed);
+
+        return "{\"result\":\"success\"}";
     }
 
     @PostMapping("/buy")

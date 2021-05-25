@@ -27,8 +27,49 @@
 
         <p>Partidas ganadas: <span th:text="${user.wonRooms}"></span></p>
         <!-- TODO activo en salas..., Ganancias, etc -->
-
+        <div>
+            <span id="error"></span>
+            <button class="button is-white" id="buttonFollow">Seguir</button>
+        </div>
     </div>
+                    
+    <script th:inline="javascript">
+        let follow_button = document.getElementById('buttonFollow');
+        let action;
 
+        function updateFollowButton(){
+            go(config.rootURL + 'api/isFollowing?u=' + /*[[${user.id}]]*/ + '', 'GET')
+            .then(function(response){
+                console.log(response)
+                if(response.true){
+                    document.getElementById("buttonFollow").class="button is-Success";
+                    document.getElementById("buttonFollow").innerHTML = "Dejar de seguir";
+                    action = "unfollow";
+                }
+                else {
+                    document.getElementById("buttonFollow").class="button is-info";
+                    document.getElementById("buttonFollow").innerHTML = "Seguir";
+                    action = "follow"
+                }
+            })
+        }
+
+        updateFollowButton()
+
+        document.addEventListener("DOMContentLoaded", () => {
+            follow_button.onclick((e)=>{
+                console.log(e)
+                e.preventDefault();
+                // para inyectar al js -> th, poner luego valor esperado
+                // si no lo encontrase, después del /*[[${...}]]*/
+                go(config.rootUrl + 'api/' + action, 'POST', {
+                    user: /*[[${user.id}]]*/ ""
+                })
+                .then((data)=>{
+                    updateFollowButton()
+                });
+            });
+        });
+    </script>
 </body>
 </html>
