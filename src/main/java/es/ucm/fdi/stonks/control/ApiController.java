@@ -98,8 +98,8 @@ public class ApiController {
                             @RequestBody JsonNode o,
                             HttpServletResponse response) throws Exception{
 
-        User follower = entityManager.find(User.class, session.getAttribute("u"));
-        User followed = entityManager.find(User.class, o.get("user"));
+        User follower = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
+        User followed = entityManager.find(User.class, o.get("user").asLong());
 
         if (follower.getFollowing().contains(followed)){
             response.sendError(400);
@@ -119,8 +119,8 @@ public class ApiController {
                             @RequestBody JsonNode o, 
                             HttpServletResponse response) throws Exception {
 
-        User follower = entityManager.find(User.class, session.getAttribute("u"));
-        User followed = entityManager.find(User.class, o.get("user"));
+        User follower = entityManager.find(User.class, ((User)session.getAttribute("u")).getId());
+        User followed = entityManager.find(User.class, o.get("user").asLong());
 
         if (!follower.getFollowing().contains(followed)) { 
             response.sendError(400);
