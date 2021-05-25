@@ -29,7 +29,9 @@ import lombok.Data;
    @NamedQuery(name="Room.byUser",
             query="SELECT r FROM Membership m "
                + "JOIN Room r ON m.room = r.id "
-               + "WHERE m.user = :user")
+               + "WHERE m.user = :user"),
+   @NamedQuery(name="Room.bySearch",
+            query="SELECT r FROM Room r WHERE r.name LIKE :name OR r.name LIKE '%:name%'")
 
 })
 public class Room {

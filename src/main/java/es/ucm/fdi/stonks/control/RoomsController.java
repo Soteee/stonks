@@ -4,6 +4,9 @@ import es.ucm.fdi.stonks.model.Membership;
 import es.ucm.fdi.stonks.model.Room;
 import es.ucm.fdi.stonks.model.Symbol;
 import es.ucm.fdi.stonks.model.User;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletResponse;
@@ -96,6 +100,8 @@ public class RoomsController{
         return "createRoom";
     }
 
+
+
     @PostMapping("/createRoom")
     @Transactional
     public void postCreateRoom(
@@ -150,6 +156,32 @@ public class RoomsController{
         }
 
         response.sendRedirect("/r/");
+    }
+
+    // Dado un parametro de busqueda, se ejecutó una query buscando
+    // parecidas, se meten en un json para pasarselo al ayax y que lo muestr
+    // en el html
+    @GetMapping(path="/getRooms", produces = "application/json")
+    @ResponseBody
+    @Transactional
+    public String getRoomsBySearch(HttpSession session,
+                                @RequestParam(value = "nameLike") String nameLike,
+                                HttpServletResponse response) throws Exception{
+        
+        List<Room> roomsResult = entityManager.createNamedQuery("Room.bySearch").setParameter("name", nameLike).getResultList();
+        JSONObject json = new JSONObject();
+        JSONArray roomsJson = new JSONArray();
+        if(!roomsResult.isEmpty()){
+           for(Room r : roomsResult){
+               JSONObject jRoom = new JSONObject();
+               jRoom.put("roomName", r.getName());
+               jRoom.put("id",r.getId());
+               jRoom.put("maxUsers",r.getMaxUsers());
+           }
+        }
+        json.put("rooms", roomsJson);
+
+        return json.toString();
     }
 
     @PostMapping("/joinRoom")

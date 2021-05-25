@@ -23,9 +23,9 @@
             <form>
                 <div class="field is-grouped">
                     <div class="control">
-                        <input class="input" type="text" name="roomSearch" placeholder="Sala">
+                        <input class="input"  id="roomSearch" type="text" name="roomSearch" placeholder="Sala">
                     </div>
-                    <div class="control">
+                    <!--<div class="control">
                         <div class="select">
                             <select name="roomType">
                                 <option id="1">Públicas</option>
@@ -33,19 +33,45 @@
                                 <option id="3">Todas</option>
                             </select>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="control">
-                        <button class="button is-link" type="submit">Buscar</button>
+                        <button class="button is-link" id="buttonSearch" type="submit">Buscar</button>
+                        <script th:inline="javascript">
+                            document.addEventListener("DOMContentLoaded",()=>{
+                             let b = document.getElementById('buttonSearch');
+                            b.onclick =(e)=>{
+                                e.preventDefault();
+                                let queryText = document.getElementById('roomSearch').value;
+                                console.log(queryText);
+                                go(config.rootUrl+'r/getRooms?namedLike='+queryText+'','GET')
+                                .then(function(response){
+                                    console.log(1+2);
+                                })
+                            }
+                            });
+                        </script>
                     </div>
                 </div>
             </form>
             <a class="button is-danger" th:href='@{/r/createRoom}' id="createRoom">Crear sala</a>
             <div class="content">
-                <ul id="results-rooms">
+                <h2>Salas populares </h2>
+                <ul id="top-rooms">
                     <li th:each="room: ${topRooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
+                </ul>
+            </div>
+            <div class="content">
+                <h2>Resultados de busquedas </h2>
+                <ul id="results-rooms" style="visibility:hidden;">
+                    <li> <span id="room_rst">result</li>
                 </ul>
             </div>
         </div>
     </div>
+
+    
+
+
+    </script>
 </body>
 </html>
