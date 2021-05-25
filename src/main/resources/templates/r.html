@@ -120,188 +120,189 @@
                         <button class="button is-primary" id="sendmsg" type="submit">Enviar</button>
                     </form>
                 </div>
-
-
-
-                <script th:inline="javascript">
-                    ///////////////// TRANSACCIONES /////////////////
-
-                    // Tiene que ser global para poder borrarlo del DOM y seguir teniendo el formulario
-                    var sell_form = document.getElementById("sell_form");
-                    sell_form.parentNode.removeChild(sell_form);
-
-                    // Actualiza todos los valores del panel del usuario
-                    function updateUserPanel(){
-                        go (config.rootUrl + 'api/userInfo?r=' + /*[[${room.id}]]*/ '', 'GET')
-                            .then(function (response){
-                                // Actualiza el balance
-                                document.getElementById("balance").innerHTML = response.balance + '€';
-
-                                // Borra la tabla de posiciones
-                                let table = document.getElementById("stocks");
-                                while (table.hasChildNodes()){
-                                    table.removeChild(table.firstChild);
-                                }
-
-                                if (Object.entries(response.stocks).length !== 0){
-                                    // Actualiza la barra de posiciones con los valores actuales
-                                    response.stocks.forEach( stock => {
-                                        let row = table.insertRow();
-                                        row.insertCell(0).innerHTML = Object.keys(stock)[0];
-                                        row.insertCell(1).innerHTML = stock[Object.keys(stock)[0]];
-                                    })
-
-                                    if (sell_form.parentNode === null){
-                                        // Muestra el formulario de venta
-                                        let user_panel = document.getElementById('user_panel');
-                                        user_panel.appendChild(sell_form);
-                                    }
-                                }
-                                else {
-                                    table.insertRow().insertCell(0).innerHTML = "Todavía no tienes posiciones";
-
-                                    if (sell_form.parentNode !== null){
-                                        // Oculta el formulario de venta
-                                        sell_form.parentNode.removeChild(sell_form);
-                                    }
-                                }
-                            })
-                    }
-                    updateUserPanel();
-
-                    let buy_input = document.getElementById("buyQuantity");
-                    buy_input.oninput = function(){
-                        let selected_stock = document.getElementById('buySymbol').options.item(document.getElementById('buySymbol').options.selectedIndex).text;
-                        let stock_value = parseFloat(document.getElementById(selected_stock).innerHTML);
-
-                        document.getElementById("buy_price").innerHTML = (stock_value * buy_input.value).toFixed(2);
-                    };
-                        
-                    let sell_input = sell_form.children.item(4);
-                    sell_input.oninput = function(){
-                        let selected_stock = document.getElementById('sellSymbol').options.item(document.getElementById('sellSymbol').options.selectedIndex).text;
-                        let stock_value = parseFloat(document.getElementById(selected_stock).innerHTML);
-                        
-                        document.getElementById("sell_price").innerHTML = (stock_value * sell_input.value).toFixed(2);
-                    };
-
-                    // envío de transacciones con AJAX
-                    document.addEventListener("DOMContentLoaded", () => {
-                        let b = document.getElementById("buy");
-                        b.onclick = (e) => {
-                            // Update error message
-                            let error = document.getElementById('buy_error');
-                            console.log(error);
-                            if (error.innerHTML !== ''){
-                                error.innerHTML = '';
-                            }
-
-                            // Actualizar el precio calculado
-                            let buy_price = document.getElementById("buy_price");
-                            buy_price.innerHTML = '0';
-
-                            // Send ajax
-                            let url = b.parentNode.action;
-                            e.preventDefault();
-                            go(url, 'POST', {
-                                room_id: /*[[${room.id}]]*/ null,
-                                symbol_id: document.getElementById("buySymbol").value,
-                                quantity: document.getElementById("buyQuantity").value
-                            })
-                                .then((data)=>{
-                                    if (data.result == 'success'){
-                                        updateUserPanel();
-                                        document.getElementById("buyQuantity").value = null;
-                                    }
-                                    else{
-                                        error.innerHTML = data.result;
-                                    }
-                                });
-                        }
-
-                        let b = sell_form.children.item(6); // Si se intenta coger con getElementById, no lo encuentra porque al principio se saca el form del DOM
-                        b.onclick = (e) => {
-                            // Update error message
-                            let error = document.getElementById('sell_error');
-                            if (error.innerHTML !== ''){
-                                error.innerHTML = '';
-                            }
-
-                            // Actualizar el precio calculado
-                            let sell_price = document.getElementById("sell_price");
-                            sell_price.innerHTML = '0';
-
-                            // Send ajax
-                            let url = b.parentNode.action;
-                            e.preventDefault();
-                            go(url, 'POST', {
-                                room_id: /*[[${room.id}]]*/ null,
-                                symbol_id: document.getElementById("sellSymbol").value,
-                                quantity: document.getElementById("sellQuantity").value
-                            })
-                                .then((data)=>{
-                                    if (data.result == 'success'){
-                                        updateUserPanel();
-                                        document.getElementById("sellQuantity").value = null;
-                                    }
-                                    else{
-                                        error.innerHTML = data.result;
-                                    }
-                                });
-                        }
-                    });
-                    
-                    ///////////////////// CHAT //////////////////////
-
-                    function formatDate(d) {
-                        // 2020-03-23T10:48:11.074 => 23/3/2020@10:48:18
-                        return new Date(d).toLocaleString("es-ES").split(" ").join("@")
-                    }
-
-                    // mostrando una tabla dinámica con datos cargados del servidor vía AJAX
-                    let dt = new simpleDatatables.DataTable(
-                        '#datatable', {
-                            ajax: {
-                                url: config.rootUrl + "chat/" + /*[[${room.id}]]*/ "", // empieza siempre por config.rootUrl
-                                load: function(xhr) {
-                                    let data = JSON.parse(xhr.responseText);
-                                    for (let i = 0; i < data.length; i++) {
-                                        let row = data[i];
-                                        row.sent = formatDate(row.sent);
-                                    }
-
-                                    return JSON.stringify(data);
-                                }
-                            }
-                        }
-                    );
-
-                    // envío de mensajes vía AJAX, sin recargar la página
-                    document.addEventListener("DOMContentLoaded", () => {
-                        let b = document.getElementById("sendmsg");
-                        b.onclick = (e) => {
-                            let url = b.parentNode.action;
-                            e.preventDefault();
-                            console.log(b, b.parentNode)
-                            go(url, 'POST', {
-                                message: document.getElementById("message").value
-                            })
-                                .then(d => console.log("happy", d))
-                                .catch(e => console.log("sad", e))
-                            document.getElementById("message").value = "";
-                        }
-                    });
-
-                    // Cuando llega un mensaje, se añade a la tabla
-                    ws.receive = (m) => {
-                        dt.rows().add([m.from, formatDate(new Date().toISOString()), m.text, m.id]);
-                    }
-                </script>
             </div>
-
     </div>
+    <script th:inline="javascript">
+        ///////////////// TRANSACCIONES /////////////////
 
+        // Tiene que ser global para poder borrarlo del DOM y seguir teniendo el formulario
+        var sell_form = document.getElementById("sell_form");
+        sell_form.parentNode.removeChild(sell_form);
 
+        // Actualiza todos los valores del panel del usuario
+        function updateUserPanel(){
+            go (config.rootUrl + 'api/userInfo?r=' + /*[[${room.id}]]*/ '', 'GET')
+                .then(function (response){
+                    console.log(response)
+                    // Actualiza el balance
+                    document.getElementById("balance").innerHTML = response.balance + '€';
+
+                    // Borra la tabla de posiciones
+                    let table = document.getElementById("stocks");
+                    while (table.hasChildNodes()){
+                        table.removeChild(table.firstChild);
+                    }
+
+                    if (Object.entries(response.stocks).length !== 0){
+                        // Actualiza la barra de posiciones con los valores actuales
+                        response.stocks.forEach( stock => {
+                            let row = table.insertRow();
+                            row.insertCell(0).innerHTML = Object.keys(stock)[0];
+                            row.insertCell(1).innerHTML = stock[Object.keys(stock)[0]];
+                        })
+
+                        if (sell_form.parentNode === null){
+                            // Muestra el formulario de venta
+                            let user_panel = document.getElementById('user_panel');
+                            user_panel.appendChild(sell_form);
+                        }
+                    }
+                    else {
+                        table.insertRow().insertCell(0).innerHTML = "Todavía no tienes posiciones";
+
+                        if (sell_form.parentNode !== null){
+                            // Oculta el formulario de venta
+                            sell_form.parentNode.removeChild(sell_form);
+                        }
+                    }
+                })
+        }
+        updateUserPanel();
+
+        // Cálculo del precio en tiempo real
+        document.addEventListener("DOMContentLoaded", () => {
+            let buy_input = document.getElementById("buyQuantity");
+            buy_input.oninput = function(){
+                let selected_stock = document.getElementById('buySymbol').options.item(document.getElementById('buySymbol').options.selectedIndex).text;
+                let stock_value = parseFloat(document.getElementById(selected_stock).innerHTML);
+
+                document.getElementById("buy_price").innerHTML = (stock_value * buy_input.value).toFixed(2);
+            };
+                
+            let sell_input = sell_form.children.item(4);
+            sell_input.oninput = function(){
+                let selected_stock = document.getElementById('sellSymbol').options.item(document.getElementById('sellSymbol').options.selectedIndex).text;
+                let stock_value = parseFloat(document.getElementById(selected_stock).innerHTML);
+                
+                document.getElementById("sell_price").innerHTML = (stock_value * sell_input.value).toFixed(2);
+            };
+        });
+
+        // Comprar acciones
+        document.addEventListener("DOMContentLoaded", () => {
+            let b = document.getElementById("buy");
+            b.onclick = (e) => {
+                // Update error message
+                let error = document.getElementById('buy_error');
+                console.log(error);
+                if (error.innerHTML !== ''){
+                    error.innerHTML = '';
+                }
+
+                // Actualizar el precio calculado
+                let buy_price = document.getElementById("buy_price");
+                buy_price.innerHTML = '0';
+
+                // Send ajax
+                let url = b.parentNode.action;
+                e.preventDefault();
+                go(url, 'POST', {
+                    room_id: /*[[${room.id}]]*/ null,
+                    symbol_id: document.getElementById("buySymbol").value,
+                    quantity: document.getElementById("buyQuantity").value
+                })
+                    .then((data)=>{
+                        if (data.result == 'success'){
+                            updateUserPanel();
+                            document.getElementById("buyQuantity").value = null;
+                        }
+                        else{
+                            error.innerHTML = data.result;
+                        }
+                    });
+            }
+        });
+
+        // Veder acciones
+        document.addEventListener("DOMContentLoaded", () => {
+            let b = sell_form.children.item(6); // Si se intenta coger con getElementById, no lo encuentra porque al principio se saca el form del DOM
+            b.onclick = (e) => {
+                // Update error message
+                let error = document.getElementById('sell_error');
+                if (error.innerHTML !== ''){
+                    error.innerHTML = '';
+                }
+
+                // Actualizar el precio calculado
+                let sell_price = document.getElementById("sell_price");
+                sell_price.innerHTML = '0';
+
+                // Send ajax
+                let url = b.parentNode.action;
+                e.preventDefault();
+                go(url, 'POST', {
+                    room_id: /*[[${room.id}]]*/ null,
+                    symbol_id: document.getElementById("sellSymbol").value,
+                    quantity: document.getElementById("sellQuantity").value
+                })
+                    .then((data)=>{
+                        if (data.result == 'success'){
+                            updateUserPanel();
+                            document.getElementById("sellQuantity").value = null;
+                        }
+                        else{
+                            error.innerHTML = data.result;
+                        }
+                    });
+            }
+        });
+        
+        ///////////////////// CHAT //////////////////////
+
+        function formatDate(d) {
+            // 2020-03-23T10:48:11.074 => 23/3/2020@10:48:18
+            return new Date(d).toLocaleString("es-ES").split(" ").join("@")
+        }
+
+        // mostrando una tabla dinámica con datos cargados del servidor vía AJAX
+        let dt = new simpleDatatables.DataTable(
+            '#datatable', {
+                ajax: {
+                    url: config.rootUrl + "chat/" + /*[[${room.id}]]*/ "", // empieza siempre por config.rootUrl
+                    load: function(xhr) {
+                        let data = JSON.parse(xhr.responseText);
+                        for (let i = 0; i < data.length; i++) {
+                            let row = data[i];
+                            row.sent = formatDate(row.sent);
+                        }
+
+                        return JSON.stringify(data);
+                    }
+                }
+            }
+        );
+
+        // Envío de mensajes vía AJAX, sin recargar la página
+        document.addEventListener("DOMContentLoaded", () => {
+            let b = document.getElementById("sendmsg");
+            b.onclick = (e) => {
+                let url = b.parentNode.action;
+                e.preventDefault();
+                console.log(b, b.parentNode)
+                go(url, 'POST', {
+                    message: document.getElementById("message").value
+                })
+                    .then(d => console.log("happy", d))
+                    .catch(e => console.log("sad", e))
+                document.getElementById("message").value = "";
+            }
+        });
+
+        // Cuando llega un mensaje, se añade a la tabla
+        ws.receive = (m) => {
+            dt.rows().add([m.from, formatDate(new Date().toISOString()), m.text, m.id]);
+        }
+    </script>
 </body>
 
 </html>
