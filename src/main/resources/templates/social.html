@@ -9,50 +9,73 @@
 </head>
     <body>
         <nav th:replace="fragments/menu.html :: topbar"></nav>
-    <div class="visualizer">
-        <!-- LISTA PRINCIPAL -->
-            <div id="botones">
-                <button id=myFollowers type="button">Mis seguidores</button>
-                 <!-- HACEMOS QUE ESTE BOTÓN ENSEÑE CON AJAX MIS SEGUIDORES -->
-                <button id=myFollowing type="button">Mis seguidos</button>
-                 <!-- HACEMOS QUE ESTE BOTÓN ENSEÑE CON AJAX MIS seguidos -->
-                <button id=searchPlayers type="button">Buscar jugadores</button>
-                <!-- HACEMOS QUE ESTE BOTÓN ENSEÑE CON AJAX LA BUSQUEDA DE SEGUIDORES -->
+
+        <div class="content m-3">
+            <h1>Amigos</h1>
+        </div>
+
+        <div class="columns m-3">
+            <div class="column is-one-third">
+                <div class="content">
+                <h2>Social</h2>
+                <!-- LISTA PRINCIPAL -->
+                    <div id="botones">
+                        <button class="button is-link" id=myFollowers type="button">Mis seguidores</button>
+                         <!-- HACEMOS QUE ESTE BOTÓN ENSEÑE CON AJAX MIS SEGUIDORES -->
+                        <br><br>
+                        <button class="button is-link" id=myFollowing type="button">Mis seguidos</button>
+                         <!-- HACEMOS QUE ESTE BOTÓN ENSEÑE CON AJAX MIS seguidos -->
+                        <br><br>
+                        <button class="button is-primary" id=searchPlayers type="button">Buscar jugadores</button>
+                        <!-- HACEMOS QUE ESTE BOTÓN ENSEÑE CON AJAX LA BUSQUEDA DE SEGUIDORES -->
+                    </div>
+                </div>
             </div>
-    </div>
-        <h2> Mis seguidos </h2>                          <!-- Segun entras -->
-            <div id="Seguidos">
-                <ol>
-                    <li>
-                        Amigo 1
-                        <button type="button">Ver perfil</button>
-                         <!-- REDIRECT A /u/id  -->
-                        <button type="button">Invitar a una sala</button>
-                        <!-- TODO: MANERA DE QUE EN MI PERFIL ME SALGAN INVITACIONES A SALAS -->
-                        
-                        <button type="button">Eliminar seguidor</button>
-                        <!-- PEDIR A LA API QUE BORRE SEGUIDOR  -->
-                    </li>
-                    
-                </ol>
+            <div class="column is-one-third">
+                <div class="content">
+                    <h2> Mis seguidos </h2>                          <!-- Segun entras -->
+                        <div id="Seguidos">
+                            <ol>
+                                <li>
+                                    Amigo 1
+                                    <br>
+                                    <button class="button is-small is-link" type="button">Ver perfil</button>
+                                     <!-- REDIRECT A /u/id  -->
+                                    <button class="button is-small is-primary" type="button">Invitar</button>
+                                    <!-- TODO: MANERA DE QUE EN MI PERFIL ME SALGAN INVITACIONES A SALAS -->
+
+                                    <button class="button is-small is-danger" type="button">Eliminar</button>
+                                    <!-- PEDIR A LA API QUE BORRE SEGUIDOR  -->
+                                </li>
+
+                            </ol>
+                        </div>
+                </div>
             </div>
+            <div class="column">
+                <div class="content">
+                    <h2>Buscar un jugador</h2>
 
-       
+                    <form>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <input class="input" type="text" name="roomSearch" onfocus="this.value=''" placeholder="Nombre de usuario o #12465" size="30px">
+                            </div>
+                            <div class="con<trol">
+                                <button class="button is-link" onclick="buscarJugador()">Buscar</button>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <div id="playerFound">
+                        Nombre del jugador #12465
+                        <br>
+                        <button class="button is-small is-link" type="button">Ver perfil</button>
+                        <button class="button is-small is-primary" type="button">Invitar</button>
 
-        <h2> BUSCAR UN JUGADOR </h2>
-
-            <form>
-                <input type="text" name="roomSearch" onfocus="this.value=''" value="Nombre de usuario o #12465" size="30px">
-
-                <button onclick="buscarJugador()">Buscar</button>
-
-            </form>
-            <br>
-            <div id="playerFound" >
-                Nombre del jugador #12465 
-                <button type="button">Ver perfil</button>
-                <button type="button">Invitar a una sala</button>
-
+                    </div>
+                </div>
             </div>
+        </div>
     </body>
 </html>
