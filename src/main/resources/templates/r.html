@@ -121,13 +121,19 @@
             </div>
     </div>
     <script th:inline="javascript">
+
+        let room = /*[[${room.id}]]*/ null;
+
+        // Oculta formulario de venta por defecto, luego se hace visible si el usuario tiene acciones para vender
         let sell_form = document.getElementById("sell_form");
         sell_form.style.visibility = "hidden";
 
         function updateUsersInRoom(){
-            go (config.rootUrl + 'api/usersInRoom?r=' + /*[[${room.id}]]*/ '', 'GET')
+            go (config.rootUrl + 'api/usersInRoom?r=' + room, 'GET')
                 .then(function(response){
                     let users = document.getElementById('users_inroom');
+                    // Remove current users
+                    users.innerHTML = "";
                     response.forEach((user)=>{
                         let newLi = document.createElement('li');
                         let newA = document.createElement('a');
@@ -144,7 +150,7 @@
 
         // Actualiza todos los valores del panel del usuario
         function updateUserPanel(){
-            go (config.rootUrl + 'api/userInfo?r=' + /*[[${room.id}]]*/ '', 'GET')
+            go (config.rootUrl + 'api/userInfo?r=' + room, 'GET')
                 .then(function (response){
                     // Actualiza el balance
                     document.getElementById("balance").innerHTML = response.balance + '€';
@@ -222,7 +228,7 @@
                 let url = b.parentNode.action;
                 e.preventDefault();
                 go(url, 'POST', {
-                    room_id: /*[[${room.id}]]*/ null,
+                    room_id: room,
                     symbol_id: document.getElementById("buySymbol").value,
                     quantity: document.getElementById("buyQuantity").value
                 })
@@ -238,7 +244,7 @@
             }
         });
 
-        // Veder acciones
+        // Vender acciones
         document.addEventListener("DOMContentLoaded", () => {
             let b = document.getElementById('sell');
             b.onclick = (e) => {
@@ -256,7 +262,7 @@
                 let url = b.parentNode.action;
                 e.preventDefault();
                 go(url, 'POST', {
-                    room_id: /*[[${room.id}]]*/ null,
+                    room_id: room,
                     symbol_id: document.getElementById("sellSymbol").value,
                     quantity: document.getElementById("sellQuantity").value
                 })
@@ -283,7 +289,7 @@
         let dt = new simpleDatatables.DataTable(
             '#datatable', {
                 ajax: {
-                    url: config.rootUrl + "chat/" + /*[[${room.id}]]*/ "", // empieza siempre por config.rootUrl
+                    url: config.rootUrl + "chat/" + room,
                     load: function(xhr) {
                         let data = JSON.parse(xhr.responseText);
                         for (let i = 0; i < data.length; i++) {
@@ -313,10 +319,27 @@
             }
         });
 
-        // Cuando llega un mensaje, se añade a la tabla
+        //////////////////////// WEB SOCKETS /////////////////////
+
+        // Gestión de web sockets entrantes
         ws.receive = (m) => {
-            dt.rows().add([m.from, formatDate(new Date().toISOString()), m.text, m.id]);
+            // Si llega un nuevo mensaje
+            if (m.event === 'message'){
+                dt.rows().add([m.message.from, formatDate(new Date().toISOString()), m.message.text, m.message.id]);
+            }
+            // Si llega una nueva transacción
+            else if (m.event === 'transaction'){
+                updateUsersInRoom();
+            }
         }
+
+        // Inicialización de web sockets
+        document.addEventListener("DOMContentLoaded", () => {
+            if (config.socketUrl) {
+                let subs = ["/topic/r" + room]; // Se suscribe a /topic/r1 para la room con id 1, etc.
+                ws.initialize(config.socketUrl, subs);
+            }
+        });
     </script>
 </body>
 

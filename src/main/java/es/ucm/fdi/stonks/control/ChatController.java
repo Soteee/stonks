@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -71,14 +72,18 @@ public class ChatController {
         entityManager.flush(); // to get Id before commit
 
         // construye json
-		ObjectMapper mapper = new ObjectMapper();
-		ObjectNode rootNode = mapper.createObjectNode();
-		rootNode.put("from", user.getUsername());
-		rootNode.put("text", text);
-		rootNode.put("id", newMessage.getId());
-		String json = mapper.writeValueAsString(rootNode);
+		JSONObject result = new JSONObject();
+        result.put("event", "message");
 
-		messagingTemplate.convertAndSend("/user/"+user.getUsername()+"/queue/updates", json);
+        JSONObject message = new JSONObject();
+		message.put("from", user.getUsername());
+		message.put("text", text);
+		message.put("id", newMessage.getId());
+        result.put("message", message);
+
+        // Manda el mensaje a la sala por ws
+		messagingTemplate.convertAndSend("/topic/r"+room.getId(), result.toString());
+
 		return "{\"result\": \"message sent.\"}";
     }
 }
