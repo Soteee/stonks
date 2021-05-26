@@ -8,6 +8,9 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.checkerframework.checker.units.qual.m;
+
 import lombok.Getter;
 import lombok.Data;
 
@@ -70,4 +73,18 @@ public class Room {
 
    @ManyToOne
    private User winner;
+
+   public User checkWinner(){
+      User winner = null;
+      double maximum = 0;
+
+      for (Membership member : memberList){
+         if (winner == null || member.getBalance() > maximum){
+            maximum = member.getBalance();
+            winner = member.getUser();
+         }
+      }
+
+      return winner;
+   }
 }

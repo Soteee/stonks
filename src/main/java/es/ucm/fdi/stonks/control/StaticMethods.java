@@ -1,6 +1,7 @@
 package es.ucm.fdi.stonks.control;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,12 +13,14 @@ import javax.persistence.EntityManager;
 
 import com.mashape.unirest.http.Unirest;
 
+import org.hibernate.engine.spi.EntityUniqueKey;
 import org.json.JSONObject;
 
 import es.ucm.fdi.stonks.model.Membership;
 import es.ucm.fdi.stonks.model.Position;
 import es.ucm.fdi.stonks.model.Room;
 import es.ucm.fdi.stonks.model.Symbol;
+import es.ucm.fdi.stonks.model.User;
 import es.ucm.fdi.stonks.model.Position.Side;
 
 public class StaticMethods {
@@ -125,5 +128,19 @@ public class StaticMethods {
         }
 
         return stocks;
+    }
+
+    public static void checkExpiredRooms(EntityManager e){
+        List<Room> rooms = e.createNamedQuery("Room.all").getResultList();
+        for (Room room : rooms){
+            if (room.getExpirationDate().compareTo(LocalDate.now()) <= 0){
+                User winner = room.checkWinner();
+                room.setFinished(true);
+                room.setWinner(winner);
+                e.persist(room);
+                winner.getWonRooms().add(room);
+                e.persist(room);
+            }
+        }
     }
 }

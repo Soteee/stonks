@@ -77,6 +77,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		// Update symbol values if more than 24 hours have passed
 		StaticMethods.refreshStockValues(entityManager);
 
+		// Check if any room has expired and set winner if so
+		StaticMethods.checkExpiredRooms(entityManager);
+
 		// note that this is a 302, and will result in a new request
 		response.sendRedirect(nextUrl);
 	}

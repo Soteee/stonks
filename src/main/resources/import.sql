@@ -40,10 +40,10 @@ Insert into user(id,enabled,username,password,roles,name,first_name) VALUES (
 );
 
 -- Salas de prueba
-INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id, finished) VALUES (1,'Andorra', TRUE, 1000, 10, 3000, 100000, 2, FALSE);
-INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id, finished) VALUES (2,'Me encanta pagar impuestos', TRUE, 1000, 10, 3000, 100000, 4, FALSE);
-INSERT INTO room(id,name, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id, finished) VALUES (3,'Partida para acabar', TRUE, 1000, 10, 3000, 100000, 1, FALSE);
-
+INSERT INTO room(id,name, expiration_date, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id, finished) VALUES (1,'Andorra', '2022-12-31', TRUE, 1000, 10, 3000, 100000, 2, FALSE);
+INSERT INTO room(id,name, expiration_date, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id, finished) VALUES (2,'Me encanta pagar impuestos', '2022-12-31', TRUE, 1000, 10, 3000, 100000, 4, FALSE);
+INSERT INTO room(id,name, expiration_date, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id, finished) VALUES (3,'Partida para acabar', '2022-12-31', TRUE, 1000, 10, 3000, 100000, 1, FALSE);
+INSERT INTO room(id,name, expiration_date, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id, finished) VALUES (4,'Partida acabada', '2020-12-31', TRUE, 1000, 10, 3000, 100000, 1, FALSE);
 
 --Stocks en mercados
 insert into symbol(name, updated_on, value) values ('TSLA',CURRENT_DATE,641.5);
@@ -115,6 +115,9 @@ INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (10, 2);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (8, 3);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (9, 3);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (10, 3);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (8, 4);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (9, 4);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (10, 4);
 
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (11, 1);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (12, 1);
@@ -129,6 +132,9 @@ INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (20, 2);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (18, 3);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (19, 3);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (20, 3);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (18, 4);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (19, 4);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (20, 4);
 
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (21, 1);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (22, 1);
@@ -143,6 +149,10 @@ INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (30, 2);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (28, 3);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (29, 3);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (30, 3);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (28, 4);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (29, 4);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (30, 4);
+
 
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (31, 1);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (32, 1);
@@ -157,6 +167,9 @@ INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (40, 2);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (38, 3);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (39, 3);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (40, 3);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (38, 4);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (39, 4);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (40, 4);
 
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (41, 1);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (42, 1);
@@ -171,6 +184,9 @@ INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (50, 2);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (48, 3);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (49, 3);
 INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (50, 3);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (48, 4);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (49, 4);
+INSERT INTO SYMBOL_ROOMS(symbol_id, rooms_id) VALUES (50, 4);
 
 -- Memberships de prueba
 INSERT INTO membership VALUES (1, 10000, NULL, 1, 1);
@@ -181,6 +197,8 @@ INSERT INTO membership VALUES (5, 40000, NULL, 2, 5);
 INSERT INTO membership VALUES (6, 8000, NULL, 2, 1);
 INSERT INTO membership VALUES (7, 99000, NULL, 3, 1);
 INSERT INTO membership VALUES (8, 8000, NULL, 3, 2);
+INSERT INTO membership VALUES (9, 1000, NULL, 4, 1);
+INSERT INTO membership VALUES (10, 8000, NULL, 4, 2);
 
 -- Posición ficticia para tener una sala en la que ganar vendiendo sólo una vez y hacer pruebas
 INSERT INTO position(member_id, quantity, value, side, symbol_id) VALUES (7, 1000, 9900, 0, 8);
