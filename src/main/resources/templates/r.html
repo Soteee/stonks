@@ -22,11 +22,12 @@
         <div class="content">
             <h1 th:text="${room.name}">No se encontró la sala</h1>
         </div>
-        <h3>Esta sala ya ha finalizado. El ganador es <a th:href="@{/u/{id}(id=${room.winner.id})}" th:text="${room.winner.username}"></a></h3>
+        <p>Esta sala ya ha finalizado</p> 
+        <p>El ganador ha sido <a th:href="@{/u/{id}(id=${room.winner.id})}" th:text="${room.winner.username}"></a></p>
         <p class="menu-label">Resultados finales</p>
         <ul id='users_inroom' class="menu-list"></ul>
     </div>
-    <div class="columns m-3" th:if="${room.finished} == false">
+    <div id='running-room' class="columns m-3" th:if="${room.finished} == false">
         <div class="column is-2">
             <nav th:replace="fragments/left_navbar :: my_rooms"></nav>
             <br>
@@ -112,7 +113,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="chatcontent" id="chat" th:if="${membership != null}">
                     <table class="datatable" id="datatable"></table>
                     <form th:action="@{/chat/{id}(id=${room.id})}" method="POST">
@@ -137,12 +137,7 @@
                     let i = 1;
                     response.forEach((user)=>{
                         let newLi = document.createElement('li');
-                        let newA = document.createElement('a');
-                        
-                        newA.setAttribute('href', '/u/' + user.id);
-                        newA.innerHTML = i + ".- " + user.username + " - " + user.balance + "€";
-                        
-                        newLi.appendChild(newA);
+                        newLi.innerHTML = "<a href='/u/" + user.id + "'>" + i + ". " + user.username + " " + user.balance + "€</a>";
                         users.appendChild(newLi);
                         i++;
                     })
@@ -347,7 +342,7 @@
                 updateUsersInRoom();
             }
             else if (m.event === 'won'){
-                
+                end(m.winner_id, m.winner_username);
             }
         }
 
@@ -358,6 +353,32 @@
                 ws.initialize(config.socketUrl, subs);
             }
         });
+
+        ///////////////////// END OF ROOM //////////////////////
+
+        function end(winner_id, winner_username){
+            let user = /*[[${session.u.id}]]*/ null;
+            let winner_gif = /*[[@{/images/winner.gif}]]*/ "";
+            let loser_gif = /*[[@{/images/loser.gif}]]*/ "";
+            let room = document.getElementById('running-room');
+
+            room.innerHTML = "";
+            let message = document.createElement('h1');
+            let gif = document.createElement('img');
+
+            if (user === winner_id){
+                message.innerHTML = "Felicidades, has ganado!";
+                gif.setAttribute('src', winner_gif);
+            }
+            else{
+                message.innerHTML = "Oh no, has perdido :(. El ganador es " + winner_username ;
+                gif.setAttribute('src', loser_gif);
+            }
+
+            room.appendChild(message);
+            room.appendChild(gif);
+        }
+
     </script>
 </body>
 

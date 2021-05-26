@@ -9,7 +9,6 @@
 </head>
 
 <body>
-
     <nav th:replace="fragments/menu.html :: topbar"></nav>
 
     <div class="content m-3">
@@ -30,9 +29,9 @@
         <div class="column is-one-quarter">
             <div class="content">
                 <h2>Salas de <span th:text="${user.username}"></span></h2>
-                <ul><li th:each="room: ${user_rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li></ul>
-                <h4><p>Partidas ganadas</p></h4>
-                <span th:text="${#lists.size(user.wonRooms)}"></span>
+                <ul><li th:each="room: ${user_rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No pertenece a ninguna sala</a></li></ul>
+                <h4>Partidas ganadas</h4>
+                <ul><li th:each="room: ${user.wonRooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">Todavía no ha ganado ninguna sala</a></li></ul>
                 <!-- TODO activo en salas..., Ganancias, etc -->
                 <div th:if="${session.u.id != user.id}">
                     <button id="buttonFollow"></button>
@@ -40,7 +39,7 @@
             </div>
         </div>
     </div>
-    <script th:inline="javascript">
+    <script th:inline="javascript" th:if="${session.u.id != user.id}">
         function updateFollowButton(){
             let follow_button = document.getElementById('buttonFollow');
 

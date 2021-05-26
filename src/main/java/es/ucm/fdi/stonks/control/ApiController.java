@@ -109,7 +109,7 @@ public class ApiController {
         return json.toString();
     }
 
-    @GetMapping("isFollowing")
+    @GetMapping("/isFollowing")
     @ResponseBody
     @Transactional
     public String isFollowing(HttpSession session,
@@ -258,11 +258,6 @@ public class ApiController {
         member.setBalance(member.getBalance() + newPosition.getValue());
         entityManager.persist(member);
 
-        // Envía por ws un evento de transacción para que se actualice la tabla de jugadores
-        JSONObject transaction_result = new JSONObject();
-        transaction_result.put("event", "transaction");
-        messagingTemplate.convertAndSend("/topic/r"+room_id, transaction_result.toString());
-
         // Comprueba si el usuario ha ganado
         if (member.getBalance() >= room.getCash2Win()){
             User winner = member.getUser();
@@ -278,6 +273,13 @@ public class ApiController {
             won_result.put("winner_id", winner.getId());
             won_result.put("winner_username", winner.getUsername());
             messagingTemplate.convertAndSend("/topic/r"+room_id, won_result.toString());
+        }
+        else{
+            // Envía por ws un evento de transacción para que se actualice la tabla de jugadores
+            JSONObject transaction_result = new JSONObject();
+            transaction_result.put("event", "transaction");
+            messagingTemplate.convertAndSend("/topic/r"+room_id, transaction_result.toString());
+
         }
 
         return "{\"result\": \"success\"}";
