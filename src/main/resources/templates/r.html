@@ -121,11 +121,8 @@
             </div>
     </div>
     <script th:inline="javascript">
-        ///////////////// TRANSACCIONES /////////////////
-
-        // Tiene que ser global para poder borrarlo del DOM y seguir teniendo el formulario
-        var sell_form = document.getElementById("sell_form");
-        sell_form.parentNode.removeChild(sell_form);
+        let sell_form = document.getElementById("sell_form");
+        sell_form.style.visibility = "hidden";
 
         function updateUsersInRoom(){
             go (config.rootUrl + 'api/usersInRoom?r=' + /*[[${room.id}]]*/ '', 'GET')
@@ -158,6 +155,10 @@
                         table.removeChild(table.firstChild);
                     }
 
+                    let sell_form = document.getElementById('sell_form');
+                    console.log(sell_form);
+
+                    // Comprueba si el usuario tiene stocks
                     if (Object.entries(response.stocks).length !== 0){
                         // Actualiza la barra de posiciones con los valores actuales
                         response.stocks.forEach( stock => {
@@ -166,18 +167,17 @@
                             row.insertCell(1).innerHTML = stock[Object.keys(stock)[0]];
                         })
 
-                        if (sell_form.parentNode === null){
+                        if (sell_form.style.visibility === "hidden"){
                             // Muestra el formulario de venta
-                            let user_panel = document.getElementById('user_panel');
-                            user_panel.appendChild(sell_form);
+                            sell_form.style.visibility = "visible"
                         }
                     }
                     else {
                         table.insertRow().insertCell(0).innerHTML = "Todavía no tienes posiciones";
 
-                        if (sell_form.parentNode !== null){
+                        if (sell_form.style.visibility === "visible"){
                             // Oculta el formulario de venta
-                            sell_form.parentNode.removeChild(sell_form);
+                            sell_form.style.visibility = "hidden"
                         }
                     }
                 })
@@ -240,7 +240,7 @@
 
         // Veder acciones
         document.addEventListener("DOMContentLoaded", () => {
-            let b = sell_form.children.item(6); // Si se intenta coger con getElementById, no lo encuentra porque al principio se saca el form del DOM
+            let b = document.getElementById('sell');
             b.onclick = (e) => {
                 // Update error message
                 let error = document.getElementById('sell_error');
