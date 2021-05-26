@@ -44,8 +44,7 @@ public class Room {
    @Size(max=20)
    private String name; // nombre de la sala
 
-   private boolean finished;
-
+   private boolean finished; // Si la sala ha acabado o no
    private boolean isPublic; // visibilidad de la sala: pública/privada
    private int weeklyCash; // dinero que se da todas las semanas; si es 0 no tiene esta función
 
@@ -68,4 +67,7 @@ public class Room {
    @OneToMany
    @JoinColumn(name = "room_id")
    private List<Membership> memberList; // lista de relaciones usuario-sala
+
+   @ManyToOne
+   private User winner;
 }

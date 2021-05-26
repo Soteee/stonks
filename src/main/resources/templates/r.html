@@ -18,14 +18,20 @@
 <body>
     <nav th:replace="fragments/menu.html :: topbar"></nav>
 
-    <div class="columns m-3">
+    <div id='finished-room' th:if="${room.finished} == true">
+        <div class="content">
+            <h1 th:text="${room.name}">No se encontró la sala</h1>
+        </div>
+        <h3>Esta sala ya ha finalizado. El ganador es <a th:href="@{/u/{id}(id=${room.winner.id})}" th:text="${room.winner.username}"></a></h3>
+        <p class="menu-label">Resultados finales</p>
+        <ul id='users_inroom' class="menu-list"></ul>
+    </div>
+    <div class="columns m-3" th:if="${room.finished} == false">
         <div class="column is-2">
             <nav th:replace="fragments/left_navbar :: my_rooms"></nav>
             <br>
             <aside class="menu" th:fragment="my_rooms">
-                <p class="menu-label">
-                    Usuarios en la sala
-                </p>
+                <p class="menu-label">Usuarios en la sala</p>
                 <ul id='users_inroom' class="menu-list"></ul>
             </aside>
         </div>
@@ -33,7 +39,6 @@
             <div class="content">
                 <h1 th:text="${room.name}">No se encontró la sala</h1>
             </div>
-
             <div>
                 <div class="content">
                     <h2>Historial de valores</h2>
@@ -110,7 +115,6 @@
 
                 <div class="chatcontent" id="chat" th:if="${membership != null}">
                     <table class="datatable" id="datatable"></table>
-
                     <form th:action="@{/chat/{id}(id=${room.id})}" method="POST">
                         <div id="chatbox"></div>
                         <textarea class="textarea" id="message" placeholder="Escribe en el chat"></textarea>
@@ -119,14 +123,10 @@
                     </form>
                 </div>
             </div>
+        </div>
     </div>
     <script th:inline="javascript">
-
         let room = /*[[${room.id}]]*/ null;
-
-        // Oculta formulario de venta por defecto, luego se hace visible si el usuario tiene acciones para vender
-        let sell_form = document.getElementById("sell_form");
-        sell_form.style.visibility = "hidden";
 
         function updateUsersInRoom(){
             go (config.rootUrl + 'api/usersInRoom?r=' + room, 'GET')
@@ -134,18 +134,30 @@
                     let users = document.getElementById('users_inroom');
                     // Remove current users
                     users.innerHTML = "";
+                    let i = 1;
                     response.forEach((user)=>{
                         let newLi = document.createElement('li');
                         let newA = document.createElement('a');
                         
                         newA.setAttribute('href', '/u/' + user.id);
-                        newA.innerHTML = user.username + " - " + user.balance + "€";
+                        newA.innerHTML = i + ".- " + user.username + " - " + user.balance + "€";
                         
                         newLi.appendChild(newA);
                         users.appendChild(newLi);
+                        i++;
                     })
                 });
         }
+
+        // Llama a updateUsersInRoom cuando se carga la página
+        document.addEventListener("DOMContentLoaded", () => {
+            updateUsersInRoom();
+        });
+    </script>
+    <script th:inline="javascript" th:if="${room.finished} == false" >
+        // Oculta formulario de venta por defecto, luego se hace visible si el usuario tiene acciones para vender
+        let sell_form = document.getElementById("sell_form");
+        sell_form.style.visibility = "hidden";
 
         // Actualiza todos los valores del panel del usuario
         function updateUserPanel(){
@@ -188,9 +200,8 @@
                 })
         }
 
-        // Llama a las funciones anteriores cuando se carga la página
+        // Llama a updateUserPanel cuando se carga la página
         document.addEventListener("DOMContentLoaded", () => {
-            updateUsersInRoom();
             updateUserPanel();
         });
 
@@ -336,7 +347,7 @@
                 updateUsersInRoom();
             }
             else if (m.event === 'won'){
-
+                
             }
         }
 

@@ -227,10 +227,12 @@ public class ApiController {
         int quantity = o.get("quantity").asInt();
         long room_id = o.get("room_id").asLong();
 
+        Room room = entityManager.find(Room.class, room_id);
+
         Membership member = (Membership) entityManager
                                         .createNamedQuery("Membership.byUserAndRoom")
                                         .setParameter("user", entityManager.find(User.class,((User)session.getAttribute("u")).getId()))
-                                        .setParameter("room", entityManager.find(Room.class, room_id))
+                                        .setParameter("room", room)
                                         .getSingleResult();
         Symbol symbol = entityManager.find(Symbol.class, symbol_id);
 
@@ -262,12 +264,12 @@ public class ApiController {
         messagingTemplate.convertAndSend("/topic/r"+room_id, transaction_result.toString());
 
         // Comprueba si el usuario ha ganado
-        Room room = entityManager.find(Room.class, room_id);
         if (member.getBalance() >= room.getCash2Win()){
             User winner = member.getUser();
             winner.getWonRooms().add(room);
             entityManager.persist(winner);
             room.setFinished(true);
+            room.setWinner(winner);
             entityManager.persist(room);
 
             // Envía por ws el ganador de la sala
