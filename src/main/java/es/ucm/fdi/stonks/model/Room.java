@@ -44,6 +44,8 @@ public class Room {
    @Size(max=20)
    private String name; // nombre de la sala
 
+   private boolean finished;
+
    private boolean isPublic; // visibilidad de la sala: pública/privada
    private int weeklyCash; // dinero que se da todas las semanas; si es 0 no tiene esta función
 

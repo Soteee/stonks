@@ -257,9 +257,26 @@ public class ApiController {
         entityManager.persist(member);
 
         // Envía por ws un evento de transacción para que se actualice la tabla de jugadores
-        JSONObject result = new JSONObject();
-        result.put("event", "transaction");
-        messagingTemplate.convertAndSend("/topic/r"+room_id, result.toString());
+        JSONObject transaction_result = new JSONObject();
+        transaction_result.put("event", "transaction");
+        messagingTemplate.convertAndSend("/topic/r"+room_id, transaction_result.toString());
+
+        // Comprueba si el usuario ha ganado
+        Room room = entityManager.find(Room.class, room_id);
+        if (member.getBalance() >= room.getCash2Win()){
+            User winner = member.getUser();
+            winner.getWonRooms().add(room);
+            entityManager.persist(winner);
+            room.setFinished(true);
+            entityManager.persist(room);
+
+            // Envía por ws el ganador de la sala
+            JSONObject won_result = new JSONObject();
+            won_result.put("event", "won");
+            won_result.put("winner_id", winner.getId());
+            won_result.put("winner_username", winner.getUsername());
+            messagingTemplate.convertAndSend("/topic/r"+room_id, won_result.toString());
+        }
 
         return "{\"result\": \"success\"}";
     }

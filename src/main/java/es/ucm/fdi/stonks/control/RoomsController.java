@@ -148,6 +148,7 @@ public class RoomsController{
         newRoom.setCreationDate(currentDate);
         newRoom.setExpirationDate(LocalDate.parse(expirationDate));
         newRoom.setMemberList(memberList);
+        newRoom.setFinished(false);
         entityManager.persist(newRoom);
 
         for(Symbol symbol : symbolList){

@@ -139,14 +139,13 @@
                         let newA = document.createElement('a');
                         
                         newA.setAttribute('href', '/u/' + user.id);
-                        newA.innerHTML = user.username + " - " + user.balance;
+                        newA.innerHTML = user.username + " - " + user.balance + "€";
                         
                         newLi.appendChild(newA);
                         users.appendChild(newLi);
                     })
                 });
         }
-        updateUsersInRoom();
 
         // Actualiza todos los valores del panel del usuario
         function updateUserPanel(){
@@ -188,7 +187,12 @@
                     }
                 })
         }
-        updateUserPanel();
+
+        // Llama a las funciones anteriores cuando se carga la página
+        document.addEventListener("DOMContentLoaded", () => {
+            updateUsersInRoom();
+            updateUserPanel();
+        });
 
         // Cálculo del precio en tiempo real
         document.addEventListener("DOMContentLoaded", () => {
@@ -330,6 +334,9 @@
             // Si llega una nueva transacción
             else if (m.event === 'transaction'){
                 updateUsersInRoom();
+            }
+            else if (m.event === 'won'){
+
             }
         }
 

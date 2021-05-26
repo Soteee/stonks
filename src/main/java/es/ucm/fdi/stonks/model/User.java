@@ -30,48 +30,32 @@ import lombok.AllArgsConstructor;
  *
  * @author mfreire
  * 
- * An authorized user of the system.
+ *         An authorized user of the system.
  */
 @Entity
 @Data
 @NoArgsConstructor
-@NamedQueries({
-		@NamedQuery(name="User.all",
-				query = "SELECT u FROM User u"),
-        @NamedQuery(name="User.byUsername",
-                query="SELECT u FROM User u "
-                    + "WHERE u.username = :username AND u.enabled = 1"),
-        @NamedQuery(name="User.hasUsername",
-                query="SELECT COUNT(u) "
-                    + "FROM User u "
-                    + "WHERE u.username = :username"),
-		@NamedQuery(name="User.top",
-				query="SELECT u FROM Membership m "
-					+ "INNER JOIN User u ON m.user = u.id "
-					+ "GROUP BY m.user "
-					+ "ORDER BY sum(m.balance) DESC"),
-		@NamedQuery(name="User.inRoom",
-				query="SELECT u FROM Membership m "
-					+ "INNER JOIN User u ON m.user = u.id "
-					+ "WHERE m.room = :room "
-					+ "ORDER BY m.balance DESC"),
-		@NamedQuery(name="User.following",
-				query="SELECT u.following FROM User u "
-					+ "WHERE u = :user"),
-		@NamedQuery(name="User.followers",
-				query="SELECT u FROM User u "
-					+ "JOIN u.following f "
-					+ "WHERE f = :user")
-})
+@NamedQueries({ @NamedQuery(name = "User.all", query = "SELECT u FROM User u"),
+		@NamedQuery(name = "User.byUsername", query = "SELECT u FROM User u "
+				+ "WHERE u.username = :username AND u.enabled = 1"),
+		@NamedQuery(name = "User.hasUsername", query = "SELECT COUNT(u) " + "FROM User u "
+				+ "WHERE u.username = :username"),
+		@NamedQuery(name = "User.top", query = "SELECT u FROM Membership m " + "INNER JOIN User u ON m.user = u.id "
+				+ "GROUP BY m.user " + "ORDER BY sum(m.balance) DESC"),
+		@NamedQuery(name = "User.inRoom", query = "SELECT u FROM Membership m " + "INNER JOIN User u ON m.user = u.id "
+				+ "WHERE m.room = :room " + "ORDER BY m.balance DESC"),
+		@NamedQuery(name = "User.following", query = "SELECT u.following FROM User u " + "WHERE u = :user"),
+		@NamedQuery(name = "User.followers", query = "SELECT u FROM User u " + "JOIN u.following f "
+				+ "WHERE f = :user") })
 public class User implements Transferable<User.Transfer> {
-	private static Logger log = LogManager.getLogger(User.class);	
+	private static Logger log = LogManager.getLogger(User.class);
 
 	public enum Role {
-		USER,			// used for logged-in, non-priviledged users
-		ADMIN,			// used for maximum priviledged users
-		MODERATOR		// remove or add roles as needed
+		USER, // used for logged-in, non-priviledged users
+		ADMIN, // used for maximum priviledged users
+		MODERATOR // remove or add roles as needed
 	}
-	
+
 	// do not change these fields
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,7 +63,10 @@ public class User implements Transferable<User.Transfer> {
 	/** username for login purposes; must be unique */
 	@Column(nullable = false, unique = true)
 	private String username;
-	/** encoded password; use setPassword(SecurityConfig.encode(plaintextPassword)) to encode it  */
+	/**
+	 * encoded password; use setPassword(SecurityConfig.encode(plaintextPassword))
+	 * to encode it
+	 */
 	@Column(nullable = false)
 	private String password;
 	@Column(nullable = false)
@@ -91,60 +78,61 @@ public class User implements Transferable<User.Transfer> {
 	private String firstName;
 	private String lastName;
 	private String mail;
-	private int wonRooms;
+
+	@OneToMany
+	@JoinColumn(name = "winner")
+	private List<Room> wonRooms;
 
 	@OneToMany
 	@JoinColumn(name = "user_id")
-	private List<Message> sent = new ArrayList<>();    
+	private List<Message> sent = new ArrayList<>();
 
-	
-    /** salas de las que soy socio */
-    @OneToMany
-    @JoinColumn(name = "user_id")
-    private List<Membership> memberList = new ArrayList<>();
+	/** salas de las que soy socio */
+	@OneToMany
+	@JoinColumn(name = "user_id")
+	private List<Membership> memberList = new ArrayList<>();
 
 	@OneToMany
-	private List<User> following=new ArrayList<>();
+	private List<User> following = new ArrayList<>();
 
 	// utility methods
-	
+
 	/**
 	 * Checks whether this user has a given role.
+	 * 
 	 * @param role to check
 	 * @return true iff this user has that role.
 	 */
 	public boolean hasRole(Role role) {
 		String roleName = role.name();
-		return Arrays.stream(roles.split(","))
-				.anyMatch(r -> r.equals(roleName));
+		return Arrays.stream(roles.split(",")).anyMatch(r -> r.equals(roleName));
 	}
 
-    @Getter
-    @AllArgsConstructor
-    public static class Transfer {
+	@Getter
+	@AllArgsConstructor
+	public static class Transfer {
 		private long id;
-        private String username;
+		private String username;
 		private int totalSent;
-    }
+	}
 
 	@Override
-    public Transfer toTransfer() {
-		return new Transfer(id,	username, sent.size());
+	public Transfer toTransfer() {
+		return new Transfer(id, username, sent.size());
 	}
-	
+
 	@Override
 	public String toString() {
 		return toTransfer().toString();
 	}
 
 	@Override
-    public boolean equals(Object object){
+	public boolean equals(Object object) {
 		User u = (User) object;
 
-		if (u.getId() == this.id){
+		if (u.getId() == this.id) {
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
