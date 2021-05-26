@@ -12,60 +12,69 @@
 
     <nav th:replace="fragments/menu.html :: topbar"></nav>
 
-    <div class="visualizer">
+    <div class="content m-3">
+        <h1>Perfil</h1>
+    </div>
 
-        <h1>Datos de <span th:text="${user.username}"></span></h1>
-
-        <h2>Nombre completo</h2>
-        <div><span th:text="${user.name}"></span> <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></div>
-
-        <h2>Roles</h2>
-        <div th:text="${user.roles}"></div>
-
-        <h1>Salas de <span th:text="${user.username}"></span></h1>
-        <ul><li th:each="room: ${user_rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li></ul>
-
-        <p>Partidas ganadas: <span th:text="${user.wonRooms}"></span></p>
-        <!-- TODO activo en salas..., Ganancias, etc -->
-        <div th:if="${session.u.id != user.id}">
-            <button id="buttonFollow"></button>
-            <script th:inline="javascript">
-                function updateFollowButton(){
-                    let follow_button = document.getElementById('buttonFollow');
-        
-                    go(config.rootUrl + 'api/isFollowing?u=' + /*[[${user.id}]]*/ + '', 'GET')
-                    .then(function(response){
-                        console.log(response)
-                        if(response.result){
-                            follow_button.setAttribute('class', 'button is-Success');
-                            follow_button.innerHTML = "Dejar de seguir";
-                            action = "unfollow";
-                        }
-                        else {
-                            follow_button.setAttribute('class', 'button is-info');
-                            follow_button.innerHTML = "Seguir";
-                            action = "follow";
-                        }
-                    })
-                }
-                updateFollowButton()
-        
-                document.addEventListener("DOMContentLoaded", () => {
-                    let b = document.getElementById('buttonFollow');
-                    b.onclick = (e)=>{
-                        e.preventDefault();
-        
-                        go(config.rootUrl + 'api/' + action, 'POST', {
-                            user: /*[[${user.id}]]*/ ""
-                        })
-                        .then((data)=>{
-                            updateFollowButton()
-                        });
-                    }
-                });
-            </script>
+    <div class="columns m-3">
+        <div class="column is-one-quarter">
+            <div class="content">
+                <h2>Datos de <span th:text="${user.username}"></span></h2>
+                <h4>Nombre</h4>
+                <div><span th:text="${user.name}"></span> <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></div>
+                <br>
+                <h4>Roles</h4>
+                <div th:text="${user.roles}"></div>
+            </div>
         </div>
-    </div>   
+        <div class="column is-one-quarter">
+            <div class="content">
+                <h2>Salas de <span th:text="${user.username}"></span></h2>
+                <ul><li th:each="room: ${user_rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li></ul>
+                <h4><p>Partidas ganadas</p></h4>
+                <span th:text="${user.wonRooms}"></span>
+                <!-- TODO activo en salas..., Ganancias, etc -->
+                <div th:if="${session.u.id != user.id}">
+                    <button id="buttonFollow"></button>
+                    <script th:inline="javascript">
+                        function updateFollowButton(){
+                            let follow_button = document.getElementById('buttonFollow');
+
+                            go(config.rootUrl + 'api/isFollowing?u=' + /*[[${user.id}]]*/ + '', 'GET')
+                                .then(function(response){
+                                    console.log(response)
+                                    if(response.result){
+                                        follow_button.setAttribute('class', 'button is-Success');
+                                        follow_button.innerHTML = "Dejar de seguir";
+                                        action = "unfollow";
+                                    }
+                                    else {
+                                        follow_button.setAttribute('class', 'button is-info');
+                                        follow_button.innerHTML = "Seguir";
+                                        action = "follow";
+                                    }
+                                })
+                        }
+                        updateFollowButton()
+
+                        document.addEventListener("DOMContentLoaded", () => {
+                            let b = document.getElementById('buttonFollow');
+                            b.onclick = (e)=>{
+                                e.preventDefault();
+
+                                go(config.rootUrl + 'api/' + action, 'POST', {
+                                    user: /*[[${user.id}]]*/ ""
+                                })
+                                    .then((data)=>{
+                                        updateFollowButton()
+                                    });
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
     
 </body>
 </html>
