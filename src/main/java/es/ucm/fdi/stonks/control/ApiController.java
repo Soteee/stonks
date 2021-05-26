@@ -10,6 +10,7 @@ import es.ucm.fdi.stonks.model.Position.Side;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 public class ApiController {
     @Autowired
     private EntityManager entityManager;
+
+    @Autowired
+	private SimpMessagingTemplate messagingTemplate;
     
     @GetMapping(path = "/userInfo", produces = "application/json")
     @ResponseBody
@@ -204,6 +208,11 @@ public class ApiController {
         member.setBalance(member.getBalance() - newPosition.getValue());
         entityManager.persist(member);
 
+        // Envía por ws un evento de transacción para que se actualice la tabla de jugadores
+        JSONObject result = new JSONObject();
+        result.put("event", "transaction");
+        messagingTemplate.convertAndSend("/topic/r"+room_id, result.toString());
+
         return "{\"result\": \"success\"}";
     }
 
@@ -246,6 +255,11 @@ public class ApiController {
 
         member.setBalance(member.getBalance() + newPosition.getValue());
         entityManager.persist(member);
+
+        // Envía por ws un evento de transacción para que se actualice la tabla de jugadores
+        JSONObject result = new JSONObject();
+        result.put("event", "transaction");
+        messagingTemplate.convertAndSend("/topic/r"+room_id, result.toString());
 
         return "{\"result\": \"success\"}";
     }

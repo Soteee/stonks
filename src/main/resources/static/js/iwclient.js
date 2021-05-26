@@ -78,18 +78,3 @@ function go(url, method, data = {}) {
 	    }
   	})
 }
-
-/**
- * Actions to perform once the page is fully loaded
- */
-document.addEventListener("DOMContentLoaded", () => {
-	if (config.socketUrl) {
-		let subs = config.admin ? 
-				["/topic/admin", "/user/queue/updates"] : ["/user/queue/updates"]
-		ws.initialize(config.socketUrl, subs);
-	}
-	
-	// add your after-page-loaded JS code here; or even better, call 
-	// 	 document.addEventListener("DOMContentLoaded", () => { /* your-code-here */ });
-	//   (assuming you do not care about order-of-execution, all such handlers will be called correctly)
-});
