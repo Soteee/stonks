@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${user.username}">No se encontró el usuario</title>
     <th:block th:replace="fragments/head ::header" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" th:href="@{/css/bulma.min.css}">
 </head>
 
 <body>
@@ -31,8 +31,7 @@
                 <h2>Salas de <span th:text="${user.username}"></span></h2>
                 <ul><li th:each="room: ${user_rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No pertenece a ninguna sala</a></li></ul>
                 <h4>Partidas ganadas</h4>
-                <ul><li th:each="room: ${user.wonRooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">Todavía no ha ganado ninguna sala</a></li></ul>
-                <!-- TODO activo en salas..., Ganancias, etc -->
+                <ul><li th:each="room: ${user.wonRooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}"></a></li></ul>
                 <div th:if="${session.u.id != user.id}">
                     <button id="buttonFollow"></button>
                 </div>

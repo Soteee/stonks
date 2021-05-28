@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Salas</title>
     <th:block th:replace="fragments/head ::header" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" th:href="@{/css/bulma.min.css}">
 </head>
     <body>
         <nav th:replace="fragments/menu.html :: topbar"></nav>
 
         <div class="content m-3">
-            <h1>Amigos</h1>
+            <h1>Seguidores</h1>
         </div>
 
         <div class="columns m-3">
@@ -20,8 +20,35 @@
                 <h2>Social</h2>
                 <!-- LISTA PRINCIPAL -->
                     <div id="botones">
-                        <button class="button is-link" id=myFollowers type="button">Mis seguidores</button>
+                        <button class="button is-link" id="myFollowers" type="button">Mis seguidores</button>
                          <!-- HACEMOS QUE ESTE BOTÓN ENSEÑE CON AJAX MIS SEGUIDORES -->
+                        <script th:inline="javascript">
+                            userId = /*[[${session.u.id}]]*/ null;
+                            document.addEventListener("DOMContentLoaded",()=>{
+                            let b = document.getElementById('myFollowers');
+                            b.onclick =(e)=>{
+                                    e.preventDefault();
+                                    go(config.rootUrl+'api/getFollowers?userId='+userId+'','GET')
+                                    .then(function(response){
+                                        console.log(response);
+
+                                        let fOL = document.getElementById('fUL');
+                                        fOL.style.visibility = "visible";
+                                        fOL.innerHTML = "";
+                                        
+                                        response.forEach(user=>{
+                                            let newLi = document.createElement('li');
+                                            newLi.innerHTML = "<a href='/u/"+user.id+"'>"+user.username+"</a>";
+                                            fOL.appendChild(newLi);
+                                            let bInvite = document.createElement('button');
+                                            binvite.innerHTML = "<button class="+"button is-small is-primary"+" type="+"button>Invitar</button>"
+
+
+                                        });
+                                    })
+                                }
+                            });
+                        </script>  
                         <br><br>
                         <button class="button is-link" id=myFollowing type="button">Mis seguidos</button>
                          <!-- HACEMOS QUE ESTE BOTÓN ENSEÑE CON AJAX MIS seguidos -->
@@ -34,21 +61,20 @@
             <div class="column is-one-third">
                 <div class="content">
                     <h2> Mis seguidos </h2>                          <!-- Segun entras -->
-                        <div id="Seguidos">
-                            <ol>
-                                <li>
-                                    Amigo 1
-                                    <br>
-                                    <button class="button is-small is-link" type="button">Ver perfil</button>
-                                     <!-- REDIRECT A /u/id  -->
-                                    <button class="button is-small is-primary" type="button">Invitar</button>
-                                    <!-- TODO: MANERA DE QUE EN MI PERFIL ME SALGAN INVITACIONES A SALAS -->
+                        <div id="Seguidos" >
+                            <ul id="mfUL" style="visibility:hidden;">
+                                
 
-                                    <button class="button is-small is-danger" type="button">Eliminar</button>
-                                    <!-- PEDIR A LA API QUE BORRE SEGUIDOR  -->
-                                </li>
+                            </ul>
+                        </div>
+                </div>
+                <div class="content">
+                    <h2> Mis seguidores </h2>                          <!-- Segun entras -->
+                        <div id="Seguidores">
+                            <ul id="fUL" style="visibility:hidden;">
+                                
 
-                            </ol>
+                            </ul>
                         </div>
                 </div>
             </div>

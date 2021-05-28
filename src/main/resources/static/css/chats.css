@@ -1,0 +1,13 @@
+#chatBox {
+    height: 400px;
+    width: 100%;
+    border-style: solid;
+    border-color: #dbdbdb;
+    border-radius: 5px;
+    border-width: 1px;
+    padding: 20px;
+    display: inline-block;
+    margin-bottom: 20px;
+    overflow-y: scroll;
+    word-wrap: break-word;
+}

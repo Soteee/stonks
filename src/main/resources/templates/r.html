@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${room.name}">No se encontró la sala</title>
     <th:block th:replace="fragments/head ::header" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
-    <link rel="stylesheet" th:href="@{/css/simple-datatables-2.1.10.css}">
+    <link rel="stylesheet" th:href="@{/css/bulma.min.css}">
     <link rel="stylesheet" th:href="@{/css/c3.css}">
+    <link rel="stylesheet" th:href="@{/css/chats.css}">
     <script th:src="@{/js/simple-datatables-2.1.10.min.js}"></script>
     <script th:src="@{/js/c3.js}"></script>
     <script th:src="@{/js/d3.js}"></script>
@@ -150,7 +150,7 @@
     </script>
     <script th:inline="javascript" th:if="${room.finished} == false" >
         let user_id = /*[[${session.u.id}]]*/ null;
-        let user_name = /*[[${session.u.name}]]*/ null;
+        let user_name = /*[[${session.u.username}]]*/ null;
 
         // Oculta formulario de venta por defecto, luego se hace visible si el usuario tiene acciones para vender
         let sell_form = document.getElementById("sell_form");
@@ -301,15 +301,21 @@
             let chatBox = document.getElementById("chatBox");
             let type;
 
-            if(msg.from === user_name) type="message is-primary";
+            console.log(msg.from);
+            console.log(user_name);
+
+            if(msg.from == user_name) type="message is-primary";
             else type="message is-info";
-                   
+
             let m = document.createElement("article");
 
             m.setAttribute("class",type);
             m.innerHTML = "<div class='message-header'><p>"+msg.from+" ("+formatDate(msg.sent)+")</p></div><div class='message-body'>"+msg.text+"</div>";
-                
+
             chatBox.appendChild(m);
+
+            // Hacer scroll down cuando llega un mensaje nuevo
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
 
         // Cargar mensajes
@@ -372,6 +378,7 @@
 
             room.innerHTML = "";
             let message = document.createElement('h1');
+            let br = document.createElement('br');
             let gif = document.createElement('img');
 
             if (user_id === winner_id){
@@ -384,6 +391,7 @@
             }
 
             room.appendChild(message);
+            room.appendChild(br);
             room.appendChild(gif);
         }
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Salas</title>
     <th:block th:replace="fragments/head ::header" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" th:href="@{/css/bulma.min.css}">
 </head>
 <body>
     <nav th:replace="fragments/menu.html :: topbar"></nav>
@@ -18,7 +18,6 @@
                 <h1>Salas</h1>
             </div>
             <a class="button is-danger" th:href='@{/r/createRoom}' id="createRoom">Crear sala</a>
-            <nav th:replace="fragments/roomSearch.html :: roomSearch"></nav>
             <br><br>
             <div class="content">
                 <h2>Salas populares </h2>
@@ -26,6 +25,7 @@
                     <li th:each="room: ${topRooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
                 </ul>
             </div>
+            <nav th:replace="fragments/roomSearch.html :: roomSearch"></nav>
         </div>
     </div>   
 </body>

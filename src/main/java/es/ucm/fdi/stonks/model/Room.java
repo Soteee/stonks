@@ -9,9 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.checkerframework.checker.units.qual.m;
-
-import lombok.Getter;
 import lombok.Data;
 
 /**

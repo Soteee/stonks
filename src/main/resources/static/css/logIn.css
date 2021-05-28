@@ -1,9 +1,6 @@
-/* body{
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: #343434;
-} */
+body {
+    font-family: Cantarell;
+}
 
 .LogInBox {
     width: 300px;

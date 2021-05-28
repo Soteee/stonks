@@ -49,7 +49,7 @@ import lombok.AllArgsConstructor;
 		@NamedQuery(name = "User.followers", query = "SELECT u FROM User u " + "JOIN u.following f "
 				+ "WHERE f = :user"),
 		@NamedQuery(name="User.bySearch",
-            query="SELECT u FROM User u WHERE u.username LIKE CONCAT('%',CONCAT(:name,'%'))") })
+            query="SELECT u FROM User u WHERE u.username LIKE CONCAT('%',CONCAT(:name,'%'))")})
 public class User implements Transferable<User.Transfer> {
 	private static Logger log = LogManager.getLogger(User.class);
 
@@ -95,7 +95,7 @@ public class User implements Transferable<User.Transfer> {
 	@JoinColumn(name = "user_id")
 	private List<Membership> memberList = new ArrayList<>();
 
-	@OneToMany
+	@ManyToMany
 	private List<User> following = new ArrayList<>();
 
 	// utility methods

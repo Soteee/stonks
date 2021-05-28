@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/logIn.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
     <title>Login</title>
     <!--TODO: Al dejar la siguiente línea, index no carga bien, da error de parseo de thymeleaf-->
     <th:block th:replace="fragments/head ::header" />
@@ -12,7 +12,7 @@
 <body>
     <!-- CAJA DE INICIAR SESION -->
     <form th:action="@{/login}" method="post" class="LogInBox">
-        <h1>LOGIN</h1>
+        <h1>Iniciar sesión</h1>
         <input type="text" id="username" name="username" placeholder="Nombre de usuario">
         <input type="password" id="password" name="password" placeholder="Contraseña">
         <input type="submit" placeholder="Iniciar Sesión" value="Iniciar sesión">
