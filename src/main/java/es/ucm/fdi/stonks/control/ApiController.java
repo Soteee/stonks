@@ -321,7 +321,7 @@ public class ApiController {
         if (!usersResult.isEmpty()) {
             for (User u : usersResult) {
                 JSONObject jUser = new JSONObject();
-                jUser.put("userName", u.getName());
+                jUser.put("userName", u.getUsername());
                 jUser.put("id", u.getId());
                 usersJson.put(jUser);
             }
