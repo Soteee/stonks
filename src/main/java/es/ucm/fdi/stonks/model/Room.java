@@ -34,7 +34,7 @@ import lombok.Data;
                + "JOIN Room r ON m.room = r.id "
                + "WHERE m.user = :user"),
    @NamedQuery(name="Room.bySearch",
-            query="SELECT r FROM Room r WHERE r.name LIKE :name OR r.name LIKE '%:name%'")
+            query="SELECT r FROM Room r WHERE r.name LIKE CONCAT('%',CONCAT(:name,'%'))")
 
 })
 public class Room {

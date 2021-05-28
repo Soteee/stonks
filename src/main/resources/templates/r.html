@@ -114,10 +114,9 @@
                     </div>
                 </div>
                 <div class="chatcontent" id="chat" th:if="${membership != null}">
-                    <table class="datatable" id="datatable"></table>
+                    <div id="chatBox"></div>
                     <form th:action="@{/chat/{id}(id=${room.id})}" method="POST">
-                        <div id="chatbox"></div>
-                        <textarea class="textarea" id="message" placeholder="Escribe en el chat"></textarea>
+                        <textarea required class="textarea" id="message" placeholder="Escribe en el chat"></textarea>
                         <br>
                         <button class="button is-primary" id="sendmsg" type="submit">Enviar</button>
                     </form>
@@ -150,6 +149,9 @@
         });
     </script>
     <script th:inline="javascript" th:if="${room.finished} == false" >
+        let user_id = /*[[${session.u.id}]]*/ null;
+        let user_name = /*[[${session.u.name}]]*/ null;
+
         // Oculta formulario de venta por defecto, luego se hace visible si el usuario tiene acciones para vender
         let sell_form = document.getElementById("sell_form");
         sell_form.style.visibility = "hidden";
@@ -295,36 +297,43 @@
             return new Date(d).toLocaleString("es-ES").split(" ").join("@")
         }
 
-        // mostrando una tabla dinámica con datos cargados del servidor vía AJAX
-        let dt = new simpleDatatables.DataTable(
-            '#datatable', {
-                ajax: {
-                    url: config.rootUrl + "chat/" + room,
-                    load: function(xhr) {
-                        let data = JSON.parse(xhr.responseText);
-                        for (let i = 0; i < data.length; i++) {
-                            let row = data[i];
-                            row.sent = formatDate(row.sent);
-                        }
+        function addMessage(msg){
+            let chatBox = document.getElementById("chatBox");
+            let type;
 
-                        return JSON.stringify(data);
-                    }
-                }
-            }
-        );
+            if(msg.from === user_name) type="message is-primary";
+            else type="message is-info";
+                   
+            let m = document.createElement("article");
 
-        // Envío de mensajes vía AJAX, sin recargar la página
+            m.setAttribute("class",type);
+            m.innerHTML = "<div class='message-header'><p>"+msg.from+" ("+formatDate(msg.sent)+")</p></div><div class='message-body'>"+msg.text+"</div>";
+                
+            chatBox.appendChild(m);
+        }
+
+        // Cargar mensajes
+        document.addEventListener("DOMContentLoaded", () => {
+            go(config.rootUrl + "chat/" + room, 'GET')
+            .then(response => {
+                console.log(response);
+                response.forEach(msg=>{
+                    addMessage(msg);
+                });
+            })
+        });
+
+        // Envío de mensajes
         document.addEventListener("DOMContentLoaded", () => {
             let b = document.getElementById("sendmsg");
             b.onclick = (e) => {
                 let url = b.parentNode.action;
                 e.preventDefault();
-                console.log(b, b.parentNode)
+                console.log(b, b.parentNode);
                 go(url, 'POST', {
                     message: document.getElementById("message").value
                 })
-                    .then(d => console.log("happy", d))
-                    .catch(e => console.log("sad", e))
+                .then(response => console.log(response))
                 document.getElementById("message").value = "";
             }
         });
@@ -335,7 +344,7 @@
         ws.receive = (m) => {
             // Si llega un nuevo mensaje
             if (m.event === 'message'){
-                dt.rows().add([m.message.from, formatDate(new Date().toISOString()), m.message.text, m.message.id]);
+                addMessage(m.message);
             }
             // Si llega una nueva transacción
             else if (m.event === 'transaction'){
@@ -357,7 +366,6 @@
         ///////////////////// END OF ROOM //////////////////////
 
         function end(winner_id, winner_username){
-            let user = /*[[${session.u.id}]]*/ null;
             let winner_gif = /*[[@{/images/winner.gif}]]*/ "";
             let loser_gif = /*[[@{/images/loser.gif}]]*/ "";
             let room = document.getElementById('running-room');
@@ -366,7 +374,7 @@
             let message = document.createElement('h1');
             let gif = document.createElement('img');
 
-            if (user === winner_id){
+            if (user_id === winner_id){
                 message.innerHTML = "Felicidades, has ganado!";
                 gif.setAttribute('src', winner_gif);
             }

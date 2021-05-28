@@ -94,7 +94,7 @@ public class RootController {
     }
 
 
-    @GetMapping("/users")
+    @GetMapping("/u")
     public String user(Model model) {
         List<?> topUsers = entityManager
             .createNamedQuery("User.top")

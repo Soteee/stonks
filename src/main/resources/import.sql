@@ -44,7 +44,8 @@ INSERT INTO room(id,name, expiration_date, is_public, weekly_cash, max_users, st
 INSERT INTO room(id,name, expiration_date, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id, finished) VALUES (2,'Me encanta pagar impuestos', '2022-12-31', TRUE, 1000, 10, 3000, 100000, 4, FALSE);
 INSERT INTO room(id,name, expiration_date, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id, finished) VALUES (3,'Partida para acabar', '2022-12-31', TRUE, 1000, 10, 3000, 100000, 1, FALSE);
 INSERT INTO room(id,name, expiration_date, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id, finished) VALUES (4,'Partida acabada', '2020-12-31', TRUE, 1000, 10, 3000, 100000, 1, FALSE);
-
+INSERT INTO room(id,name, expiration_date, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id, finished) VALUES (5,'Andorra2', '2022-12-31', TRUE, 1000, 10, 3000, 100000, 2, FALSE);
+INSERT INTO room(id,name, expiration_date, is_public, weekly_cash, max_users, start_balance, cash2win, admin_id, finished) VALUES (6,'Andorra de prueba', '2022-12-31', TRUE, 1000, 10, 3000, 100000, 2, FALSE);
 --Stocks en mercados
 insert into symbol(name, updated_on, value) values ('TSLA',CURRENT_DATE,641.5);
 insert into symbol(name, updated_on, value) values ('AAPL',CURRENT_DATE,128.25);

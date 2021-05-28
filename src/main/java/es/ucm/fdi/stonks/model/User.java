@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,7 +47,9 @@ import lombok.AllArgsConstructor;
 				+ "WHERE m.room = :room " + "ORDER BY m.balance DESC"),
 		@NamedQuery(name = "User.following", query = "SELECT u.following FROM User u " + "WHERE u = :user"),
 		@NamedQuery(name = "User.followers", query = "SELECT u FROM User u " + "JOIN u.following f "
-				+ "WHERE f = :user") })
+				+ "WHERE f = :user"),
+		@NamedQuery(name="User.bySearch",
+            query="SELECT u FROM User u WHERE u.username LIKE CONCAT('%',CONCAT(:name,'%'))") })
 public class User implements Transferable<User.Transfer> {
 	private static Logger log = LogManager.getLogger(User.class);
 
@@ -79,7 +82,7 @@ public class User implements Transferable<User.Transfer> {
 	private String lastName;
 	private String mail;
 
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	@JoinColumn(name = "winner")
 	private List<Room> wonRooms;
 

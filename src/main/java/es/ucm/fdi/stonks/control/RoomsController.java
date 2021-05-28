@@ -33,7 +33,7 @@ public class RoomsController{
     @Autowired
     private EntityManager entityManager;
 
-    @GetMapping("/")   // lista de salas
+    @GetMapping("")   // lista de salas
     public String rooms(Model model, HttpSession session) {
         List<?> user_rooms = entityManager
                 .createNamedQuery("Room.byUser")
@@ -170,7 +170,6 @@ public class RoomsController{
                                 HttpServletResponse response) throws Exception{
         
         List<Room> roomsResult = entityManager.createNamedQuery("Room.bySearch").setParameter("name", nameLike).getResultList();
-        JSONObject json = new JSONObject();
         JSONArray roomsJson = new JSONArray();
         if(!roomsResult.isEmpty()){
            for(Room r : roomsResult){
@@ -178,11 +177,11 @@ public class RoomsController{
                jRoom.put("roomName", r.getName());
                jRoom.put("id",r.getId());
                jRoom.put("maxUsers",r.getMaxUsers());
+               roomsJson.put(jRoom);
            }
         }
-        json.put("rooms", roomsJson);
-
-        return json.toString();
+        
+        return roomsJson.toString();
     }
 
     @PostMapping("/joinRoom")

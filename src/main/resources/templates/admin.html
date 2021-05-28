@@ -54,36 +54,7 @@
                 </ul>
             </div>
         </div>
-        <div class="column" id="rooms">
-            <div class="field">
-                <label class="label">Salas activas</label>
-            </div>
-            <form>
-                <div class="field is-grouped">
-                    <div class="control">
-                        <input class="input" type="text" name="roomSearch" placeholder="Sala">
-                    </div>
-                    <div class="control">
-                        <div class="select">
-                            <select name="filtro">
-                                <option id="1">Gratis</option>
-                                <option id="2">De pago</option>
-                                <option id="3">Nuevas</option>
-                                <option id="4">Top</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="control">
-                        <button class="button is-link" type="submit">Buscar</button>
-                    </div>
-                </div>
-            </form>
-            <div class="content">
-                <ul>
-                    <li th:each="room: ${rooms}"><a th:text="${room.name}" th:href="@{/r/{id}(id=${room.id})}" th:id="${room.name}">No se han encntrado salas</a></li>
-                </ul>
-            </div>
-        </div>
+        <nav th:replace="fragments/roomSearch.html :: roomSearch"></nav>
     </div>
 </body>
 </html>

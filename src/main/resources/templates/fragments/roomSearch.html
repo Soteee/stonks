@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+</head>
+    <body>
+        <div th:fragment="roomSearch">
+            <div class="field">
+                <label class="label">Buscar salas</label>
+            </div>
+            <form>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <input required class="input" id="roomSearch" type="text" name="roomSearch" placeholder="Sala">
+                    </div>
+                    <div class="control">
+                        <button class="button is-link" id="buttonSearch" type="submit">Buscar</button>
+                    </div>
+                </div>
+            </form>
+            <br>
+            <div class="content">
+                <h2>Resultados de busquedas </h2>
+                <ul id="results-rooms" style="visibility:hidden;"></ul>
+            </div>
+            <script th:inline="javascript">
+                document.addEventListener("DOMContentLoaded",()=>{
+                    let b = document.getElementById('buttonSearch');
+                    b.onclick =(e)=>{
+                        e.preventDefault();
+                        let queryText = document.getElementById('roomSearch').value;
+                        console.log(queryText);
+                        go(config.rootUrl+'r/getRooms?nameLike='+queryText+'','GET')
+                        .then(function(response){
+                            console.log(response);
+
+                            let rooms = document.getElementById('results-rooms');
+                            rooms.style.visibility = "visible";
+                            rooms.innerHTML = "";
+                            
+                            response.forEach(room=>{
+                                let newLi = document.createElement('li');
+                                newLi.innerHTML = "<a href='/r/"+room.id+"'>"+room.roomName+"</a>";
+                                rooms.appendChild(newLi);
+                            });
+                        })
+                    }
+                });
+            </script>
+        </div>
+    </body>
+</html>

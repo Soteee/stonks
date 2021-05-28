@@ -78,7 +78,7 @@ public class ChatController {
         JSONObject message = new JSONObject();
 		message.put("from", user.getUsername());
 		message.put("text", text);
-		message.put("id", newMessage.getId());
+        message.put("sent", newMessage.getDateSent());
         result.put("message", message);
 
         // Manda el mensaje a la sala por ws
