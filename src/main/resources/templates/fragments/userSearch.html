@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/bulma.min.css}">
+</head>
+    <body>
+        <div th:fragment="userSearch">
+            <div class="field">
+                <label class="label">Buscar usuarios</label>
+            </div>
+            <form>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <input required class="input" id="userSearch" type="text" name="userSearch" placeholder="Sala">
+                    </div>
+                    <div class="control">
+                        <button class="button is-link" id="user-buttonSearch" type="submit">Buscar</button>
+                    </div>
+                </div>
+            </form>
+            <br>
+            <div class="content">
+                <h3 id="user-title"></h3>
+                <ul id="results-users" style="visibility:hidden;"></ul>
+            </div>
+            <script th:inline="javascript">
+                document.addEventListener("DOMContentLoaded",()=>{
+                    let b = document.getElementById('user-buttonSearch');
+                    b.onclick =(e)=>{
+                        e.preventDefault();
+                        let queryText = document.getElementById('userSearch').value;
+                        console.log(queryText);
+                        go(config.rootUrl+'api/getUsers?nameLike='+queryText+'','GET')
+                        .then(function(response){
+                            document.getElementById('user-title').innerHTML = "Usuarios encontrados";
+                            let users = document.getElementById('results-users');
+                            users.style.visibility = "visible";
+                            users.innerHTML = "";
+                            
+                            response.forEach(user=>{
+                                let newLi = document.createElement('li');
+                                newLi.innerHTML = "<a href='/u/"+user.id+"'>"+user.userName+"</a>";
+                                users.appendChild(newLi);
+                            });
+                        })
+                    }
+                });
+            </script>
+        </div>
+    </body>
+</html>

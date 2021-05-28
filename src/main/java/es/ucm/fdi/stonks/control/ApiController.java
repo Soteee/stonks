@@ -284,4 +284,72 @@ public class ApiController {
 
         return "{\"result\": \"success\"}";
     }
+
+    // Dado un parametro de busqueda, se ejecuta una query buscando
+    // parecidas, se meten en un json para pasarselo al ayax y que lo muestra
+    // en el html
+    @GetMapping(path = "/getRooms", produces = "application/json")
+    @ResponseBody
+    @Transactional
+    public String getRoomsBySearch(HttpSession session, @RequestParam(value = "nameLike") String nameLike,
+            HttpServletResponse response) throws Exception {
+
+        List<Room> roomsResult = entityManager.createNamedQuery("Room.bySearch").setParameter("name", nameLike)
+                .getResultList();
+        JSONArray roomsJson = new JSONArray();
+        if (!roomsResult.isEmpty()) {
+            for (Room r : roomsResult) {
+                JSONObject jRoom = new JSONObject();
+                jRoom.put("roomName", r.getName());
+                jRoom.put("id", r.getId());
+                roomsJson.put(jRoom);
+            }
+        }
+
+        return roomsJson.toString();
+    }
+
+    @GetMapping(path = "/getUsers", produces = "application/json")
+    @ResponseBody
+    @Transactional
+    public String getUsersBySearch(HttpSession session, @RequestParam(value = "nameLike") String nameLike,
+            HttpServletResponse response) throws Exception {
+
+        List<User> usersResult = entityManager.createNamedQuery("User.bySearch").setParameter("name", nameLike)
+                .getResultList();
+        JSONArray usersJson = new JSONArray();
+        if (!usersResult.isEmpty()) {
+            for (User u : usersResult) {
+                JSONObject jUser = new JSONObject();
+                jUser.put("userName", u.getName());
+                jUser.put("id", u.getId());
+                usersJson.put(jUser);
+            }
+        }
+
+        return usersJson.toString();
+    }
+
+    @GetMapping(path = "/getFollowers", produces = "application/json")
+    @ResponseBody
+    @Transactional
+    public String getFollowers(HttpSession session, @RequestParam(value = "userId") long userId,
+            HttpServletResponse response) throws Exception {
+
+        User user = entityManager.find(User.class, userId);
+
+        List<User> followersResult = entityManager.createNamedQuery("User.followers").setParameter("user", user)
+                .getResultList();
+
+        JSONArray userJson = new JSONArray();
+        if (!followersResult.isEmpty()) {
+            for (User r : followersResult) {
+                JSONObject jUser = new JSONObject();
+                jUser.put("username", r.getName());
+                userJson.put(jUser);
+            }
+        }
+
+        return userJson.toString();
+    }
 }

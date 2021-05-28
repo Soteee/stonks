@@ -159,30 +159,7 @@ public class RoomsController{
         response.sendRedirect("/r/");
     }
 
-    // Dado un parametro de busqueda, se ejecutó una query buscando
-    // parecidas, se meten en un json para pasarselo al ayax y que lo muestr
-    // en el html
-    @GetMapping(path="/getRooms", produces = "application/json")
-    @ResponseBody
-    @Transactional
-    public String getRoomsBySearch(HttpSession session,
-                                @RequestParam(value = "nameLike") String nameLike,
-                                HttpServletResponse response) throws Exception{
-        
-        List<Room> roomsResult = entityManager.createNamedQuery("Room.bySearch").setParameter("name", nameLike).getResultList();
-        JSONArray roomsJson = new JSONArray();
-        if(!roomsResult.isEmpty()){
-           for(Room r : roomsResult){
-               JSONObject jRoom = new JSONObject();
-               jRoom.put("roomName", r.getName());
-               jRoom.put("id",r.getId());
-               jRoom.put("maxUsers",r.getMaxUsers());
-               roomsJson.put(jRoom);
-           }
-        }
-        
-        return roomsJson.toString();
-    }
+    
 
     @PostMapping("/joinRoom")
     @Transactional
