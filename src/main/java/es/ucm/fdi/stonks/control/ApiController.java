@@ -352,4 +352,21 @@ public class ApiController {
 
         return userJson.toString();
     }
+
+    @GetMapping("/getEnabled")
+	@Transactional
+	@ResponseBody
+	public String getEnabled(@RequestParam(value = "u") long id, 
+							HttpServletResponse response) throws Exception {
+		User target = entityManager.find(User.class, id);
+
+		if (target == null){
+			response.sendError(400);
+		}
+		
+		JSONObject result = new JSONObject();
+		result.put("enabled", target.getEnabled());
+
+		return result.toString();
+	}
 }

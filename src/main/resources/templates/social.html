@@ -33,7 +33,7 @@
                                         console.log(response);
 
                                         let fOL = document.getElementById('fUL');
-                                        fOL.style.visibility = "visible";
+                                        fOL.style.removeProperty('display');
                                         fOL.innerHTML = "";
                                         
                                         response.forEach(user=>{
@@ -62,7 +62,7 @@
                 <div class="content">
                     <h2> Mis seguidos </h2>                          <!-- Segun entras -->
                         <div id="Seguidos" >
-                            <ul id="mfUL" style="visibility:hidden;">
+                            <ul id="mfUL" style="display:none;">
                                 
 
                             </ul>
@@ -71,7 +71,7 @@
                 <div class="content">
                     <h2> Mis seguidores </h2>                          <!-- Segun entras -->
                         <div id="Seguidores">
-                            <ul id="fUL" style="visibility:hidden;">
+                            <ul id="fUL" style="display:none;">
                                 
 
                             </ul>

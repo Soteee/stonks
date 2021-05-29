@@ -12,13 +12,15 @@
     <nav th:replace="fragments/menu.html :: topbar"></nav>
 
     <div class="content m-3">
-        <h1>Perfil</h1>
+        <h1>Perfil de <span th:text="${user.username}"></span></h1>
+        <button id="enable" th:if='${session.u.hasRole("ADMIN") and session.u.id != user.id}'></button>
     </div>
-
-    <div class="columns m-3">
+    <div  class="columns m-3" >
+        <h2 id="not-enabled" style="display: none;">Parece que este usuario no está disponible ahora mismo...</h2>
+    </div>
+    <div id="enabled" class="columns m-3" style="display: none;">
         <div class="column is-one-quarter">
             <div class="content">
-                <h2>Datos de <span th:text="${user.username}"></span></h2>
                 <h4>Nombre</h4>
                 <div><span th:text="${user.name}"></span> <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></div>
                 <br>
@@ -40,6 +42,59 @@
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        function udpateEnable(){
+            go(config.rootUrl + 'api/getEnabled?u=' + /*[[${user.id}]]*/ + '', 'GET')
+                .then(function(response){
+                    if (response.enabled){
+                        document.getElementById('enabled').style.removeProperty('display');
+                        document.getElementById('not-enabled').style.display = 'none';
+                    }
+                    else{
+                        document.getElementById('not-enabled').style.removeProperty('display');
+                        document.getElementById('enabled').style.display = 'none';
+                    }
+                });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            udpateEnable();
+        });
+    </script>
+    <script th:inline="javascript" th:if='${session.u.hasRole("ADMIN") and session.u.id != user.id}'>
+        function updateEnableButton(){
+            go(config.rootUrl + 'api/getEnabled?u=' + /*[[${user.id}]]*/ + '', 'GET')
+                .then(function(response){
+                    let enable_button = document.getElementById("enable");
+
+                    if (response.enabled){
+                        enable_button.setAttribute('class', 'button is-danger');
+                        enable_button.innerHTML = "Desactivar usuario"
+                    }
+                    else{
+                        enable_button.setAttribute('class', 'button is-success');
+                        enable_button.innerHTML = "Activar usuario"
+                    }
+                });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateEnableButton();
+
+            let b = document.getElementById("enable");
+            b.onclick = (e)=>{
+                e.preventDefault();
+
+                go(config.rootUrl + 'admin/toggleUser', 'POST', {
+                    id: /*[[${user.id}]]*/ ""
+                })
+                .then((data)=>{
+                    updateEnableButton();
+                    udpateEnable();
+                });
+            }
+        });
+    </script>
     <script th:inline="javascript" th:if="${session.u.id != user.id}">
         function updateFollowButton(){
             let follow_button = document.getElementById('buttonFollow');

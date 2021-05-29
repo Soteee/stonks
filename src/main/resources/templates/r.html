@@ -154,7 +154,7 @@
 
         // Oculta formulario de venta por defecto, luego se hace visible si el usuario tiene acciones para vender
         let sell_form = document.getElementById("sell_form");
-        sell_form.style.visibility = "hidden";
+        sell_form.style.display = "none";
 
         // Actualiza todos los valores del panel del usuario
         function updateUserPanel(){
@@ -181,17 +181,17 @@
                             row.insertCell(1).innerHTML = stock[Object.keys(stock)[0]];
                         })
 
-                        if (sell_form.style.visibility === "hidden"){
+                        if (sell_form.style.display === "none"){
                             // Muestra el formulario de venta
-                            sell_form.style.visibility = "visible"
+                            sell_form.style.removeProperty('display');
                         }
                     }
                     else {
                         table.insertRow().insertCell(0).innerHTML = "Todavía no tienes posiciones";
 
-                        if (sell_form.style.visibility === "visible"){
+                        if (!sell_form.style.display){
                             // Oculta el formulario de venta
-                            sell_form.style.visibility = "hidden"
+                            sell_form.style.display = "none"
                         }
                     }
                 })

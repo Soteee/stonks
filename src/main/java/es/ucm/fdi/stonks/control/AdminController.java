@@ -1,21 +1,28 @@
 package es.ucm.fdi.stonks.control;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.ucm.fdi.stonks.LocalData;
 import es.ucm.fdi.stonks.model.User;
@@ -32,9 +39,6 @@ public class AdminController {
 	
 	@Autowired 
 	private EntityManager entityManager;
-	
-	@Autowired
-	private LocalData localData;
 	
 	@Autowired
 	private Environment env;
@@ -54,22 +58,26 @@ public class AdminController {
 		return "admin";
 	}
 
-	@PostMapping("/toggleuser")
+	@PostMapping("/toggleUser")
 	@Transactional
-	public String delUser(Model model,	@RequestParam long id) {
-		User target = entityManager.find(User.class, id);
+	@ResponseBody
+	public String delUser(Model model,	
+							@RequestBody JsonNode o, 
+							HttpServletResponse response) throws IOException {
+		User target = entityManager.find(User.class, o.get("id").asLong());
+		
+		if (target == null){
+			response.sendError(400);
+		}
+
 		if (target.getEnabled() == 1) {
-			// remove profile photo
-			File f = localData.getFile("user", ""+id);
-			if (f.exists()) {
-				f.delete();
-			}
 			// disable user
 			target.setEnabled((byte)0); 
 		} else {
 			// enable user
 			target.setEnabled((byte)1);
 		}
-		return index(model);
-	}	
+
+		return "{\"result\": \"success\"}";
+	}
 }

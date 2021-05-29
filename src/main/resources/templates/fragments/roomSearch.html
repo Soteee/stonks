@@ -24,7 +24,7 @@
             <br>
             <div class="content">
                 <h3 id="room-title"></h3>
-                <ul id="results-rooms" style="visibility:hidden;"></ul>
+                <ul id="results-rooms" style="display:none;"></ul>
             </div>
             <script th:inline="javascript">
                 document.addEventListener("DOMContentLoaded",()=>{
@@ -37,7 +37,7 @@
                         .then(function(response){
                             document.getElementById('room-title').innerHTML = "Salas encontradas";
                             let rooms = document.getElementById('results-rooms');
-                            rooms.style.visibility = "visible";
+                            rooms.style.removeProperty('display');;
                             rooms.innerHTML = "";
                             
                             response.forEach(room=>{

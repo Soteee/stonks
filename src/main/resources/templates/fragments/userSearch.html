@@ -24,7 +24,7 @@
             <br>
             <div class="content">
                 <h3 id="user-title"></h3>
-                <ul id="results-users" style="visibility:hidden;"></ul>
+                <ul id="results-users" style="display:none;"></ul>
             </div>
             <script th:inline="javascript">
                 document.addEventListener("DOMContentLoaded",()=>{
@@ -37,7 +37,7 @@
                         .then(function(response){
                             document.getElementById('user-title').innerHTML = "Usuarios encontrados";
                             let users = document.getElementById('results-users');
-                            users.style.visibility = "visible";
+                            users.style.removeProperty('display');
                             users.innerHTML = "";
                             
                             response.forEach(user=>{
