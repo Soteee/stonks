@@ -12,6 +12,7 @@
 <body>
     <!-- CAJA DE INICIAR SESION -->
     <form th:action="@{/login}" method="post" class="LogInBox">
+        <p th:if="${error}" th:text="${error}"></p>
         <h1>Iniciar sesión</h1>
         <input type="text" id="username" name="username" placeholder="Nombre de usuario">
         <input type="password" id="password" name="password" placeholder="Contraseña">

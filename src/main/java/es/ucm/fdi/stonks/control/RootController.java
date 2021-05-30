@@ -60,7 +60,11 @@ public class RootController {
     }
 
     @GetMapping("/login")
-    public String getLogin(Model model) {
+    public String getLogin(Model model, @RequestParam(required = false) String error) {
+        if (error != null){
+            model.addAttribute("error", "El usuario y la contraseña no coinciden o el usuario está desactivado");
+        }
+
         return "login";
     }
 
