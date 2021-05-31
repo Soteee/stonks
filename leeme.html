@@ -1,151 +1,522 @@
 <!DOCTYPE html>
-<html lang="es">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-    <meta charset="UTF-8">
-    <title>Léeme</title>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-
-    <h1>stonks</h1>
-
-    <p><i>A trading community experience</i></p>
-
-    <p>Proyecto para la asignatura de Ingeniería Web (optativa general para distintos grados de la
-        <a href="https://informatica.ucm.es/">Facultad de Informática de la UCM</a>).</p>
-
-    <h2>Autores</h2>
-
-    <p>Óscar Fernández Romano, Víctor Fresco Perales, Alberto Redondo Gil, Javier Ignacio Sotelino Barriga, Juan
-        Tecedor Roa</p>
-
-    <h2>Introducción</h2>
-
-    <p>
-        ¿Te gustaría invertir en bolsa pero no tienes ni para un tercio? ¿Quieres demostrarle
-        a tus amigos quién es el verdadero Lobo de Wall Street? En Stonks te ofrecemos una
-        oportunidad de simular la verdadera experiencia Wall Street con tus amigos a través
-        de un divertido juego social.
-    </p>
-
-    <p><i>Buy, sell and have fun with your friends to get STONKS!</i></p>
-
-    <h2>Repositorio en GitHub</h2>
-
-    <a href="https://github.com/Soteee/stonks">Soteee/stonks</a>
-
-    <h2>Entrega vistas</h2>
-
-    <h3>Vistas</h3>
-
-    <ul>
-        <li><a href="localhost:8080">index.html</a></li>
-        <li><a href="localhost:8080/admin">admin.html</a></li>
-        <li><a href="localhost:8080/r">r.html</a></li>
-        <li><a href="localhost:8080/rooms">rooms.html</a></li>
-        <li><a href="localhost:8080/social">social.html</a></li>
-    </ul>
-
-    <h3>Licencias</h3>
-
-    <ul>
-        <li>Logo: <a href="https://www.freelogodesign.org/preview?lang=es&name=Stonks%20EST%202012&logo=e6fe77e5-b974-4cd8-87eb-8983d0e6de16">
-            https://www.freelogodesign.org/preview?lang=es&name=Stonks%20EST%202012&logo=e6fe77e5-b974-4cd8-87eb-8983d0e6de16</a>
-        <br>Licencia descrita aquí: <a href="https://es.freelogodesign.org/terms-of-use">
-                https://es.freelogodesign.org/terms-of-use</a></li>
-        <br>
-        <li>Imagen de muestra de bolsa: <a href="https://media.warriortrading.com/2019/08/shutterstock_775889491.jpg">
-            https://media.warriortrading.com/2019/08/shutterstock_775889491.jpg</a>
-        <br>Licencia Creative Commons</li>
-    </ul>
-
-    <h2>Entrega modelado</h2>
-
-    <h3>Esquema entidad/relación de la BD</h3>
-
-    <img src="img/esquema_bd.png" alt="Esquema entidad/relación de la BD">
-
-    <p>Todas las entidades estan etiquetadas con @Entity y sus ids son únicas generadas secuencialmente</p>
-
-    <h3>User</h3>
-
-    <p>Representa un usuario.</p>
-        <ul>
-            <li><b>ID</b></li>
-            <li><b>userName:</b> Nombre de usuario (no puede ser nulo).</li>
-            <li><b>realName:</b> Nombre real del usuario.</li>
-            <li><b>memberList:</b> Indica las salas en las que el usuario participa. Es una lista de relaciones
-                usuario-sala (clase Member).</li>
-        </ul>
-
-    <h3>Rooms</h3>
-
-    <p>Representa una sala en la que los usuarios pueden jugar una partida.</p>
-    <ul>
-        <li><b>ID</b></li>
-        <li><b>name:</b> Nombre de la sala (no puede ser nulo).</li>
-        <li><b>isPublic:</b> Indica si la sala es pública o no.</li>
-        <li><b>weeklyCash:</b> Indica la cantidad de dinero que se entrega a los usuarios de la sala al final de la
-            semana. Esto les permite seguir jugando aunque pierdan todo su dinero. Puede ser 0.
-        <li><b>maxUsers:</b> Máximo número de participantes en la sala.</li>
-        <li><b>startBalance:</b> Cantidad inicial de dinero en la sala.</li>
-        <li><b>cash3win:</b> Cantidad de dinero necesaria para que un usuario gane la partida de la sala. Puede ser 0,
-            lo que indicaría que la partida se terminará cuando expire (en ese caso, expirationDate no podría ser NULL)
-        </li>
-        <li><b>createDate:</b> Fecha de creación de la sala.</li>
-        <li><b>expirationDate:</b> Fecha de expiracion de la sala. Cuando llega esa fecha, el usuario con más dinero
-            gana la partida (si nadie ha alcanzado ya la canitdad cash3win). Puede ser NULL, lo que indicaría que la
-            partida terminará cuando alguien alcance la cantidad cash3win (en ese caso, cash3win no puede ser 0).</li>
-        <li><b>admin:</b> Usuario con el rol de administrador en la sala (clase User).</li>
-        <li><b>memberList:</b> Indica los usuarios que están en la sala. Es una lista de relaciones usuario-sala (clase
-            Member).</li>
-    </ul>
-
-    <h3>Member</h3>
-
-    <p>Representa la relación entre un usuario y una sala.</p>
-        <ul>
-            <li><b>ID</b></li>
-            <li><b>user:</b> Usuario que participa en la relación (clase User).</li>
-            <li><b>room:</b> Sala en la que el usuario se encuentra (clase Room).</li>
-            <li><b>joinData:</b> Fecha de entrada en la sala.</li>
-            <li><b>balance:</b> Cantidad de dinero que el usuario acumula en esa sala.</li>
-            <li><b>positionList:</b> Lista de transacciones que el usuario ha hecho en esa sala (clase Position).</li>
-        </ul>
-
-    <h3>Position</h3>
-
-    <p>Representa cada transacción que hace un usuario en una sala.</p>
-    <ul>
-        <li><b>ID</b></li>
-        <li><b>member:</b> Indica qué usuario dentro de qué sala ha realizado la transacción (clase Member).</li>
-        <li><b>purchaseDate:</b> Indica la fecha en la que se realizó la transacción.</li>
-        <li><b>isActive:</b> Indica si la transacción se encuentra en un estado activo o no.</li>
-        <li><b>quantity:</b> Indica el número de acciones que se han adquirido.</li>
-        <li><b>indexName:</b> Nombre de la empresa a la que pertenecen las acciones.</li>
-        <li><b>price:</b> Precio medio de la transacción en función de lo que ha valido y lo que vale ahora. El precio
-            real se calcula en base al precio de las acciones en el momento (usando la API).</li>
-    </ul>
-
-    <h3>Conversation</h3>
-
-    <p>Representa una conversación entre dos usuarios.</p>
-    <ul>
-        <li><b>ID</b></li>
-        <li><b>user1 y user2:</b> Usuarios dentro de la conversación (clase User).</li>
-        <li><b>messageList:</b> Lista de mensajes dentro de la conversación (clase Message).</li>
-    </ul>
-
-    <h3>Message</h3>
-
-    <p>Representa un mensaje enviado desde un usuario a otro dentro de una conversación.</p>
-    <ul>
-        <li><b>ID</b></li>
-        <li><b>conver:</b> Conversación a la que pertenece el mensaje (clase Conversation).</li>
-        <li><b>sender:</b> Usuario que envía el mensaje (sólo puede ser conversation.user1 o conversation.user2; clase
-            User).</li>
-        <li><b>text:</b> Texto enviado.</li>
-        <li><b>date:</b> Fecha en la que el mensaje ha sido enviado.</li>
-    </ul>
-
+<h1 id="stonks">stonks</h1>
+<p><em>A trading community experience</em></p>
+<p>Proyecto para la asignatura de Ingeniería Web (optativa general para distintos grados de la <a href="https://informatica.ucm.es/">Facultad de Informática de la UCM</a>).</p>
+<h2 id="autores">Autores</h2>
+<p>Víctor Fresco Perales, Alberto Redondo Gil, Javier Ignacio Sotelino Barriga, Juan Tecedor Roa</p>
+<h2 id="introducción">Introducción</h2>
+<p>¿Te gustaría invertir en bolsa pero no tienes ni para un tercio? ¿Quieres demostrarle a tus amigos quién es el verdadero Lobo de Wall Street? En Stonks te ofrecemos una oportunidad de simular la verdadera experiencia Wall Street con tus amigos a través de un divertido juego social.</p>
+<p><em>Buy, sell and have fun with your friends to get STONKS!</em></p>
+<h2 id="tecnologías">Tecnologías</h2>
+<p>Durante el desarrollo de la asignatura, hemos aprendido los conceptos básicos sobre distintas tecnologías web, y hemos aplicado todas ellas en nuestro proyecto:</p>
+<ul>
+<li>HTML</li>
+<li>CSS</li>
+<li>Spring MVC, Spring Security</li>
+<li>Thymeleaf</li>
+<li>JavaScript</li>
+<li>JPA</li>
+<li>XML</li>
+<li>JSON</li>
+<li>AJAX</li>
+<li>Karate</li>
+<li>H2</li>
+<li>D3</li>
+</ul>
+<p>Además, hemos usado otras tecnologías que no hemos visto en clase:</p>
+<ul>
+<li>Bulma</li>
+</ul>
+<h2 id="uso">Uso</h2>
+<p>Se necesitan las siguientes dependencias:</p>
+<ul>
+<li>JDK &gt;= 8</li>
+<li>Maven</li>
+</ul>
+<p>Clona el repositorio y accede al directorio:</p>
+<pre><code>git clone https://github.com/Soteee/stonks.git
+cd stonks</code></pre>
+<p>Y lanza el servidor usando Maven, que se encargará de resolver las dependencias de Java:</p>
+<pre><code>mvn spring-boot:run</code></pre>
+<p>El servidor estará disponible en el puerto 8080.</p>
+<h2 id="vistas">Vistas</h2>
+<ul>
+<li><a href="/src/main/resources/templates/index.html">index.html</a></li>
+</ul>
+<p>Página de inicio. Aparece cuando se accede a la raíz del servidor y también después de iniciar sesión con un usuario que no sea el administrador.</p>
+<p>A la izquierda, una lista de los mejores usuarios y otra de las mejores salas; en el resto de la página, una gráfica que muestra el histórico de los valores de las acciones.</p>
+<ul>
+<li><a href="/src/main/resources/templates/admin.html">admin.html</a></li>
+</ul>
+<p>Panel de administración del administrador.</p>
+<p>Aquí podemos encontrar dos formas de búsqueda, una por usuario y otra por salas. Tras pulsar el botón de búsqueda aparecen los resultados.</p>
+<ul>
+<li><a href="/src/main/resources/templates/rooms.html">rooms.html</a></li>
+</ul>
+<p>Página principal de acceso a las distintas salas.</p>
+<p>Muestra un top 10 de salas según la cantidad de dinero que se tienen los jugadores, las salas a las que pertenece el usuario y un buscador de salas.</p>
+<ul>
+<li><a href="/src/main/resources/templates/r.html">r.html</a></li>
+</ul>
+<p>Página individual para cada sala.</p>
+<p>Si el usuario no pertenece a la sala, solo se muestra las demás salas del usuario a la izquierda, el gráfico de acciones que se pueden comprar y vender en la sala, sus valores y un botón para unirse. Si el usuario pertenece a la sala, además de lo anteriormente mencionado, se muestra un panel donde se pueden vender y comprar acciones, un chat y los usuarios de la sala ordenados por la cantidad de dinero que tienen.</p>
+<ul>
+<li><a href="/src/main/resources/templates/users.html">users.html</a></li>
+</ul>
+<p>Página para buscar usuarios.</p>
+<p>En la parte superior aparece el menú y, en el resto de la página, una lista de los 5 mejores usuarios y un buscador de usuarios.</p>
+<ul>
+<li><a href="/src/main/resources/templates/u.html">u.html</a></li>
+</ul>
+<p>Página de perfil del usuario. Cada usuario tiene la suya.</p>
+<p>En la parte superior aparece el menú y, en el resto de la página, los datos del usuario, las salas en las que está y una lista de partidas ganadas. También muestra un botón para poder seguir al usuario.</p>
+<ul>
+<li><a href="/src/main/resources/templates/social.html">social.html</a></li>
+</ul>
+<p>Muestra una lista de seguidos y seguidores para acceder rápidamente a su perfil.</p>
+<ul>
+<li><a href="/src/main/resources/templates/createRoom.html">createRoom.html</a></li>
+</ul>
+<p>En esta vista podemos crear una sala.</p>
+<p>Tenemos apartados para ponerle nombre, ajustes de privacidad, numero de jugadores, cantidad de dinero inicial, cantidad de dinero extra, fecha límite, dinero para ganar y los símbolos de la sala.</p>
+<ul>
+<li><a href="/src/main/resources/templates/login.html">login.html</a></li>
+</ul>
+<p>Aquí podemos introducir nuestro nombre de usuario y contraseña y pulsar "iniciar sesión". Si no tenemos cuenta, podemos pulsar "Regístrate".</p>
+<ul>
+<li><a href="/src/main/resources/templates/logout.html">logout.html</a></li>
+</ul>
+<p>No tiene vista, es un botón que redirecciona.</p>
+<ul>
+<li><a href="/src/main/resources/templates/register.html">register.html</a></li>
+</ul>
+<p>En esta vista podemos crear una nueva cuenta.</p>
+<p>Encontramos campos como nombre usuario, correo electrónico, nombre, primer apellido, segundo apellido y contraseña, así como lo buena que es la contraseña y, finalmente, el botón de crear cuenta.</p>
+<h3 id="fragmentos">Fragmentos</h3>
+<p>Fragmentos de HTML que insertamos en varias páginas.</p>
+<ul>
+<li><a href="/src/main/resources/templates/fragments/head.html">head.html</a></li>
+</ul>
+<p>Inicializa scripts y hojas de estilo.</p>
+<ul>
+<li><a href="/src/main/resources/templates/fragments/left_navbar.html">left_navbar.html</a></li>
+</ul>
+<p>Columna izquierda donde se muestran las salas a las que pertenece el usuario.</p>
+<ul>
+<li><a href="/src/main/resources/templates/fragments/menu.html">menu.html</a></li>
+</ul>
+<p>Menu principal de la aplicación.</p>
+<p>Muestra Iniciar Sesión y Registrarse a un usuario que no haya iniciado sesión y Salas, Usuarios, Seguidores y Cerrar Sesión a uno que sí lo haya hecho. Si el usuario es un administrador, también muestra Administrador.</p>
+<h2 id="casos-de-uso">Casos de uso</h2>
+<p>En general, la mayoría de casos de uso se han acabado adaptando a AJAX, especialmente mensajería y búsqueda. Todo el tema de actualización de símbolos para el debug está cargado desde local para test (con la finalidad de evitar quedarnos sin querys a la api), pero se utiliza una API alojada en <a href="https://rapidapi.com/sparior/api/yahoo-finance15">rapidapi</a> dónde conseguimos traernos una lista de símbolos y su precio real cada 24 horas.</p>
+<p>Contamos con las siguientes funcionalidades:</p>
+<ul>
+<li><p><em>Registro</em> Con un Script para calcular la calidad de la contraseña.</p></li>
+<li><p><em>Inicio de sesión</em></p></li>
+<li><p><em>Creación de sala</em> Se creará una sala de la que serás dueño y la gente podrá unirse, buscarla y jugar en ella.</p></li>
+<li><p><em>Búsqueda de salas</em> Ordenadas por simulitud a la hora de la consulta</p></li>
+<li><p><em>Unirse a una sala</em> Si no pertenece a una sala en el momento de clicquear en ella sale un botón grande para unirse</p></li>
+<li><p><em>Compra y venta de acciones en tiempo real de una sala</em> (Todo con ajax)</p></li>
+<li><p><em>Ganar en una sala</em> (Recomendamos usar "Partida para acabar y vender un par de acciones con la cuenta admin (Usuario admin, password aa)) También puede crearse una cuenta y unirse de 0. La victoria es en tiempo real y notifica a todos los usuarios de si han perdido o ganado con un gif. La sala se mantiene con estado "Acabada" y se puede revisitar para ver los balances finales. Por otro lado, si la sala no tiene una cantidad de dinero fija para acabar, cada vex que alguien inicia sesión, se comprueba si la sala ha caducado. Si es el caso, el ganador es el usuario con más dinero.</p></li>
+<li><p><em>Consultar gráficas</em> Pasando el ratón por encima</p></li>
+<li><p><em>Seguir, dejar de seguir, ser seguido (podemos probarlo con otra cuenta desde otro navegador) y comprobarlo en <a href="/src/main/resources/template/social.html">social.html</a></em></p></li>
+<li><p><em>Consultar el perfil de usuario, seguirle, y comprobar sus partidas ganadas</em>. Para esto, podemos utilizar la sala "Partida para acabar", ganarla con la cuenta de admin (Usuario:admin, password:aa) y luego ir a su perfil y consultar que la partida sale ganada.</p></li>
+<li><p><em>Desactivar a un usuario como admin</em> Si eres administrador, te sale un botón más en el menú dónde puedes buscar usuarios y desactivarlos. Los usuarios desactivados no pueden logear, y si intentan meterse a su perfil saldrá "No disponible*</p></li>
+<li><p><em>Borrar mensajes de una sala de chat</em> (Hecho con AJAX) Como admin, entrar en una sala y bajar a la sala de chat nos mostrará un botón eliminar en todos los mensajes.</p></li>
+</ul>
+<h2 id="usuarios-de-prueba">Usuarios de prueba</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Usuario</th>
+<th>Contraseña</th>
+<th>Rol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>javi</td>
+<td>aa</td>
+<td>administrador</td>
+</tr>
+<tr class="even">
+<td>admin</td>
+<td>aa</td>
+<td>administrador</td>
+</tr>
+<tr class="odd">
+<td>juan</td>
+<td>aa</td>
+<td>usuario normal</td>
+</tr>
+</tbody>
+</table>
+<h2 id="soluciones-del-feedback">Soluciones del feedback</h2>
+<h3 id="conseguir-precio-en-tiempo-real-de-un-símbolo-para-actualización-de-api">Conseguir precio en tiempo real de un símbolo para actualización de API</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="dt">static</span> <span class="dt">double</span> <span class="fu">getSymbol</span><span class="op">(</span><span class="bu">String</span> name<span class="op">)</span> <span class="kw">throws</span> <span class="bu">Exception</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>        <span class="bu">Map</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">,</span> <span class="bu">String</span><span class="op">&gt;</span> headers <span class="op">=</span> <span class="kw">new</span> <span class="bu">HashMap</span><span class="op">&lt;&gt;();</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        headers<span class="op">.</span><span class="fu">put</span><span class="op">(</span>headerkey<span class="op">,</span> headerkeyp2<span class="op">);</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        headers<span class="op">.</span><span class="fu">put</span><span class="op">(</span>authname1<span class="op">,</span> authname2<span class="op">);</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        headers<span class="op">.</span><span class="fu">put</span><span class="op">(</span><span class="st">&quot;useQueryString&quot;</span><span class="op">,</span> <span class="st">&quot;true&quot;</span><span class="op">);</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        JSONObject json <span class="op">=</span> Unirest<span class="op">.</span><span class="fu">get</span><span class="op">(</span>url <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;/financial-data&quot;</span><span class="op">)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                                <span class="op">.</span><span class="fu">headers</span><span class="op">(</span>headers<span class="op">)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                                <span class="op">.</span><span class="fu">asJson</span><span class="op">()</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                                <span class="op">.</span><span class="fu">getBody</span><span class="op">()</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                                <span class="op">.</span><span class="fu">getObject</span><span class="op">();</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>json <span class="op">==</span> <span class="kw">null</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="op">-</span><span class="fl">1.f</span><span class="op">;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">Double</span><span class="op">.</span><span class="fu">parseDouble</span><span class="op">(</span>json<span class="op">.</span><span class="fu">getJSONObject</span><span class="op">(</span><span class="st">&quot;financialData&quot;</span><span class="op">).</span><span class="fu">getJSONObject</span><span class="op">(</span><span class="st">&quot;currentPrice&quot;</span><span class="op">).</span><span class="fu">getString</span><span class="op">(</span><span class="st">&quot;fmt&quot;</span><span class="op">).</span><span class="fu">replaceAll</span><span class="op">(</span><span class="st">&quot;,&quot;</span><span class="op">,</span> <span class="st">&quot;&quot;</span><span class="op">));</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span></code></pre></div>
+<p>Dado un nombre de símbolo, se pide a la API sus datos de precio en tiempo real. Recordar que estos precios no son los que se consultan cuando se está usando la aplicación, solo cuando se pide un refresco de precios cada 24h. Después de obtenerlos se cargan en la BBDD en el siguiente apartado.</p>
+<h3 id="actualización-de-la-api">Actualización de la API</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">refreshStockValues</span><span class="op">(</span>EntityManager em<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">List</span><span class="op">&lt;</span>Symbol<span class="op">&gt;</span> symbolList <span class="op">=</span> em</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                                <span class="op">.</span><span class="fu">createNamedQuery</span><span class="op">(</span><span class="st">&quot;Symbol.lasts&quot;</span><span class="op">,</span> Symbol<span class="op">.</span><span class="fu">class</span><span class="op">)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                                <span class="op">.</span><span class="fu">getResultList</span><span class="op">();</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Use the same value for evert stock so we can extract them all at once easily from DB</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        LocalDateTime now <span class="op">=</span> LocalDateTime<span class="op">.</span><span class="fu">now</span><span class="op">();</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span>Symbol o <span class="op">:</span> symbolList<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            <span class="co">// If more than 24 hours have passed</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span><span class="op">(</span>o<span class="op">.</span><span class="fu">getUpdatedOn</span><span class="op">()</span> <span class="op">==</span> <span class="kw">null</span> <span class="op">||</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                <span class="bu">Duration</span><span class="op">.</span><span class="fu">between</span><span class="op">(</span>o<span class="op">.</span><span class="fu">getUpdatedOn</span><span class="op">(),</span> now<span class="op">).</span><span class="fu">compareTo</span><span class="op">(</span><span class="bu">Duration</span><span class="op">.</span><span class="fu">ofHours</span><span class="op">(</span><span class="dv">24</span><span class="op">))</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">){</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                <span class="cf">try</span> <span class="op">{</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                    Symbol newSymbol <span class="op">=</span> <span class="kw">new</span> <span class="fu">Symbol</span><span class="op">();</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                    newSymbol<span class="op">.</span><span class="fu">setName</span><span class="op">(</span>o<span class="op">.</span><span class="fu">getName</span><span class="op">());</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                    newSymbol<span class="op">.</span><span class="fu">setUpdatedOn</span><span class="op">(</span>now<span class="op">);</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                    newSymbol<span class="op">.</span><span class="fu">setValue</span><span class="op">(</span><span class="fu">getSymbol</span><span class="op">(</span>o<span class="op">.</span><span class="fu">getName</span><span class="op">()));</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">List</span><span class="op">&lt;</span>Room<span class="op">&gt;</span> newList <span class="op">=</span> <span class="kw">new</span> <span class="bu">ArrayList</span><span class="op">&lt;&gt;();</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                    newList<span class="op">.</span><span class="fu">addAll</span><span class="op">(</span>o<span class="op">.</span><span class="fu">getRooms</span><span class="op">());</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>                    newSymbol<span class="op">.</span><span class="fu">setRooms</span><span class="op">(</span>newList<span class="op">);</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>                    em<span class="op">.</span><span class="fu">persist</span><span class="op">(</span>newSymbol<span class="op">);</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span> <span class="cf">catch</span> <span class="op">(</span><span class="bu">Exception</span> e<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>                    e<span class="op">.</span><span class="fu">printStackTrace</span><span class="op">();</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span></code></pre></div>
+<p>Con esta línea cada vez que alguien logea se comprobará si han pasado 24 horas desde la última actualización, si han pasado, se manda una petición a la API dónde se cargaría todos los símbolos pedidos. Se pisan los anteriores.</p>
+<h2 id="recursos-externos">Recursos externos</h2>
+<p>Hemos usado algunos recursos externos como ayuda para desarrollar ciertas partes concretas de nuestro proyecto.</p>
+<h3 id="bulma">Bulma</h3>
+<p><a href="https://bulma.io/">Bulma</a> es Framework de CSS.</p>
+<p>Lo hemos utilizado para darle un estilo a la aplicación en general: colores, elementos, componentes, formularios, layouts...</p>
+<p>Hemos incluido elementos como botones, contenidos, tablas..; componentes como menús y navbars...</p>
+<p>Para conformar los layouts hemos usado columnas, dividiendo así verticalmente el espacio de cada página.</p>
+<h3 id="d3">D3</h3>
+<p>D3 es una librería de JavaScript que sirve para visualizar datos usando estándares web.</p>
+<p>Lo hemos usado para mostrar el histórico de valores de los índices.</p>
+<p>Para facilitar su uso hemos creado <a href="/src/main/resources/static/js/graphics.js">graphics.js</a>, que con tan solo añadirlo al HTML funciona. De esta forma, evitamos repetir scripts en varios archivos.</p>
+<h2 id="modelado">Modelado</h2>
+<p>Todas las entidades estan etiquetadas con @Entity y sus IDs son únicas generadas secuencialmente.</p>
+<h3 id="user">User</h3>
+<p>Representa un usuario.</p>
+<ul>
+<li><strong>id</strong></li>
+<li><strong>password:</strong> contraseña.</li>
+<li><strong>roles:</strong> roles que desempeña el usuario (usuario, admin...).</li>
+<li><strong>enabled:</strong> booleano que indica si el usuario está activo o no.</li>
+<li><strong>username:</strong> nombre de usuario (no puede ser nulo).</li>
+<li><strong>firstName:</strong> nombre real del usuario.</li>
+<li><strong>lastName:</strong> apellido del usuario.</li>
+<li><strong>mail:</strong> correo electrónico del usuario.</li>
+<li><strong>wonRooms:</strong> lista de salas en las que el usuario ha ganado partidas.</li>
+<li><strong>sent:</strong> lista de mensajes enviados.</li>
+<li><strong>memberList:</strong> Indica las salas en las que el usuario participa. Es una lista de relaciones usuario-sala (clase Member).</li>
+<li><strong>following:</strong> lista de usuarios seguidos.</li>
+</ul>
+<h3 id="room">Room</h3>
+<p>Representa una sala en la que los usuarios pueden jugar una partida.</p>
+<ul>
+<li><strong>id</strong></li>
+<li><strong>name:</strong> nombre de la sala (no puede ser nulo).</li>
+<li><strong>finished:</strong> indica si la partida que se juega en la sala ha terminado ya o no.</li>
+<li><strong>weeklyCash:</strong> indica la cantidad de dinero que se entrega a los usuarios de la sala al final de la semana. Esto les permite seguir jugando aunque pierdan todo su dinero. Puede ser 0.</li>
+<li><strong>maxUsers:</strong> máximo número de participantes en la sala.</li>
+<li><strong>startBalance:</strong> cantidad inicial de dinero en la sala.</li>
+<li><strong>cash2win:</strong> cantidad de dinero necesaria para que un usuario gane la partida de la sala. Puede ser 0, lo que indicaría que la partida se terminará cuando expire (en ese caso, expirationDate no podría ser null).</li>
+<li><strong>received:</strong> lista de mensajes que se han enviado en la sala.</li>
+<li><strong>creationDate:</strong> fecha de creación de la sala.</li>
+<li><strong>expirationDate:</strong> fecha de expiracion de la sala. Cuando llega esa fecha, el usuario con más dinero gana la partida (si nadie ha alcanzado ya la canitdad cash2win). Puede ser null, lo que indicaría que la partida terminará cuando alguien alcance la cantidad cash2win (en ese caso, cash2win no puede ser 0).</li>
+<li><strong>admin:</strong> usuario con el rol de administrador en la sala (clase User).</li>
+<li><strong>memberList:</strong> lista con los usuarios que están en la sala. Es una lista de relaciones usuario-sala (clase Member).</li>
+<li><strong>winner:</strong> usuario que ha ganado la partida que se juega en la sala, en caso de que se haya terminado (en caso contrario, será null).</li>
+</ul>
+<h3 id="membership">Membership</h3>
+<p>Representa la relación entre un usuario y una sala.</p>
+<ul>
+<li><strong>id</strong></li>
+<li><strong>user:</strong> usuario que participa en la relación (clase User).</li>
+<li><strong>room:</strong> sala en la que el usuario se encuentra (clase Room).</li>
+<li><strong>joinDate:</strong> fecha de entrada en la sala.</li>
+<li><strong>balance:</strong> cantidad de dinero que el usuario acumula en esa sala.</li>
+<li><strong>positionList:</strong> lista de transacciones que el usuario ha hecho en esa sala (clase Position).</li>
+</ul>
+<h3 id="position">Position</h3>
+<p>Representa cada transacción que hace un usuario en una sala.</p>
+<ul>
+<li><strong>id</strong></li>
+<li><strong>member:</strong> indica qué usuario dentro de qué sala ha realizado la transacción (clase Member).</li>
+<li><strong>purchaseDate:</strong> indica la fecha en la que se realizó la transacción.</li>
+<li><strong>quantity:</strong> indica el número de acciones que se han adquirido.</li>
+<li><strong>value:</strong> precio de cada acción en el momento de la compra.</li>
+<li><strong>side:</strong> indica si la transacción es una compra o una venta.</li>
+<li><strong>symbol:</strong> símbolo para el que se ha hecho la transacción.</li>
+</ul>
+<h3 id="message">Message</h3>
+<p>Representa un mensaje enviado por un usuario en una sala.</p>
+<ul>
+<li><strong>id</strong></li>
+<li><strong>user:</strong> usuario que envía el mensaje.</li>
+<li><strong>room:</strong> sala a la que se ha enviado el mensaje.</li>
+<li><strong>text:</strong> contenido del mensaje.</li>
+<li><strong>dateSent:</strong> fecha en la que el mensaje ha sido enviado.</li>
+</ul>
+<h4 id="transfer">Transfer</h4>
+<p>Ademaś, la clase Message tiene una clase Transfer definida dentro, que sirve para persistir a/de JSON.</p>
+<ul>
+<li><strong>id:</strong> ID del mensaje.</li>
+<li><strong>from:</strong> nombre de usuario del que envía el mensaje.</li>
+<li><strong>sent:</strong> fecha en la que el mensaje ha sido enviado.</li>
+<li><strong>text:</strong> contenido del mensaje.</li>
+</ul>
+<h4 id="symbol">Symbol</h4>
+<p>Representa un símbolo.</p>
+<ul>
+<li><strong>id</strong></li>
+<li><strong>name:</strong> nombre del símbolo (normalmente, algunas letras del nombre de la empresa en mayúsculas).</li>
+<li><strong>value:</strong> precio de cada acción en el momento acutal.</li>
+<li><strong>updatedOn:</strong> fecha en la que se ha actualizado el precio de la acción.</li>
+<li><strong>rooms:</strong> lista de salas que utilizan el símbolo.</li>
+</ul>
+<h2 id="licencias">Licencias</h2>
+<ul>
+<li><p>Logo: <a href="https://www.freelogodesign.org/preview?lang=es&amp;name=Stonks%20EST%202012&amp;logo=e6fe77e5-b974-4cd8-87eb-8983d0e6de16"><a href="https://www.freelogodesign.org/preview?lang=es&amp;name=Stonks%20EST%202012&amp;logo=e6fe77e5-b974-4cd8-87eb-8983d0e6de16">https://www.freelogodesign.org/preview?lang=es&amp;name=Stonks%20EST%202012&amp;logo=e6fe77e5-b974-4cd8-87eb-8983d0e6de16</a></a><br />
+Licencia descrita aquí: <a href="https://es.freelogodesign.org/terms-of-use"><a href="https://es.freelogodesign.org/terms-of-use">https://es.freelogodesign.org/terms-of-use</a></a></p></li>
+<li><p>Imagen de muestra de bolsa: <a href="https://media.warriortrading.com/2019/08/shutterstock_775889491.jpg"><a href="https://media.warriortrading.com/2019/08/shutterstock_775889491.jpg">https://media.warriortrading.com/2019/08/shutterstock_775889491.jpg</a></a><br />
+Licencia Creative Commons</p></li>
+</ul>
 </body>
 </html>
