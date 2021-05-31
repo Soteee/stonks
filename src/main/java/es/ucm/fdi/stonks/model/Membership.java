@@ -14,7 +14,9 @@ import lombok.Data;
 @NamedQueries({
 	@NamedQuery(name="Membership.byUserAndRoom",
 	        query="SELECT m FROM Membership m "
-                + "WHERE m.room = :room AND m.user = :user")
+                + "WHERE m.room = :room AND m.user = :user"),
+    @NamedQuery(name="Membership.getAllBalances",
+            query="SELECT sum(m.balance) FROM Membership m")
 })
 public class Membership {
 

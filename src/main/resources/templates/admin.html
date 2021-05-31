@@ -12,6 +12,11 @@
     <div class="content m-3">
         <h1>Panel de administración</h1>
     </div>
+    <div>
+        <p>Número de usuarios: <span th:text="${numUsers}"></span></p>
+        <p>Número de salas: <span th:text="${numRooms}"></span></p>
+        <p>Dinero total de los usuarios: <span th:text="${totalBalance}"></span>€</p>
+    </div>
     <div class="columns m-3">
         <div class="column is-one-fifth">
             <nav th:replace="fragments/userSearch.html :: userSearch"></nav>

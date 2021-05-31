@@ -41,16 +41,23 @@ public class AdminController {
 		model.addAttribute("basePath", env.getProperty("es.ucm.fdi.base-path"));
 		model.addAttribute("debug", env.getProperty("es.ucm.fdi.debug"));
 
-		List<User> users = entityManager
+		int numUsers = entityManager
 							.createNamedQuery("User.all", User.class)
-							.getResultList();
-        model.addAttribute("users", users);
+							.getResultList()
+							.size();
+        model.addAttribute("numUsers", numUsers);
 
-        List<Room> rooms = entityManager
+        int numRooms = entityManager
 							.createNamedQuery("Room.all", Room.class)
-							.getResultList();
-        model.addAttribute("rooms", rooms);
+							.getResultList()
+							.size();
+        model.addAttribute("numRooms", numRooms);
 		
+		Double totalBalance = entityManager
+								.createNamedQuery("Membership.getAllBalances", Double.class)
+								.getSingleResult();
+		model.addAttribute("totalBalance", String.format("%.2f",totalBalance));
+
 		return "admin";
 	}
 
