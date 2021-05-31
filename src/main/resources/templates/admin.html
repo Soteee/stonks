@@ -11,11 +11,9 @@
     <nav th:replace="fragments/menu.html :: topbar"></nav>
     <div class="content m-3">
         <h1>Panel de administración</h1>
-    </div>
-    <div>
-        <p>Número de usuarios: <span th:text="${numUsers}"></span></p>
-        <p>Número de salas: <span th:text="${numRooms}"></span></p>
-        <p>Dinero total de los usuarios: <span th:text="${totalBalance}"></span>€</p>
+        <p><b>Número de usuarios:</b> <span th:text="${numUsers}"></span></p>
+        <p><b>Número de salas:</b> <span th:text="${numRooms}"></span></p>
+        <p><b>Dinero total de los usuarios:</b> <span th:text="${totalBalance}"></span>€</p>
     </div>
     <div class="columns m-3">
         <div class="column is-one-fifth">
