@@ -13,7 +13,6 @@ import javax.persistence.EntityManager;
 
 import com.mashape.unirest.http.Unirest;
 
-import org.hibernate.engine.spi.EntityUniqueKey;
 import org.json.JSONObject;
 
 import es.ucm.fdi.stonks.model.Membership;
@@ -51,7 +50,7 @@ public class StaticMethods {
 
     public static void refreshStockValues(EntityManager em) {
         List<Symbol> symbolList = em
-								.createNamedQuery("Symbol.lasts")
+								.createNamedQuery("Symbol.lasts", Symbol.class)
 								.getResultList();
 
         // Use the same value for evert stock so we can extract them all at once easily from DB
@@ -84,10 +83,10 @@ public class StaticMethods {
     public static int computeQuantity(EntityManager em, Membership m, Symbol s){
         int quantity = 0;
         List<Position> positions = em
-                            .createNamedQuery("Position.byMembershipAndSymbol")
-                            .setParameter("symbol", s)
-                            .setParameter("membership", m)
-                            .getResultList();
+                                    .createNamedQuery("Position.byMembershipAndSymbol", Position.class)
+                                    .setParameter("symbol", s)
+                                    .setParameter("membership", m)
+                                    .getResultList();
 
         for (Position position : positions) {
             if (position.getSide() == Side.BUY)
@@ -131,7 +130,7 @@ public class StaticMethods {
     }
 
     public static void checkExpiredRooms(EntityManager e){
-        List<Room> rooms = e.createNamedQuery("Room.all").getResultList();
+        List<Room> rooms = e.createNamedQuery("Room.all", Room.class).getResultList();
         for (Room room : rooms){
             if (room.getExpirationDate().compareTo(LocalDate.now()) <= 0){
                 User winner = room.checkWinner();

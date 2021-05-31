@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,9 +23,7 @@ import lombok.AllArgsConstructor;
  */
 @Entity
 @Data
-public class Message implements Transferable<Message.Transfer> {
-	
-	private static Logger log = LogManager.getLogger(Message.class);	
+public class Message implements Transferable<Message.Transfer> {	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

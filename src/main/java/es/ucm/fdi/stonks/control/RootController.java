@@ -1,5 +1,6 @@
 package es.ucm.fdi.stonks.control;
 
+import es.ucm.fdi.stonks.model.Room;
 import es.ucm.fdi.stonks.model.Symbol;
 import es.ucm.fdi.stonks.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.List;
 
 @Controller
 public class RootController {
-
-	private static final Logger log = LogManager.getLogger(AdminController.class);
 
     @Autowired
     private EntityManager entityManager;
@@ -33,22 +29,22 @@ public class RootController {
     @Transactional
     @GetMapping("/")
     public String index(Model model) {
-        List<?> topUsers = entityManager
-                            .createNamedQuery("User.top")
+        List<User> topUsers = entityManager
+                            .createNamedQuery("User.top", User.class)
                             .setMaxResults(5)
                             .getResultList();
         model.addAttribute("topUsers", topUsers);
 
-        List<?> topRooms = entityManager
-                            .createNamedQuery("Room.top")
+        List<Room> topRooms = entityManager
+                            .createNamedQuery("Room.top", Room.class)
                             .setMaxResults(5)
                             .getResultList();
         model.addAttribute("topRooms", topRooms);
 
 
-        List<Symbol> symbols = (List<Symbol>)entityManager
-                            .createNamedQuery("Symbol.all")
-                            .getResultList();
+        List<Symbol> symbols = entityManager
+                                .createNamedQuery("Symbol.all", Symbol.class)
+                                .getResultList();
         model.addAttribute("stocks", StaticMethods.symbolsToStocks(symbols));
 
         return "index";
@@ -75,13 +71,12 @@ public class RootController {
 
     @PostMapping("/register")
     @Transactional
-    public String postRegister(
-                        @RequestParam String username, 
-                        @RequestParam String mail,
-                        @RequestParam String name,
-                        @RequestParam String firstName,
-                        @RequestParam String lastName,
-                        @RequestParam String password) {
+    public String postRegister(@RequestParam String username, 
+                                @RequestParam String mail,
+                                @RequestParam String name,
+                                @RequestParam String firstName,
+                                @RequestParam String lastName,
+                                @RequestParam String password) {
         
         User newUser = new User();
         newUser.setUsername(username);
@@ -115,8 +110,8 @@ public class RootController {
         User user = entityManager.find(User.class, id);
         model.addAttribute("user", user);
 
-        List<?> user_rooms = entityManager
-                .createNamedQuery("Room.byUser")
+        List<Room> user_rooms = entityManager
+                .createNamedQuery("Room.byUser", Room.class)
                 .setParameter("user", user)
                 .getResultList();
         model.addAttribute("user_rooms", user_rooms);

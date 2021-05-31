@@ -51,7 +51,6 @@ import lombok.AllArgsConstructor;
 		@NamedQuery(name="User.bySearch",
             query="SELECT u FROM User u WHERE u.username LIKE CONCAT('%',CONCAT(:name,'%'))")})
 public class User implements Transferable<User.Transfer> {
-	private static Logger log = LogManager.getLogger(User.class);
 
 	public enum Role {
 		USER, // used for logged-in, non-priviledged users

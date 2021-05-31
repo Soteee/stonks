@@ -45,27 +45,27 @@ public class ApiController {
         
         Room room = entityManager.find(Room.class, room_id);
         
-        Membership membership = (Membership) entityManager
-                                        .createNamedQuery("Membership.byUserAndRoom")
-                                        .setParameter("user", entityManager.find(User.class,((User)session.getAttribute("u")).getId()))
-                                        .setParameter("room", room)
-                                        .getSingleResult();
+        Membership membership =entityManager
+                                .createNamedQuery("Membership.byUserAndRoom", Membership.class)
+                                .setParameter("user", entityManager.find(User.class,((User)session.getAttribute("u")).getId()))
+                                .setParameter("room", room)
+                                .getSingleResult();
 
         if (membership == null){
             response.sendError(400);
         }
 
-        List<?> lastSymbols = entityManager
-                                .createNamedQuery("Symbol.lastsByRoom")
-                                .setParameter("room", room)
-                                .getResultList();
+        List<Symbol> lastSymbols = entityManager
+                                    .createNamedQuery("Symbol.lastsByRoom", Symbol.class)
+                                    .setParameter("room", room)
+                                    .getResultList();
 
         JSONObject json = new JSONObject();
 
         json.put("balance", String.format("%.02f",membership.getBalance()));
 
         JSONArray stocks = new JSONArray();
-        for (Symbol symbol : (List<Symbol>) lastSymbols) {
+        for (Symbol symbol : lastSymbols) {
             int quantity = StaticMethods.computeQuantity(entityManager, membership, symbol);
             if (quantity != 0){
                 JSONObject stock = new JSONObject();
@@ -87,7 +87,7 @@ public class ApiController {
         Room room = entityManager.find(Room.class, room_id);
 
         List<User> users = entityManager
-                            .createNamedQuery("User.inRoom")
+                            .createNamedQuery("User.inRoom", User.class)
                             .setParameter("room", room)
                             .getResultList();
 
@@ -178,11 +178,11 @@ public class ApiController {
         int quantity = o.get("quantity").asInt();
         long room_id = o.get("room_id").asLong();
 
-        Membership member = (Membership) entityManager
-                                        .createNamedQuery("Membership.byUserAndRoom")
-                                        .setParameter("user", entityManager.find(User.class,((User)session.getAttribute("u")).getId()))
-                                        .setParameter("room", entityManager.find(Room.class, room_id))
-                                        .getSingleResult();
+        Membership member = entityManager
+                            .createNamedQuery("Membership.byUserAndRoom", Membership.class)
+                            .setParameter("user", entityManager.find(User.class,((User)session.getAttribute("u")).getId()))
+                            .setParameter("room", entityManager.find(Room.class, room_id))
+                            .getSingleResult();
 
         Symbol symbol = entityManager.find(Symbol.class, symbol_id);
 
@@ -229,11 +229,11 @@ public class ApiController {
 
         Room room = entityManager.find(Room.class, room_id);
 
-        Membership member = (Membership) entityManager
-                                        .createNamedQuery("Membership.byUserAndRoom")
-                                        .setParameter("user", entityManager.find(User.class,((User)session.getAttribute("u")).getId()))
-                                        .setParameter("room", room)
-                                        .getSingleResult();
+        Membership member = entityManager
+                            .createNamedQuery("Membership.byUserAndRoom", Membership.class)
+                            .setParameter("user", entityManager.find(User.class,((User)session.getAttribute("u")).getId()))
+                            .setParameter("room", room)
+                            .getSingleResult();
         Symbol symbol = entityManager.find(Symbol.class, symbol_id);
 
         int userQuantity =  StaticMethods.computeQuantity(entityManager, member, symbol);
@@ -294,8 +294,10 @@ public class ApiController {
     public String getRoomsBySearch(HttpSession session, @RequestParam(value = "nameLike") String nameLike,
             HttpServletResponse response) throws Exception {
 
-        List<Room> roomsResult = entityManager.createNamedQuery("Room.bySearch").setParameter("name", nameLike)
-                .getResultList();
+        List<Room> roomsResult = entityManager
+                                .createNamedQuery("Room.bySearch", Room.class)
+                                .setParameter("name", nameLike)
+                                .getResultList();
         JSONArray roomsJson = new JSONArray();
         if (!roomsResult.isEmpty()) {
             for (Room r : roomsResult) {
@@ -315,8 +317,10 @@ public class ApiController {
     public String getUsersBySearch(HttpSession session, @RequestParam(value = "nameLike") String nameLike,
             HttpServletResponse response) throws Exception {
 
-        List<User> usersResult = entityManager.createNamedQuery("User.bySearch").setParameter("name", nameLike)
-                .getResultList();
+        List<User> usersResult = entityManager
+                                .createNamedQuery("User.bySearch", User.class)
+                                .setParameter("name", nameLike)
+                                .getResultList();
         JSONArray usersJson = new JSONArray();
         if (!usersResult.isEmpty()) {
             for (User u : usersResult) {
@@ -338,8 +342,10 @@ public class ApiController {
 
         User user = entityManager.find(User.class, userId);
 
-        List<User> followersResult = entityManager.createNamedQuery("User.followers").setParameter("user", user)
-                .getResultList();
+        List<User> followersResult = entityManager
+                                    .createNamedQuery("User.followers", User.class)
+                                    .setParameter("user", user)
+                                    .getResultList();
 
         JSONArray userJson = new JSONArray();
         if (!followersResult.isEmpty()) {

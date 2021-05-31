@@ -5,8 +5,6 @@ import es.ucm.fdi.stonks.model.Room;
 import es.ucm.fdi.stonks.model.Symbol;
 import es.ucm.fdi.stonks.model.User;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletResponse;
@@ -35,16 +32,16 @@ public class RoomsController{
 
     @GetMapping("")   // lista de salas
     public String rooms(Model model, HttpSession session) {
-        List<?> user_rooms = entityManager
-                .createNamedQuery("Room.byUser")
-                .setParameter("user", entityManager.find(User.class,((User)session.getAttribute("u")).getId()))
-                .getResultList();
+        List<Room> user_rooms = entityManager
+                                .createNamedQuery("Room.byUser", Room.class)
+                                .setParameter("user", entityManager.find(User.class,((User)session.getAttribute("u")).getId()))
+                                .getResultList();
         model.addAttribute("user_rooms", user_rooms);
 
-        List<?> topRooms = entityManager
-                .createNamedQuery("Room.top")
-                .setMaxResults(10)
-                .getResultList();
+        List<Room> topRooms = entityManager
+                                .createNamedQuery("Room.top",Room.class)
+                                .setMaxResults(10)
+                                .getResultList();
         model.addAttribute("topRooms", topRooms);
 
         return "rooms";
@@ -54,33 +51,33 @@ public class RoomsController{
     public String room(@PathVariable long id, Model model, HttpSession session) {
         User user = entityManager.find(User.class,((User)session.getAttribute("u")).getId());
 
-        List<?> user_rooms = entityManager
-                            .createNamedQuery("Room.byUser")
-                            .setParameter("user", user)
-                            .getResultList();
+        List<Room> user_rooms = entityManager
+                                .createNamedQuery("Room.byUser", Room.class)
+                                .setParameter("user", user)
+                                .getResultList();
         model.addAttribute("user_rooms", user_rooms);
 
         Room room = entityManager.find(Room.class, id);
         model.addAttribute("room", room);
 
-        List<?> lastSymbols = entityManager
-                                .createNamedQuery("Symbol.lastsByRoom")
+        List<Symbol> lastSymbols = entityManager
+                                .createNamedQuery("Symbol.lastsByRoom", Symbol.class)
                                 .setParameter("room", room)
                                 .getResultList();
         model.addAttribute("symbols", lastSymbols);
 
         List<Symbol> allSymbols = entityManager
-                                    .createNamedQuery("Symbol.allByRoom")
+                                    .createNamedQuery("Symbol.allByRoom", Symbol.class)
                                     .setParameter("room", room)
                                     .getResultList();
         model.addAttribute("roomStocks", StaticMethods.symbolsToStocks(allSymbols));
 
         try {
-            Membership membership = (Membership) entityManager
-                                                .createNamedQuery("Membership.byUserAndRoom")
-                                                .setParameter("user", user)
-                                                .setParameter("room", room)
-                                                .getSingleResult();
+            Membership membership = entityManager
+                                    .createNamedQuery("Membership.byUserAndRoom", Membership.class)
+                                    .setParameter("user", user)
+                                    .setParameter("room", room)
+                                    .getSingleResult();
             model.addAttribute("membership", membership);
         } catch (Exception e) {
             // El usuario no pertenece a la sala (no pasa nada)
@@ -92,8 +89,8 @@ public class RoomsController{
     @GetMapping("/createRoom")
     public String createRoom(Model model) {
 
-        List<?> symbols = entityManager
-                        .createNamedQuery("Symbol.lasts")
+        List<Symbol> symbols = entityManager
+                        .createNamedQuery("Symbol.lasts", Symbol.class)
                         .getResultList();
         model.addAttribute("symbols", symbols);
 
@@ -124,10 +121,10 @@ public class RoomsController{
 
         List<Symbol> symbolList = new ArrayList<>();
         for (int i = 0; i < symbols.length; ++i) {
-            symbolList.addAll((List<Symbol>) entityManager
-                .createNamedQuery("Symbol.allByName")
-                .setParameter("name", symbols[i])
-                .getResultList());
+            symbolList.addAll(entityManager
+                                .createNamedQuery("Symbol.allByName", Symbol.class)
+                                .setParameter("name", symbols[i])
+                                .getResultList());
         }
 
         adminMember.setUser(room_admin);
@@ -170,10 +167,11 @@ public class RoomsController{
         User user = entityManager.find(User.class,((User)session.getAttribute("u")).getId());
         Room room = entityManager.find(Room.class, room_id);
 
-        List<?> previousMembers = entityManager.createNamedQuery("Membership.byUserAndRoom")
-                            .setParameter("user", user)
-                            .setParameter("room", room)
-                            .getResultList();
+        List<Membership> previousMembers = entityManager
+                                            .createNamedQuery("Membership.byUserAndRoom", Membership.class)
+                                            .setParameter("user", user)
+                                            .setParameter("room", room)
+                                            .getResultList();
 
         // Checks if user is already in the room and if room is full
         if (previousMembers.size() == 0 &&
