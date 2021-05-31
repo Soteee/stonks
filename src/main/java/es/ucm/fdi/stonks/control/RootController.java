@@ -111,9 +111,9 @@ public class RootController {
         model.addAttribute("user", user);
 
         List<Room> user_rooms = entityManager
-                .createNamedQuery("Room.byUser", Room.class)
-                .setParameter("user", user)
-                .getResultList();
+                                .createNamedQuery("Room.byUser", Room.class)
+                                .setParameter("user", user)
+                                .getResultList();
         model.addAttribute("user_rooms", user_rooms);
 
         return "u";

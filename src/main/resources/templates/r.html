@@ -22,6 +22,7 @@
         <div class="content">
             <h1 th:text="${room.name}">No se encontró la sala</h1>
         </div>
+        <p>Dueño de la sala: <a th:href="@{/u/{id}(id=${room.admin.id})}" th:text="${room.admin.username}"></a></p>
         <p>Esta sala ya ha finalizado</p> 
         <p>El ganador ha sido <a th:href="@{/u/{id}(id=${room.winner.id})}" th:text="${room.winner.username}"></a></p>
         <p class="menu-label">Resultados finales</p>
@@ -42,7 +43,8 @@
             </div>
             <div>
                 <div class="content">
-                    <h2>Historial de valores</h2>
+                    <h3>Dueño de la sala: <a th:href="@{/u/{id}(id=${room.admin.id})}" th:text="${room.admin.username}"></a></h3>
+                    <h3>Historial de valores</h3>
                     <div id="chart">
                         <script th:inline="javascript">
                             cargarIndices( /*[[${roomStocks}]]*/ null);
@@ -50,7 +52,7 @@
                     </div>
                     <div class="columns m-2">
                         <div class="column is-half">
-                            <h2>Valores actuales</h2>
+                            <h3>Valores actuales</h3>
                             <table id='currentValues'>
                                 <tr th:each="stock : ${roomStocks}">
                                     <td th:text="${stock.key}"></td>
@@ -61,7 +63,7 @@
                         <div class="column" th:if="${membership == null}">
                             <form method="POST" th:action="@{/r/joinRoom}">
                                 <div class="content">
-                                    <h2>No perteneces a esta sala</h2>
+                                    <h3>No perteneces a esta sala</h3>
                                 </div>
                                 <button class="button is-large is-info" type="submit">
                                     Unirme
@@ -70,7 +72,7 @@
                             </form>
                         </div>
                         <div class="column" th:if="${membership != null}">
-                            <h2>Operaciones</h2>
+                            <h3>Operaciones</h3>
                             <div class="columns m-2">
                                 <div id="user_panel" th:if="${membership != null}">
                                     <!-- Información de las acciones del usuario -->
@@ -113,7 +115,9 @@
                         </div>
                     </div>
                 </div>
+                <div>
                 <div class="chatcontent" id="chat" th:if="${membership != null}">
+                    <div class="content"><h3>Chat</h3></div>
                     <div id="chatBox"></div>
                     <form th:action="@{/chat/{id}(id=${room.id})}" method="POST">
                         <textarea required class="textarea" id="message" placeholder="Escribe en el chat"></textarea>
@@ -149,6 +153,7 @@
         });
     </script>
     <script th:inline="javascript" th:if="${room.finished} == false" >
+        let isAdmin = /*[[${session.u.hasRole("ADMIN") or room.admin.id == session.u.id}]]*/ null;
         let user_id = /*[[${session.u.id}]]*/ null;
         let user_name = /*[[${session.u.username}]]*/ null;
 
@@ -170,7 +175,6 @@
                     }
 
                     let sell_form = document.getElementById('sell_form');
-                    console.log(sell_form);
 
                     // Comprueba si el usuario tiene stocks
                     if (Object.entries(response.stocks).length !== 0){
@@ -227,7 +231,6 @@
             b.onclick = (e) => {
                 // Update error message
                 let error = document.getElementById('buy_error');
-                console.log(error);
                 if (error.innerHTML !== ''){
                     error.innerHTML = '';
                 }
@@ -301,21 +304,44 @@
             let chatBox = document.getElementById("chatBox");
             let type;
 
-            console.log(msg.from);
-            console.log(user_name);
-
             if(msg.from == user_name) type="message is-primary";
             else type="message is-info";
 
             let m = document.createElement("article");
 
             m.setAttribute("class",type);
-            m.innerHTML = "<div class='message-header'><p>"+msg.from+" ("+formatDate(msg.sent)+")</p></div><div class='message-body'>"+msg.text+"</div>";
-
+            m.setAttribute("id", "msg-" + msg.id);
+            m.innerHTML = "<div class='message-header'><p>"+msg.from+" ("+formatDate(msg.sent)+")</p></div><div class='message-body'>"+msg.text;
+            if (isAdmin){
+                m.innerHTML += "<div class='column'><button id='remove-"+msg.id+"' class='button is-danger'>Eliminar mensaje</button></div>";
+            }
+            m.innerHTML += "</div>";
             chatBox.appendChild(m);
+
+            if (isAdmin){
+                // Añade el ajax  a cada botón del mensaje
+                let removeButton = document.getElementById("remove-"+msg.id);
+                removeButton.onclick = (e) => {
+                    e.preventDefault();
+                    msg = e.target.id.split('-')[1];
+
+                    go(config.rootUrl + "chat/" + room + "/remove", 'POST', {
+                        msg: msg
+                    })
+                    .then(removeMessage)
+                }
+            }
 
             // Hacer scroll down cuando llega un mensaje nuevo
             chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Eliminar un mensaje
+        function removeMessage(msg){
+            console.log(msg);
+
+            let message = document.getElementById("msg-" + msg.message);
+            message.parentElement.removeChild(message);
         }
 
         // Cargar mensajes
