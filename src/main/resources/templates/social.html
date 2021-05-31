@@ -35,13 +35,13 @@
                                         let fOL = document.getElementById('fUL');
                                         fOL.style.removeProperty('display');
                                         fOL.innerHTML = "";
-                                        
+                                        let hdr = document.getElementById('msh');
+                                        hdr.style.removeProperty('display');
                                         response.forEach(user=>{
                                             let newLi = document.createElement('li');
                                             newLi.innerHTML = "<a href='/u/"+user.id+"'>"+user.username+"</a>";
                                             fOL.appendChild(newLi);
-                                            let bInvite = document.createElement('button');
-                                            binvite.innerHTML = "<button class="+"button is-small is-primary"+" type="+"button>Invitar</button>"
+                                            
 
 
                                         });
@@ -50,17 +50,42 @@
                             });
                         </script>  
                         <br><br>
-                        <button class="button is-link" id=myFollowing type="button">Mis seguidos</button>
-                         <!-- HACEMOS QUE ESTE BOTÓN ENSEÑE CON AJAX MIS seguidos -->
+                        <button class="button is-link" id="myFollowing" type="button">Mis seguidos</button>
+                         <!-- HACEMOS QUE ESTE BOTÓN ENSEÑE CON AJAX MIS SEGUIDOS -->
+                        <script th:inline="javascript">
+                            userId = /*[[${session.u.id}]]*/ null;
+                            document.addEventListener("DOMContentLoaded",()=>{
+                            let b = document.getElementById('myFollowing');
+                            b.onclick =(e)=>{
+                                    e.preventDefault();
+                                    go(config.rootUrl+'api/getFollowing?userId='+userId,'GET')
+                                    .then(function(response){
+                                        console.log(response);
+                                        let fOL = document.getElementById('mfUL');
+                                        fOL.style.removeProperty('display');
+                                        fOL.innerHTML = "";
+                                        let hdr = document.getElementById('msh1');
+                                        hdr.style.removeProperty('display');
+                                        response.forEach(user=>{
+                                            let newLi = document.createElement('li');
+                                            newLi.innerHTML = "<a href='/u/"+user.id+"'>"+user.username+"</a>";
+                                            fOL.appendChild(newLi);
+                                           
+
+
+                                        });
+                                    })
+                                }
+                            });
+                        </script>
                         <br><br>
-                        <button class="button is-primary" id=searchPlayers type="button">Buscar jugadores</button>
-                        <!-- HACEMOS QUE ESTE BOTÓN ENSEÑE CON AJAX LA BUSQUEDA DE SEGUIDORES -->
+                       
                     </div>
                 </div>
             </div>
             <div class="column is-one-third">
                 <div class="content">
-                    <h2> Mis seguidos </h2>                          <!-- Segun entras -->
+                    <h2 style="display:none" id="msh"> Mis seguidos </h2>                          <!-- Segun entras -->
                         <div id="Seguidos" >
                             <ul id="mfUL" style="display:none;">
                                 
@@ -69,38 +94,16 @@
                         </div>
                 </div>
                 <div class="content">
-                    <h2> Mis seguidores </h2>                          <!-- Segun entras -->
-                        <div id="Seguidores">
+                    <h2 style="display:none" id="msh1"> Mis seguidores </h2>                          <!-- Segun entras -->
+                        <div id="Segidores">
                             <ul id="fUL" style="display:none;">
-                                
-
                             </ul>
                         </div>
                 </div>
             </div>
             <div class="column">
-                <div class="content">
-                    <h2>Buscar un jugador</h2>
-
-                    <form>
-                        <div class="field is-grouped">
-                            <div class="control">
-                                <input class="input" type="text" name="roomSearch" onfocus="this.value=''" placeholder="Nombre de usuario o #12465" size="30px">
-                            </div>
-                            <div class="con<trol">
-                                <button class="button is-link" onclick="buscarJugador()">Buscar</button>
-                            </div>
-                        </div>
-                    </form>
-                    <br>
-                    <div id="playerFound">
-                        Nombre del jugador #12465
-                        <br>
-                        <button class="button is-small is-link" type="button">Ver perfil</button>
-                        <button class="button is-small is-primary" type="button">Invitar</button>
-
-                    </div>
-                </div>
+               
+                
             </div>
         </div>
     </body>

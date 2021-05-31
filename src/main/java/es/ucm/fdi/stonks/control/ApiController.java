@@ -291,8 +291,9 @@ public class ApiController {
     @GetMapping(path = "/getRooms", produces = "application/json")
     @ResponseBody
     @Transactional
-    public String getRoomsBySearch(HttpSession session, @RequestParam(value = "nameLike") String nameLike,
-            HttpServletResponse response) throws Exception {
+    public String getRoomsBySearch(HttpSession session, 
+                                    @RequestParam(value = "nameLike") String nameLike,
+                                    HttpServletResponse response) throws Exception {
 
         List<Room> roomsResult = entityManager
                                 .createNamedQuery("Room.bySearch", Room.class)
@@ -314,8 +315,9 @@ public class ApiController {
     @GetMapping(path = "/getUsers", produces = "application/json")
     @ResponseBody
     @Transactional
-    public String getUsersBySearch(HttpSession session, @RequestParam(value = "nameLike") String nameLike,
-            HttpServletResponse response) throws Exception {
+    public String getUsersBySearch(HttpSession session, 
+                                    @RequestParam(value = "nameLike") String nameLike,
+                                    HttpServletResponse response) throws Exception {
 
         List<User> usersResult = entityManager
                                 .createNamedQuery("User.bySearch", User.class)
@@ -337,13 +339,40 @@ public class ApiController {
     @GetMapping(path = "/getFollowers", produces = "application/json")
     @ResponseBody
     @Transactional
-    public String getFollowers(HttpSession session, @RequestParam(value = "userId") long userId,
-            HttpServletResponse response) throws Exception {
+    public String getFollowers(HttpSession session, 
+                                @RequestParam(value = "userId") long userId,
+                                HttpServletResponse response) throws Exception {
 
         User user = entityManager.find(User.class, userId);
 
         List<User> followersResult = entityManager
                                     .createNamedQuery("User.followers", User.class)
+                                    .setParameter("user", user)
+                                    .getResultList();
+
+        JSONArray userJson = new JSONArray();
+        if (!followersResult.isEmpty()) {
+            for (User r : followersResult) {
+                JSONObject jUser = new JSONObject();
+                jUser.put("username", r.getName());
+                userJson.put(jUser);
+            }
+        }
+
+        return userJson.toString();
+    }
+
+    @GetMapping(path = "/getFollowing", produces = "application/json")
+    @ResponseBody
+    @Transactional
+    public String getFollowing(HttpSession session, 
+                                @RequestParam(value = "userId") long userId,
+                                HttpServletResponse response) throws Exception {
+
+        User user = entityManager.find(User.class, userId);
+
+        List<User> followersResult = entityManager
+                                    .createNamedQuery("User.following")
                                     .setParameter("user", user)
                                     .getResultList();
 

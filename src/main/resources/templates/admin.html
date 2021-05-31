@@ -13,8 +13,12 @@
         <h1>Panel de administración</h1>
     </div>
     <div class="columns m-3">
-        <nav th:replace="fragments/userSearch.html :: userSearch"></nav>
-        <nav th:replace="fragments/roomSearch.html :: roomSearch"></nav>
+        <div class="column is-one-fifth">
+            <nav th:replace="fragments/userSearch.html :: userSearch"></nav>
+        </div>
+        <div class="column is-one-fifth">
+            <nav th:replace="fragments/roomSearch.html :: roomSearch"></nav>
+        </div>
     </div>
 </body>
 </html>

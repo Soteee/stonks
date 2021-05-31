@@ -36,7 +36,7 @@ INSERT INTO user(id,enabled,username,password,roles,name,first_name) VALUES (
 	'Jhon', 'Doe'
 );
 Insert into user(id,enabled,username,password,roles,name,first_name) VALUES (
-	6,1, 'javi', '{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u', 'USER', 'javi', 'javi'
+	6,1, 'javi', '{bcrypt}$2a$10$xLFtBIXGtYvAbRqM95JhcOaG23fHRpDoZIJrsF2cCff9xEHTTdK1u', 'USER,ADMIN', 'javi', 'javi'
 );
 
 -- Salas de prueba

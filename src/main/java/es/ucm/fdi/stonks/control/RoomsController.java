@@ -18,6 +18,8 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -97,17 +99,15 @@ public class RoomsController{
         return "createRoom";
     }
 
-
-
     @PostMapping("/createRoom")
     @Transactional
     public void postCreateRoom(
             @RequestParam String name,
-            @RequestParam boolean isPublic,
             @RequestParam int weeklyCash,
-            @RequestParam int maxUsers,
-            @RequestParam int startBalance,
-            @RequestParam int cash2Win,
+            @RequestParam @Min(1) @Max(10) int maxUsers,
+            @RequestParam @Min(1) @Max(10) int startBalance,
+            @RequestParam(required = false) Integer isCash2Win,
+            @RequestParam(required = false) @Min(1) Integer cash2Win,
             @RequestParam String expirationDate,
             @RequestParam String[] symbols,
             HttpServletResponse response,
@@ -136,11 +136,12 @@ public class RoomsController{
         memberList.add(adminMember);
 
         newRoom.setName(name);
-        newRoom.setPublic(isPublic);
         newRoom.setWeeklyCash(weeklyCash);
         newRoom.setMaxUsers(maxUsers);
         newRoom.setStartBalance(startBalance);
-        newRoom.setCash2Win(cash2Win);
+        if (isCash2Win != null && cash2Win != null){
+            newRoom.setCash2Win(cash2Win);
+        }
         newRoom.setAdmin(room_admin);
         newRoom.setCreationDate(currentDate);
         newRoom.setExpirationDate(LocalDate.parse(expirationDate));
@@ -155,8 +156,6 @@ public class RoomsController{
 
         response.sendRedirect("/r/");
     }
-
-    
 
     @PostMapping("/joinRoom")
     @Transactional

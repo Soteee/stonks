@@ -92,66 +92,117 @@
 </head>
 
 <body>
-    <nav th:replace="fragments/menu.html :: topbar"></nav>
-    <div class="visualizer">
+<nav th:replace="fragments/menu.html :: topbar"></nav>
+<div class="content m-3">
 
-        <!-- CREAR UNA SALA -->
-        <form class="Formulario" method="POST" th:action="@{/r/createRoom}">
-            <h1 class="form-text">CREAR UNA SALA</h1>
+    <h1>Crear una sala</h1>
 
-            <!-- NOMBRE DE LA SALA -->
-            <p class="form-text">Nombre de la sala</p>
-            <input type="text" id="name" name="name" placeholder="Nombre de la Sala">
+    <!-- CREAR UNA SALA -->
+    <form method="POST" th:action="@{/r/createRoom}" id='form'>
 
-            <!-- Privacidad y contraseña -->
-            <p class="form-text">Privacidad</p>
-            <select id="isPublic" class="likeInput" name="isPublic">
-                <option value="0">Privada (contraseña)</option>
-                <option value="1">Pública</option>
-            </select>
-            <!-- Se comprueba el nivel de seguridad de la primera, y la segunda tiene que ser igual -->
-            <input type="password" id="password" name="password" maxlength="15" placeholder="Contraseña" onkeyup="muestra_seguridad_clave(this.value, this.form)">
-            <input type="password" id="repitedPassword" name="repitedPassword" maxlength="15" placeholder="Repite la contraseña">
-            <span id="porcentajeBarra" style="width: 50%"></span>
+        <!-- NOMBRE DE LA SALA -->
+        <div class="field">
+            <label class="label">Nombre de la sala</label>
+            <div class="control">
+                <input class="input" type="text" id="name" name="name">
+            </div>
+        </div>
 
-            <!-- Privacidad y contraseña -->
-            <p class="form-text">Número de jugadores</p>
-            <input type="number" id="maxUsers" maxlength="3" max="10" name="maxUsers" placeholder="Número de jugadores">
+        <!-- NÚMERO DE JUGADORES-->
+        <div class="field">
+            <label class="label">Número de jugadores</label>
+            <div class="control">
+                <input class="input" type="number" id="maxUsers" maxlength="3" max="10" name="maxUsers">
+            </div>
+        </div>
 
-            <!-- Dinero inicial -->
-            <p class="form-text">Cantidad de dinero inicial</p>
-            <input type="number" id="startBalance" maxlength="7" name="startBalance" placeholder="Dinero inicial">
-            
-            <!-- Dinero extra -->
-            <p class="form-text">Cantidad de dinero extra</p>
-            <select class="likeInput">
-                <option id="1">Diariamente</option>
-                <option id="2">Semanalmente</option>
-                <option id="3">Mensualmente</option>
-                <option id="4">Nunca</option>
-            </select>
-            <input type="number" id="weeklyCash" maxlength="7" name="weeklyCash" placeholder="Dinero extra">
+        <!-- Dinero inicial -->
+        <div class="field">
+            <label class="label">Cantidad de dinero inicial</label>
+            <div class="control">
+                <input class="input" type="number" id="startBalance" maxlength="7" name="startBalance">
+            </div>
+        </div>
 
-            <!-- Fecha límite -->
-            <p class="form-text">Fecha límite</p>
-            <input type="date" id="expirationDate" name="expirationDate" value="2021-07-22" min="2021-04-06" max="2022-04-06">
+        <!-- Dinero extra -->
+        <div class="field">
+            <label class="label">Cantidad de dinero extra</label>
+        </div>
+        <div class="field is-grouped">
+            <div class="control">
+                <div class="select">
+                    <select class="likeInput">
+                        <option id="1">Diariamente</option>
+                        <option id="2">Semanalmente</option>
+                        <option id="3">Mensualmente</option>
+                        <option id="4">Nunca</option>
+                    </select>
+                </div>
+            </div>
+            <input class="input" type="number" id="weeklyCash" maxlength="7" name="weeklyCash" placeholder="Dinero extra">
+        </div>
 
-            <!-- Dinero para ganar -->
-            <p class="form-text">Dinero para ganar</p>
-            <input type="checkbox" id="cash2WinBool">
-            <input type="number" id="cash2Win" maxlength="8" name="cash2Win" placeholder="Dinero para ganar">
-            <br>
+        <!-- Fecha límite -->
+        <div class="field">
+            <label class="label">Fecha límite</label>
+            <div class="control">
+                <input class="input" type="date" id="expirationDate" name="expirationDate" value="2021-07-22" min="2021-04-06" max="2022-04-06">
+            </div>
+        </div>
 
-            <p class="form-text">Símbolos de la sala</p>
+        <!-- Dinero para ganar -->
+        <div class="field">
+            <label class="label">Dinero para ganar</label>
+            <label class="checkbox">
+                <input type="checkbox" id="cash2WinBool" name="isCash2Win" value="1">
+                Activar
+            </label>
+            <div class="control">
+                <input class="input" type="number" id="cash2Win" maxlength="8" name="cash2Win" placeholder="Dinero para ganar">
+            </div>
+        </div>
+
+        <p id='error'></p>
+        <div class="field">
+            <label class="label">Símbolos de la sala</label>
+        </div>
+        <div id="symbols" class="field is-grouped-multiline">
             <th:block th:each="symbol : ${symbols}">
-                <input type="checkbox" name="symbols" th:value="${symbol.name}">
-                <label th:text="${symbol.name}"></label>
+                <label class="checkbox">
+                    <input type="checkbox" name="symbols" th:value="${symbol.name}">
+                    <label th:text="${symbol.name}"></label>
+                </label>
             </th:block>
-            <br>
+        </div>
 
-            <input type="submit" placeholder="Check" value="Crear sala">
-        </form>
-    </div>
+        <div class="field">
+            <div class="control">
+                <input type="submit" placeholder="Check" value="Crear sala">
+            </div>
+        </div>
+
+    </form>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        let b = document.getElementById("form");
+        b.onclick = (e) => {
+            e.preventDefault();
+            let checked = false;
+            Array.from(document.getElementById('symbols').children).forEach(function(element){
+                if (element.childNodes[1].checked){
+                    checked = true;
+                }
+            });
+
+            if (checked){
+                e.submit()
+            }
+            else{
+                document.getElementById('error').innerHTML = "Debes marcar al menos una casilla";
+            }
+        }
+    });
+</script>
 </body>
-
 </html>

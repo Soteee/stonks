@@ -93,15 +93,15 @@
     <!-- CAJA DE REGISTRARSE -->
     <form class="LogInBox" method="POST" th:action="@{/register}">
         <h1>CREAR UNA CUENTA</h1>
-        <input type="text" id="username" name="username" placeholder="Nombre de usuario">
-        <input type="mail" id="mail" name="mail" placeholder="Correo electrónico">
-        <input type="text" id="name" name="name" placeholder="Nombre">
-        <input type="text" id="firstName" name="firstName" placeholder="Primer apellido">
-        <input type="text" id="lastName" name="lastName" placeholder="Segundo apellido">
+        <input type="text" id="username" name="username" placeholder="Nombre de usuario" required>
+        <input type="mail" id="mail" name="mail" placeholder="Correo electrónico" required>
+        <input type="text" id="name" name="name" placeholder="Nombre" required>
+        <input type="text" id="firstName" name="firstName" placeholder="Primer apellido" required>
+        <input type="text" id="lastName" name="lastName" placeholder="Segundo apellido" required>
 
         <!-- Se comprueba el nivel de seguridad de la primera, y la segunda tiene que ser igual -->
-        <input type="password" name="password" id="password" maxlength="15" placeholder="Contraseña" onkeyup="muestra_seguridad_clave(this.value, this.form)">
-        <input type="password" name="repitedPassword" id="repitedPassword"  maxlength="15" placeholder="Repite la contraseña">
+        <input type="password" name="password" id="password" maxlength="15" placeholder="Contraseña" onkeyup="muestra_seguridad_clave(this.value, this.form)" required>
+        <input type="password" name="repitedPassword" id="repitedPassword"  maxlength="15" placeholder="Repite la contraseña" required>
         <div class="barra">
             <span id="porcentajeBarra" style="width: 0%"></span>
         </div>
