@@ -104,7 +104,7 @@
         <div class="field">
             <label class="label">Nombre de la sala</label>
             <div class="control">
-                <input class="input" type="text" id="name" name="name">
+                <input required class="input" type="text" id="name" name="name">
             </div>
         </div>
 
@@ -112,7 +112,7 @@
         <div class="field">
             <label class="label">Número de jugadores</label>
             <div class="control">
-                <input class="input" type="number" id="maxUsers" maxlength="3" max="10" name="maxUsers">
+                <input required class="input" type="number" id="maxUsers" maxlength="3" max="10" name="maxUsers">
             </div>
         </div>
 
@@ -120,7 +120,7 @@
         <div class="field">
             <label class="label">Cantidad de dinero inicial</label>
             <div class="control">
-                <input class="input" type="number" id="startBalance" maxlength="7" name="startBalance">
+                <input required class="input" type="number" id="startBalance" maxlength="7" name="startBalance">
             </div>
         </div>
 
@@ -139,14 +139,14 @@
                     </select>
                 </div>
             </div>
-            <input class="input" type="number" id="weeklyCash" maxlength="7" name="weeklyCash" placeholder="Dinero extra">
+            <input required class="input" type="number" id="weeklyCash" maxlength="7" name="weeklyCash" placeholder="Dinero extra">
         </div>
 
         <!-- Fecha límite -->
         <div class="field">
             <label class="label">Fecha límite</label>
             <div class="control">
-                <input class="input" type="date" id="expirationDate" name="expirationDate" value="2021-07-22" min="2021-04-06" max="2022-04-06">
+                <input required class="input" type="date" id="expirationDate" name="expirationDate" value="2021-07-22" min="2021-04-06" max="2022-04-06">
             </div>
         </div>
 
@@ -186,7 +186,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         let b = document.getElementById("form");
-        b.onclick = (e) => {
+        b.onsubmit = (e) => {
             e.preventDefault();
             let checked = false;
             Array.from(document.getElementById('symbols').children).forEach(function(element){
@@ -196,7 +196,7 @@
             });
 
             if (checked){
-                e.submit()
+                b.submit()
             }
             else{
                 document.getElementById('error').innerHTML = "Debes marcar al menos una casilla";

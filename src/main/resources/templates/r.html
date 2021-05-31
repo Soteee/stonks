@@ -361,7 +361,6 @@
             b.onclick = (e) => {
                 let url = b.parentNode.action;
                 e.preventDefault();
-                console.log(b, b.parentNode);
                 go(url, 'POST', {
                     message: document.getElementById("message").value
                 })

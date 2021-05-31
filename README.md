@@ -160,7 +160,7 @@ funcionalidades:
 
 *   *Compra y venta de acciones en tiempo real de una sala* (Todo con ajax) 
 
-*   *Ganar en una sala* (Recomendamos usar "Partida para acabar y vender un par de acciones con la cuenta admin (Usuario admin, password aa)) También puede crearse una cuenta y unirse de 0. La victoria es en tiempo real y notifica a todos los usuarios de si han perdido o ganado con un gif. La sala se mantiene con estado "Acabada" y se puede revisitar para ver los balances finales
+*   *Ganar en una sala* (Recomendamos usar "Partida para acabar y vender un par de acciones con la cuenta admin (Usuario admin, password aa)) También puede crearse una cuenta y unirse de 0. La victoria es en tiempo real y notifica a todos los usuarios de si han perdido o ganado con un gif. La sala se mantiene con estado "Acabada" y se puede revisitar para ver los balances finales. Por otro lado, si la sala no tiene una cantidad de dinero fija para acabar, cada vex que alguien inicia sesión, se comprueba si la sala ha caducado. Si es el caso, el ganador es el usuario con más dinero.
 
 *  *Consultar gráficas* Pasando el ratón por encima
 
@@ -171,6 +171,7 @@ funcionalidades:
 * *Desactivar a un usuario como admin* Si eres administrador, te sale un botón más en el menú dónde puedes buscar usuarios y desactivarlos. Los usuarios desactivados no pueden logear, y si intentan meterse a su perfil saldrá "No disponible*
 
 * *Borrar mensajes de una sala de chat* (Hecho con AJAX) Como admin, entrar en una sala y bajar a la sala de chat nos mostrará un botón eliminar en todos los mensajes.
+
 ## Usuarios de prueba
 
 | Usuario | Contraseña | Rol |
@@ -178,7 +179,80 @@ funcionalidades:
 | javi | aa | administrador |
 | admin | aa | administrador |
 | juan | aa | usuario normal |
-  
+
+## Soluciones del feedback 
+
+
+### Conseguir precio en tiempo real de un símbolo para actualización de API
+
+```java
+private static double getSymbol(String name) throws Exception {
+        Map<String, String> headers = new HashMap<>();
+        headers.put(headerkey, headerkeyp2);
+        headers.put(authname1, authname2);
+        headers.put("useQueryString", "true");
+
+        JSONObject json = Unirest.get(url + name + "/financial-data")
+                                .headers(headers)
+                                .asJson()
+                                .getBody()
+                                .getObject();
+
+        if (json == null) {
+            return -1.f;
+        }
+        
+        return Double.parseDouble(json.getJSONObject("financialData").getJSONObject("currentPrice").getString("fmt").replaceAll(",", ""));
+    }
+
+```
+
+Dado un nombre de símbolo, se pide a la API sus datos de precio en tiempo real. Recordar que estos precios no son los que se consultan cuando se está usando la aplicación, solo cuando se pide un refresco de precios cada 24h. Después de obtenerlos se cargan en la BBDD en el siguiente apartado.
+
+### Actualización de la API 
+
+
+
+```java
+
+ public static void refreshStockValues(EntityManager em) {
+        List<Symbol> symbolList = em
+								.createNamedQuery("Symbol.lasts", Symbol.class)
+								.getResultList();
+
+        // Use the same value for evert stock so we can extract them all at once easily from DB
+        LocalDateTime now = LocalDateTime.now();
+
+		for (Symbol o : symbolList) {
+			// If more than 24 hours have passed
+			if(o.getUpdatedOn() == null ||
+				Duration.between(o.getUpdatedOn(), now).compareTo(Duration.ofHours(24)) > 0){
+                
+                try {
+                    Symbol newSymbol = new Symbol();
+
+                    newSymbol.setName(o.getName());
+                    newSymbol.setUpdatedOn(now);
+                    newSymbol.setValue(getSymbol(o.getName()));
+                    List<Room> newList = new ArrayList<>();
+                    newList.addAll(o.getRooms());
+                    newSymbol.setRooms(newList);
+
+                    em.persist(newSymbol);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+			}
+		}
+    }
+```
+
+Con esta línea cada vez que alguien logea se comprobará si han pasado 24 horas desde la última actualización, si han pasado, se manda una petición a la API dónde se cargaría todos los símbolos pedidos. Se pisan los anteriores.
+
+
+
+
+
 ## Recursos externos
 
 Hemos usado algunos recursos externos como ayuda para desarrollar ciertas partes concretas de nuestro proyecto.
@@ -199,7 +273,7 @@ D3 es una librería de JavaScript que sirve para visualizar datos usando estánd
 
 Lo hemos usado para mostrar el histórico de valores de los índices.
 
-Para facilitar su uso hemos creado [graphics.js](/src/main/resources/static/js/graphics.js) que con tan solo añadirlo al HTML funciona. Así evitamos repetir scripts en varios archivos.
+Para facilitar su uso hemos creado [graphics.js](/src/main/resources/static/js/graphics.js), que con tan solo añadirlo al HTML funciona. De esta forma, evitamos repetir scripts en varios archivos.
 
 ## Modelado
 
